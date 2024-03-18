@@ -1,17 +1,16 @@
 import React from "react";
-import { Route, Routes, Outlet } from "react-router-dom";
-import NavigationBar from "../components/NavigationBar";
-import WelcomePage from "../pages/WelcomePage";
-import SignUpPage from "../pages/SignUpPage";
-import SelectRolePage from "../pages/SelectRolePage";
-import SignInPage from "../pages/SignInPage";
-import HomePage from "../pages/HomePage";
-import ChatBoxPage from "../pages/ChatBoxPage";
-import SearchPage from "../pages/SearchPage";
-import AthleteProfilePage from "../pages/AthleteProfilePage";
-import ScoutProfilePage from "../pages/ScoutProfilePage";
-import OrgProfilePage from "../pages/OrgProfilePage";
-
+import NavigationBar from "../Components/NavigationBar";
+import WelcomePage from "../Pages/WelcomePage";
+import SignUpPage from "../Pages/SignUpPage";
+import SelectRolePage from "../Pages/SelectRolePage";
+import SignInPage from "../Pages/SignInPage";
+import HomePage from "../Pages/HomePage";
+import ChatBoxPage from "../Pages/ChatBoxPage";
+import SearchPage from "../Pages/SearchPage";
+import AthleteProfilePage from "../Pages/AthleteProfilePage";
+import ScoutProfilePage from "../Pages/ScoutProfilePage";
+import OrgProfilePage from "../Pages/OrgProfilePage";
+import NotFoundPage from "../Pages/NotFoundPage";
 import {
   BrowserRouter as Router,
   Route,
@@ -19,7 +18,7 @@ import {
   Outlet,
 } from "react-router-dom";
 
-export default function AppRouter({}) {
+export default function AppRouter() {
   return (
     <Router>
       <Routes>
@@ -30,18 +29,18 @@ export default function AppRouter({}) {
               <Outlet />
             </>
           }>
-          <Route path="/" element={<WelcomePage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/selectrole" element={<SelectRolePage />} />
-          <Route path="/signin" element={<SignInPage />} />
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/chatbox" element={<ChatBoxPage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/athleteprofile" element={<AthleteProfilePage />} />
+          <Route path="/scoutprofile" element={<ScoutProfilePage />} />
+          <Route path="/orgprofile" element={<OrgProfilePage />} />
         </Route>
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/chatbox" element={<ChatBoxPage />} />
-        <Route path="/search" element={<SearchPage />} />
-        <Route path="/athleteprofile" element={<AthleteProfilePage />} />
-        <Route path="/scoutprofile" element={<ScoutProfilePage />} />
-        <Route path="/orgprofile" element={<OrgProfilePage />} />
+        <Route path="/" element={<WelcomePage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/selectrole" element={<SelectRolePage />} />
+        <Route path="/signin" element={<SignInPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );

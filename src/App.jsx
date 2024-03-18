@@ -1,14 +1,10 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import styles from "./scss/App.module.scss";
+import { useState, useEffect, createContext, useContext } from "react";
+import AppRouter from "./Router/Router.jsx";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <h1>HI</h1>
+      <AppRouter></AppRouter>
     </>
   );
 }
