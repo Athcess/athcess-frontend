@@ -1,0 +1,30 @@
+.container{
+  height: 100%;
+}
+.content {
+  display: grid;
+  text-align: center;
+  justify-content: center;
+  grid-template-columns: auto auto;
+  align-items: center;
+  grid-column-gap: 100px;
+
+  
+}
+
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 70px;
+  margin-bottom: 120px;
+  background-color: #007458;
+  color: white;
+  border-bottom: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  .headerText{
+    
+    margin-left: 50px;
+    font-size: 32px;
+  }
+}
+  
