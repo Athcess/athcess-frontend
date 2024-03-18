@@ -26,8 +26,7 @@ export default function SignUpPage(props) {
       email: "",
       name: "",
       password: "",
-      terms: true,
-    },
+        },
     validate: {
       email: (val) => (/^\S+@\S+$/.test(val) ? null : "Invalid email"),
       password: (val) =>
@@ -37,14 +36,36 @@ export default function SignUpPage(props) {
     },
   });
 
+  const signupUser = (e) => {
+    e.preventDefault();
+    form.validate();
+    if(form.isValid()){
+    // Axios.post('', {
+    //     Email: form.values.email,
+    //     UserName: form.values.name,
+    //     Password: form.values.password
+    // }).then(() => {
+      console.log(form.values.email, form.values.name, form.values.password)
+        navigate('/signin');
+        //})
+    }
+
+    
+}
+
+
   return (
     <div className={styles.container}>
+      <header className={styles.header}>
+          <div className={styles.headerText}>ATHCESS</div>
+      </header>
+      <div className={styles.content}>
       <Paper className={styles.paper} radius="md" p="xl" withBorder {...props}>
-        <Text size="lg" fw={500}>
+        <Text className={styles.center} size="lg" fw={500}>
           SIGN UP
         </Text>
 
-        <form onSubmit={form.onSubmit(() => {})}>
+        <form onSubmit={signupUser}>
           <Stack>
             <TextInput
               required
@@ -83,13 +104,13 @@ export default function SignUpPage(props) {
             />
           </Stack>
           <Group justify="center" mt="xl">
-            <Button type="submit" radius="xl" w="100%">
+            <Button color="#00A67E" type="submit" radius="xl" w="100%">
               Sign Up
             </Button>
           </Group>
           <Divider label="Or sign up with" labelPosition="center" my="lg" />
           <Group grow mb="md" mt="md">
-            <GoogleLogin
+            {/* <GoogleLogin
               onSuccess={(credentialResponse) => {
                 var credentialResponseDecoded = jwtDecode(
                   credentialResponse.credential
@@ -99,19 +120,17 @@ export default function SignUpPage(props) {
               }}
               onError={(error) => {
                 console.log("Login Failed", error);
-              }}></GoogleLogin>
+              }}></GoogleLogin> */}
           </Group>
           <Anchor
-            component="button"
-            type="button"
+            href="/signin" 
             c="dimmed"
-            onClick={() => {}}
-            size="xs"
-            className={styles.anchor}>
-            Already have an account? Login
+            size="xs">
+            Already have an account? Sign in
           </Anchor>
         </form>
       </Paper>
+      </div>
     </div>
   );
 }

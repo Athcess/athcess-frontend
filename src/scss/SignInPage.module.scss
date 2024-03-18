@@ -1,0 +1,32 @@
+
+.container{
+    justify-items: center;
+    height: 100%;
+  }
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    height: 70px;
+    background-color: #007458;
+    color: white;
+    border-bottom: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+    .headerText{
+      margin-left: 50px;
+      font-size: 32px;
+    }
+  }
+  .paper {
+    width: 500px;
+    margin: 100px 0px 100px 0px;
+  }
+
+  .center{
+    display : flex;
+    justify-content: center;
+  }
