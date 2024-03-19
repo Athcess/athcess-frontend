@@ -2,5 +2,37 @@
   width: 100%;
   height: 100%;
   background-color: green;
+  padding: 70px;
+  .grid {
+    .gridCol {
+      background-color: white;
+      border: 1px solid black;
+      .post {
+        width: 100%;
+        height: 600px;
+        border-radius: 30px;
+        border: 2px solid red;
+        padding: 10px;
+        div {
+          border: 1px solid blue;
+          border-radius: 30px;
+        }
+        .postProfile {
+          height: 60px;
+        }
+        .postText {
+          height: 70px;
+        }
+        .postImage {
+          height: 220px;
+        }
+        .postInteraction {
+          height: 60px;
+        }
+        .postComment {
+          height: 160px;
+        }
+      }
+    }
+  }
 }
-

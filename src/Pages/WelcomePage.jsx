@@ -20,7 +20,7 @@ export default function WelcomePage() {
                 radius="xl"
                 component="a"
                 href="/signin">
-                Sign in{" "}
+                Sign in
               </Button>
             </div>
             <div style={{ width: 220 }}>
