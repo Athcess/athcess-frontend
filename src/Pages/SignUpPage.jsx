@@ -12,7 +12,7 @@ import {
   Group,
   Button,
   Divider,
-  Checkbox,
+  SegmentedControl,
   Anchor,
   Stack,
 } from "@mantine/core";
@@ -24,15 +24,22 @@ export default function SignUpPage(props) {
   const form = useForm({
     initialValues: {
       email: "",
-      name: "",
+      username: "",
+      firstname: "",
+      lastname: "",
       password: "",
+      checkpassword: "",
+      role: "",
         },
     validate: {
-      email: (val) => (/^\S+@\S+$/.test(val) ? null : "Invalid email"),
+      email: (val) => ((/^\S+@\S+$/.test(val) || val === "")? null : "Invalid email"),
       password: (val) =>
-        val.length <= 6
+        (val.length <= 6
           ? "Password should include at least 6 characters"
-          : null,
+          : null),
+      checkpassword : (val) => (form.values.password === val ? null : "Password is not the same" ),
+      role : (val) => (val != "" ? null : "Please select a role")
+
     },
   });
 
@@ -45,7 +52,7 @@ export default function SignUpPage(props) {
     //     UserName: form.values.name,
     //     Password: form.values.password
     // }).then(() => {
-      console.log(form.values.email, form.values.name, form.values.password)
+      console.log(form.values.email, form.values.firstname,form.values.lastname,form.values.username, form.values.password,form.values.role, )
         navigate('/signin');
         //})
     }
@@ -69,23 +76,43 @@ export default function SignUpPage(props) {
           <Stack>
             <TextInput
               required
-              label="Name"
-              placeholder="Your name"
-              value={form.values.name}
+              label="First Name"
+              placeholder="Your first name"
+              value={form.values.firstname}
               onChange={(event) =>
-                form.setFieldValue("name", event.currentTarget.value)
+                form.setFieldValue("firstname", event.currentTarget.value)
               }
               radius="md"
             />
             <TextInput
               required
+              label="Last Name"
+              placeholder="Your last name"
+              value={form.values.lastname}
+              onChange={(event) =>
+                form.setFieldValue("lastname", event.currentTarget.value)
+              }
+              radius="md"
+            />
+            <TextInput
+              
               label="Email"
-              placeholder="hello@mantine.dev"
+              placeholder="Optional"
               value={form.values.email}
               onChange={(event) =>
                 form.setFieldValue("email", event.currentTarget.value)
               }
               error={form.errors.email && "Invalid email"}
+              radius="md"
+            />
+            <TextInput
+              required
+              label="Username"
+              placeholder="Your username"
+              value={form.values.username}
+              onChange={(event) =>
+                form.setFieldValue("username", event.currentTarget.value)
+              }
               radius="md"
             />
             <PasswordInput
@@ -102,6 +129,35 @@ export default function SignUpPage(props) {
               }
               radius="md"
             />
+            <PasswordInput
+              required
+              label="Confirm Password"
+              placeholder="confirm password"
+              value={form.values.checkpassword}
+              onChange={(event) =>
+                form.setFieldValue("checkpassword", event.currentTarget.value)
+              }
+              error={
+                form.errors.checkpassword &&
+                "Password should not the same!"
+              }
+              radius="md"
+            />
+            <SegmentedControl
+            style={{ marginTop: 15}}
+            required
+            color="#00A67E"
+            value={form.values.role}
+            onChange={(event) =>
+              form.setFieldValue("role", event)
+            }
+            data={[
+                  { label: 'Athlete', value: 'Athlete' },
+                  { label: 'Scout', value: 'Scout' },
+                  { label: 'Organization', value: 'Organization' },
+            ]}
+            />
+            {form.errors.role && <span style={{ color: 'red' }}>Please select a role</span>}
           </Stack>
           <Group justify="center" mt="xl">
             <Button color="#00A67E" type="submit" radius="xl" w="100%">

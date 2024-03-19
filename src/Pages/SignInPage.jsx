@@ -25,7 +25,7 @@ export default function SignInPage(props) {
   const navigate = useNavigate();
   const form = useForm({
     initialValues: {
-      name: "",
+      username: "",
       password: "",
     },
   });
@@ -34,10 +34,10 @@ export default function SignInPage(props) {
         e.preventDefault();
         
         // Axios.post('', {
-        //     LoginUserName: form.values.name,
+        //     LoginUserName: form.values.username,
         //     LoginPassword: form.values.password
         //}).then((response) => {
-        console.log(form.values.name,form.values.password);
+        console.log(form.values.username,form.values.password);
         navigate('/home')
         //})
     }
@@ -57,11 +57,11 @@ export default function SignInPage(props) {
           <Stack>
             <TextInput
               required
-              label="Name"
-              placeholder="Your name"
-              value={form.values.name}
+              label="Username"
+              placeholder="Your username"
+              value={form.values.username}
               onChange={(event) =>
-                form.setFieldValue("name", event.currentTarget.value)
+                form.setFieldValue("username", event.currentTarget.value)
               }
               radius="md"
             />
@@ -79,9 +79,12 @@ export default function SignInPage(props) {
               }
               radius="md"
             />
-            <Text size="xs" c="dimmed">
-            Forget Password
-            </Text>
+            <Anchor 
+            href="/forgetpassword" 
+            c="dimmed"
+            size="xs">
+            Forget password
+          </Anchor>
           </Stack>
           
           <Group justify="center" mt="xl">

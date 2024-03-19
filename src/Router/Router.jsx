@@ -11,6 +11,7 @@ import AthleteProfilePage from "../Pages/AthleteProfilePage";
 import ScoutProfilePage from "../Pages/ScoutProfilePage";
 import OrgProfilePage from "../Pages/OrgProfilePage";
 import NotFoundPage from "../Pages/NotFoundPage";
+import ForgetPasswordPage from "../Pages/ForgetPasswordPage";
 import {
   BrowserRouter as Router,
   Route,
@@ -40,6 +41,7 @@ export default function AppRouter() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/selectrole" element={<SelectRolePage />} />
         <Route path="/signin" element={<SignInPage />} />
+        <Route path="/forgetpassword" element={<ForgetPasswordPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
