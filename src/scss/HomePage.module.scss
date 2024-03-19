@@ -1,37 +1,54 @@
 .container {
   width: 100%;
-  height: 100%;
-  background-color: green;
+  min-width: 1000px;
+  background-color: #fefefa;
   padding: 70px;
-  .grid {
-    .gridCol {
+  gap: 30px;
+  display: flex;
+  div {
+  }
+  .leftContent {
+    width: 30%;
+    .upcomingEvent {
+      border-radius: 30px;
+      border: 2px solid blue;
       background-color: white;
-      border: 1px solid black;
-      .post {
-        width: 100%;
-        height: 600px;
+      width: 100%;
+      height: 300px;
+      padding: 10px;
+    }
+  }
+  .rightContent {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .post {
+      border-radius: 30px;
+      border: 2px solid blue;
+      background-color: white;
+      width: 100%;
+      height: 1000px;
+      padding: 10px;
+
+      div {
         border-radius: 30px;
-        border: 2px solid red;
-        padding: 10px;
-        div {
-          border: 1px solid blue;
-          border-radius: 30px;
-        }
-        .postProfile {
-          height: 60px;
-        }
-        .postText {
-          height: 70px;
-        }
-        .postImage {
-          height: 220px;
-        }
-        .postInteraction {
-          height: 60px;
-        }
-        .postComment {
-          height: 160px;
-        }
+        border: 1px solid red;
+      }
+      .postProfile {
+        height: 7%;
+      }
+      .postText {
+        height: 13%;
+      }
+      .postImage {
+        height: 50%;
+      }
+      .postInteraction {
+        height: 7%;
+      }
+      .postComment {
+        height: 23%;
       }
     }
   }
