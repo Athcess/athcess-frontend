@@ -17,6 +17,7 @@ import {
   Routes,
   Outlet,
 } from "react-router-dom";
+import styles from "../scss/AppRouter.module.scss";
 
 export default function AppRouter() {
   return (

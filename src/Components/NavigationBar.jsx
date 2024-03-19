@@ -14,7 +14,7 @@ import { IconSearch } from "@tabler/icons-react";
 export default function NavigationBar() {
   const [opened, { toggle }] = useDisclosure();
   return (
-    <div className={styles.container}>
+    <header className={styles.container}>
       <div className={styles.headerText}>ATHCESS</div>
       <Autocomplete
         className={styles.search}
@@ -29,28 +29,16 @@ export default function NavigationBar() {
         visibleFrom="xs"
       />
       <UnstyledButton>
-        <Image
-          src="../../public/Images/calendar_logo.png"
-          className={styles.image}
-        />
+        <Image src="/Images/calendar_logo.png" className={styles.image} />
       </UnstyledButton>
       <UnstyledButton>
-        <Image
-          src="../../public/Images/chat_logo.png"
-          className={styles.image}
-        />
+        <Image src="/Images/chat_logo.png" className={styles.image} />
       </UnstyledButton>
       <UnstyledButton>
-        <Image
-          src="../../public/Images/noti_logo.png"
-          className={styles.image}
-        />
+        <Image src="/Images/noti_logo.png" className={styles.image} />
       </UnstyledButton>
       <UnstyledButton>
-        <Image
-          src="../../public/Images/profile_logo.png"
-          className={styles.image}
-        />
+        <Image src="/Images/profile_logo.png" className={styles.image} />
       </UnstyledButton>
       <Burger
         className={styles.burger}
@@ -59,6 +47,6 @@ export default function NavigationBar() {
         onClick={toggle}
         aria-label="Toggle navigation"
       />
-    </div>
+    </header>
   );
 }
