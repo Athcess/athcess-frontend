@@ -178,12 +178,16 @@ export default function SignUpPage(props) {
                 console.log("Login Failed", error);
               }}></GoogleLogin> */}
           </Group>
+          <Text ta="center" c="dimmed" size="xs"> Already have an account? &nbsp;
           <Anchor
+          
+            underline="always"
             href="/signin" 
             c="dimmed"
             size="xs">
-            Already have an account? Sign in
+            Sign in
           </Anchor>
+          </Text>
         </form>
       </Paper>
       </div>

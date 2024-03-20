@@ -63,6 +63,10 @@ export default function SignInPage(props) {
               onChange={(event) =>
                 form.setFieldValue("username", event.currentTarget.value)
               }
+              error={
+                form.errors.username &&
+                "Please enter a valid email address or username."
+              }
               radius="md"
             />
             <PasswordInput
@@ -75,7 +79,7 @@ export default function SignInPage(props) {
               }
               error={
                 form.errors.password &&
-                "Password should include at least 6 characters"
+                "Please enter a valid password."
               }
               radius="md"
             />
@@ -106,12 +110,15 @@ export default function SignInPage(props) {
                 console.log("Login Failed", error);
               }}></GoogleLogin>
           </Group> */}
+          <Text ta="center" c="dimmed" size="xs">Do not have an account? &nbsp;
           <Anchor 
             href="/signup" 
+            underline="always"
             c="dimmed"
             size="xs">
-            Do not have an account? Sign up
+            Sign up
           </Anchor>
+          </Text>
         </form>
       </Paper>
       </div>
