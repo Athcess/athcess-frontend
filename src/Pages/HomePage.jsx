@@ -1,13 +1,26 @@
 import React from "react";
 import styles from "../scss/HomePage.module.scss";
-import { Box } from "@mantine/core";
-import { Grid } from "@mantine/core";
+import { Box, Grid, UnstyledButton, Image } from "@mantine/core";
 
 export default function HomePage() {
   return (
     <div className={styles.container}>
       <div className={styles.leftContent}>
-        <div className={styles.upcomingEvent}></div>
+        <div className={styles.upcomingEvent}>
+          <div className={styles.upcomingEventTitle}>Upcoming Events!</div>
+          <div className={styles.upcomingEventContent}>
+            <ul className={styles.events}>
+              <li>dsadsadsadsadsadsd</li>
+              <li>dsadasdsdsdadad</li>
+              <li>dsadasdsadasdsadadsadsadsadasdsa</li>
+              <li>dsadssadadsadasdsadasdasdasdsa</li>
+              <li>ddsdssdsdwqdssadaas</li>
+            </ul>
+            <UnstyledButton className={styles.calendar}>
+              <Image src="/Images/calendar_color_logo.png" />
+            </UnstyledButton>
+          </div>
+        </div>
       </div>
       <div className={styles.rightContent}>
         <div className={styles.post}>

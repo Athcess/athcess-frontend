@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../scss/NavigationBar.module.scss";
 import {
   Autocomplete,
@@ -13,6 +13,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { IconSearch } from "@tabler/icons-react";
 
 export default function NavigationBar() {
+  const [isLogin, setIsLogin] = useState(true);
   const [opened, { toggle }] = useDisclosure();
   return (
     <header className={styles.container}>
@@ -38,18 +39,28 @@ export default function NavigationBar() {
       <UnstyledButton>
         <Image src="/Images/noti_logo.png" className={styles.image} />
       </UnstyledButton>
-      <div style={{ width: 220 }}>
-        <Button
-          fullWidth
-          variant="white"
-          color="#007458"
-          size="md"
-          radius="xl"
-          component="a"
-          href="/signin">
-          Sign in
-        </Button>
-      </div>
+      {isLogin ? (
+        <UnstyledButton>
+          <Image
+            src="/Images/profile_logo.png"
+            className={styles.profileImage}
+          />
+        </UnstyledButton>
+      ) : (
+        <div style={{ width: 220 }}>
+          <Button
+            fullWidth
+            variant="white"
+            color="#007458"
+            size="md"
+            radius="xl"
+            component="a"
+            href="/signin">
+            Sign in
+          </Button>
+        </div>
+      )}
+
       <Burger
         className={styles.burger}
         color="white"
