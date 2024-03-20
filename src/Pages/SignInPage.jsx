@@ -57,8 +57,8 @@ export default function SignInPage(props) {
           <Stack>
             <TextInput
               required
-              label="Username"
-              placeholder="Your username"
+              label="Username or Email"
+              placeholder="Your username or email"
               value={form.values.username}
               onChange={(event) =>
                 form.setFieldValue("username", event.currentTarget.value)
