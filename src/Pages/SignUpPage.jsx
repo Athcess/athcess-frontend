@@ -20,7 +20,6 @@ import {
   Select,
   MultiSelect,
 } from "@mantine/core";
-import { DatePickerInput } from "@mantine/dates";
 import styles from "../scss/SignUpPage.module.scss";
 import { jwtDecode } from "jwt-decode";
 
@@ -30,18 +29,19 @@ export default function SignUpPage(props) {
     initialValues: {
       email: "",
       username: "",
-      firstname: "",
-      lastname: "",
+      first_name: "",
+      last_name: "",
       password: "",
-      passwordcheck: "",
+      confirm_password: "",
       role: "",
       age: "",
       hometown: "",
       position: "",
       birth_date: "",
-      education: "",
+      education: ["", ""],
       //organization
-      organizationName: "",
+      organization: "",
+      club_name: "", 
       phone: "",
       address: "",
       city: "",
@@ -55,17 +55,17 @@ export default function SignUpPage(props) {
         val.length <= 6
           ? "Password should include at least 6 characters"
           : null,
-      passwordcheck: (val) =>
+      confirm_password: (val) =>
         form.values.password === val ? null : "Password is not the same",
       role: (val) => (val != "" ? null : "Please select a role"),
       phone: (val) =>
         (/^\d+$/.test(val) && (val.length == 10 || val.length == 9)) ||
-        form.values.role != "Organization"
+        form.values.role != "organization"
           ? null
           : "Invalid phone number, do not enter -",
       postalcode: (val) =>
         (/^\d+$/.test(val) && val.length == 5) ||
-        form.values.role != "Organization"
+        form.values.role != "organization"
           ? null
           : "Invalid postal code",
     },
@@ -140,12 +140,12 @@ export default function SignUpPage(props) {
               <PasswordInput
                 required
                 label="Confirm Password"
-                placeholder="confirm password"
-                value={form.values.passwordcheck}
+                placeholder="Confirm password"
+                value={form.values.confirm_password}
                 onChange={(event) =>
-                  form.setFieldValue("passwordcheck", event.currentTarget.value)
+                  form.setFieldValue("confirm_password", event.currentTarget.value)
                 }
-                error={form.errors.passwordcheck && "Password is not the same!"}
+                error={form.errors.confirm_password && "Password is not the same!"}
                 radius="md"
               />
               <SegmentedControl
@@ -155,15 +155,15 @@ export default function SignUpPage(props) {
                 value={form.values.role}
                 onChange={(event) => form.setFieldValue("role", event)}
                 data={[
-                  { label: "Athlete", value: "Athlete" },
-                  { label: "Scout", value: "Scout" },
-                  { label: "Organization", value: "Organization" },
+                  { label: "Athlete", value: "athlete" },
+                  { label: "Scout", value: "scout" },
+                  { label: "Organization", value: "organization" },
                 ]}
               />
               {form.errors.role && (
                 <span style={{ color: "red" }}>Please select a role</span>
               )}
-              {form.values.role === "Organization" && (
+              {form.values.role === "organization" && (
                 <>
                   <Text ta="center" size="lg" fw={500}>
                     Oraganization Information
@@ -173,10 +173,23 @@ export default function SignUpPage(props) {
                     required
                     label="Organization Name"
                     placeholder="Enter organization name"
-                    value={form.values.organizationName}
+                    value={form.values.organization}
                     onChange={(event) =>
                       form.setFieldValue(
-                        "organizationName",
+                        "organization",
+                        event.currentTarget.value
+                      )
+                    }
+                    radius="md"
+                  />
+                  <TextInput
+                    required
+                    label="Club name"
+                    placeholder="Enter club name"
+                    value={form.values.club_name}
+                    onChange={(event) =>
+                      form.setFieldValue(
+                        "club_name",
                         event.currentTarget.value
                       )
                     }
@@ -219,7 +232,7 @@ export default function SignUpPage(props) {
                   <Select
                     required
                     label="Province"
-                    placeholder=""
+                    placeholder="Enter Province"
                     searchable
                     comboboxProps={{
                       position: "bottom",
@@ -323,7 +336,8 @@ export default function SignUpPage(props) {
                   />
                 </>
               )}
-              {(form.values.role === "Athlete" || form.values.role === "Scout" )&& (
+              {(form.values.role === "athlete" ||
+                form.values.role === "scout") && (
                 <>
                   <Text ta="center" size="lg" fw={500}>
                     Personal Information
@@ -333,9 +347,9 @@ export default function SignUpPage(props) {
                     required
                     label="First Name"
                     placeholder="Your first name"
-                    value={form.values.firstname}
+                    value={form.values.first_name}
                     onChange={(event) =>
-                      form.setFieldValue("firstname", event.currentTarget.value)
+                      form.setFieldValue("first_name", event.currentTarget.value)
                     }
                     radius="md"
                   />
@@ -343,9 +357,9 @@ export default function SignUpPage(props) {
                     required
                     label="Last Name"
                     placeholder="Your last name"
-                    value={form.values.lastname}
+                    value={form.values.last_name}
                     onChange={(event) =>
-                      form.setFieldValue("lastname", event.currentTarget.value)
+                      form.setFieldValue("last_name", event.currentTarget.value)
                     }
                     radius="md"
                   />
@@ -357,48 +371,107 @@ export default function SignUpPage(props) {
                     onChange={(event) => form.setFieldValue("age", event)}
                     radius="md"
                   />
-
-                  <Text size="sm" fw={500}>
-                    Birth date
-                  </Text>
-                  <DatePicker
-                    label="select date"
-                    required
-                    onChange={(event) =>
-                      form.setFieldValue("birth_date", event)
-                    }
-                  />
-                  {(form.values.role === "Athlete")&& (
-                  <MultiSelect
-                    label="Position"
-                    placeholder=""
-                    searchable
-                    comboboxProps={{
-                      position: "bottom",
-                      middlewares: { flip: false, shift: false },
-                    }}
-                    //value={form.values.position}
-                    onChange={(event) => form.setFieldValue("position", event)}
-                    data={[
-                      ("GK", "Goalkeeper"),
-                      ("CB", "Center Back"),
-                      ("LB", "Left Back"),
-                      ("RB", "Right Back"),
-                      ("CM", "Center Midfield"),
-                      ("LM", "Left Midfield"),
-                      ("RM", "Right Midfield"),
-                      ("CAM", "Center Attacking Midfield"),
-                      ("LW", "Left Wing"),
-                      ("RW", "Right Wing"),
-                      ("ST", "Striker"),
-                    ]}
-                  />
+                  <Group gap={5}>
+                    <Text className={styles.date} size="sm" fw={500}>
+                      Birth date{" "}
+                      <Text span c="red" inherit>
+                        *
+                      </Text>
+                    </Text>
+                    <DatePicker
+                      slotProps={{ textField: { size: 'small', required: true } }}
+                      className={styles.dateinner}
+                      onChange={(event) =>
+                        form.setFieldValue("birth_date", event)
+                      }
+                    />
+                  </Group>
+                  {form.values.role === "athlete" && (
+                    <>
+                      <MultiSelect
+                        radius="md"
+                        label="Position"
+                        placeholder="Select positions"
+                        searchable
+                        comboboxProps={{
+                          position: "bottom",
+                          middlewares: { flip: false, shift: false },
+                        }}
+                        //value={form.values.position}
+                        onChange={(event) =>
+                          form.setFieldValue("position", event)
+                        }
+                        data={[
+                          ("GK", "Goalkeeper"),
+                          ("CB", "Center Back"),
+                          ("LB", "Left Back"),
+                          ("RB", "Right Back"),
+                          ("CM", "Center Midfield"),
+                          ("LM", "Left Midfield"),
+                          ("RM", "Right Midfield"),
+                          ("CAM", "Center Attacking Midfield"),
+                          ("LW", "Left Wing"),
+                          ("RW", "Right Wing"),
+                          ("ST", "Striker"),
+                        ]}
+                      />
+                      <Group className={styles.education}>
+                        <TextInput
+                          w={318}
+                          required
+                          label="School name"
+                          placeholder="Your school name"
+                          onChange={(event) =>
+                            form.setFieldValue(
+                              "education.0",
+                              event.currentTarget.value
+                            )
+                          }
+                          radius="md"
+                        />
+                        <Select
+                          radius="md"
+                          w={100}
+                          required
+                          label="Grade"
+                          placeholder=""
+                          comboboxProps={{
+                            position: "bottom",
+                            middlewares: { flip: false, shift: false },
+                          }}
+                          //value={form.values.position}
+                          onChange={(event) =>
+                            form.setFieldValue("education.1", event)
+                          }
+                          data={[
+                            "P1",
+                            "P2",
+                            "P3",
+                            "P4",
+                            "P5",
+                            "P6",
+                            "M1",
+                            "M2",
+                            "M3",
+                            "M4",
+                            "M5",
+                            "M6",
+                            "Year 1",
+                            "Year 2",
+                            "Year 3",
+                            "Year 4",
+                            "Other",
+                          ]}
+                        />
+                      </Group>
+                    </>
                   )}
 
                   <Select
+                    radius="md"
                     required
                     label="Hometown"
-                    placeholder=""
+                    placeholder="Enter hometown"
                     searchable
                     comboboxProps={{
                       position: "bottom",
@@ -485,7 +558,22 @@ export default function SignUpPage(props) {
                       "Yala",
                       "Yasothon",
                     ]}
+                    
                   />
+                  {form.values.role === "scout" && (
+                  <TextInput
+                    label="If belong to an organization"
+                    placeholder="Enter organization name"
+                    value={form.values.organization}
+                    onChange={(event) =>
+                      form.setFieldValue(
+                        "organization",
+                        event.currentTarget.value
+                      )
+                    }
+                    radius="md"
+                  />
+                  )}
                 </>
               )}
             </Stack>
