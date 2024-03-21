@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
     "@mantine/carousel": "^7.6.2",
     "@mantine/charts": "^7.6.2",
     "@mantine/code-highlight": "^7.6.2",
@@ -23,6 +25,9 @@
     "@mantine/nprogress": "^7.6.2",
     "@mantine/spotlight": "^7.6.2",
     "@mantine/tiptap": "^7.6.2",
+    "@mui/material": "^5.15.14",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
+    "@mui/x-date-pickers": "^6.19.8",
     "@preact/signals-react": "^2.0.0",
     "@react-oauth/google": "^0.12.1",
     "@tabler/icons-react": "^2.47.0",
@@ -43,7 +48,8 @@
     "react-router": "^6.22.1",
     "react-router-dom": "^6.22.3",
     "recharts": "^2.12.3",
-    "sass": "^1.71.1"
+    "sass": "^1.71.1",
+    "styled-components": "^6.1.8"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.20.1",
