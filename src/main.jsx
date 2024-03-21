@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
-import styles from "./scss/Index.module.scss";
+import styles from "./scss/index.module.scss";
 import "@mantine/core/styles.css";
 
 import { MainProvider } from "./Provider/MainProvider";

@@ -42,7 +42,7 @@ export default function NavigationBar() {
       {isLogin ? (
         <UnstyledButton>
           <Image
-            src="/Images/profile_logo.png"
+            src="/Images/profile_logo.jpeg"
             className={styles.profileImage}
           />
         </UnstyledButton>
