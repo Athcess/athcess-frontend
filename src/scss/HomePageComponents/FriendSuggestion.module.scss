@@ -1,0 +1,32 @@
+.friendSuggestionPerson {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  .friendSuggestionImage {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+  }
+  .friendSuggestionPersonContent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+    .friendSuggestionPersonName {
+      font-weight: bold;
+      font-size: 1.2rem;
+      line-height: 1rem;
+      color: grey;
+    }
+    .friendSuggestionPersonMutual {
+      font-size: 0.8rem;
+      color: grey;
+    }
+    .friendSuggestionPersonInteraction {
+      display: flex;
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+  }
+}

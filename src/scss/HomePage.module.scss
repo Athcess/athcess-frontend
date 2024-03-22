@@ -58,51 +58,24 @@
       border: 1px solid grey;
       background-color: white;
       width: 100%;
-      padding: 10px;
-      gap: 20px;
+      padding: 20px;
+      gap: 30px;
       height: auto;
       .friendSuggestionTitle {
         font-weight: bold;
         color: grey;
+        align-self: center;
       }
       .friendSuggestionList {
         display: flex;
+        width: 100%;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
         gap: 30px;
-        .friendSuggestionPerson {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          .friendSuggestionImage {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-          }
-          .friendSuggestionPersonContent {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            gap: 5px;
-            .friendSuggestionPersonName {
-              font-weight: bold;
-              font-size: 1.2rem;
-              line-height: 1rem;
-              color: grey;
-            }
-            .friendSuggestionPersonMutual {
-              font-size: 0.8rem;
-              color: grey;
-            }
-            .friendSuggestionPersonInteraction {
-              display: flex;
-              width: 100%;
-              justify-content: space-evenly;
-              flex-wrap: wrap;
-              gap: 10px;
-            }
-          }
-        }
       }
+    }
+    .newPost {
     }
   }
   .rightContent {

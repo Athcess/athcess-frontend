@@ -1,0 +1,56 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 30px;
+  border: 2px solid grey;
+  background-color: white;
+  min-width: 1000px;
+  min-height: 1000px;
+  height: auto;
+  padding: 20px;
+  div {
+    // border: 1px solid red;
+  }
+  .profile {
+    height: 70px;
+    display: flex;
+    gap: 0.5rem;
+    .profileImage {
+      width: 3rem;
+      border-radius: 50%;
+    }
+    .profileContent {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      .profileName {
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+      .profileDate {
+        font-size: 0.8rem;
+        color: grey;
+      }
+    }
+  }
+  .text {
+  }
+  .postImage {
+    max-height: 500px;
+    width: fit-content;
+    align-self: center;
+  }
+
+  .commentContainer {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    gap: 10px;
+
+    .commentInput {
+      border-radius: 50%;
+    }
+  }
+}
