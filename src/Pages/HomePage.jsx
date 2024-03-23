@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import styles from "../scss/HomePage.module.scss";
 import {
   Box,
@@ -14,38 +15,31 @@ import { IconPlus } from "@tabler/icons-react";
 
 import Post from "../Components/HomePageComponents/Post";
 import FriendSuggestion from "../Components/HomePageComponents/FriendSuggestion";
+import {
+  UpcomingEventContainerTrue,
+  UpcomingEventContainerFalse,
+} from "../Components/HomePageComponents/UpcomingEventContainer";
+import {
+  FriendSuggestionContainerTrue,
+  FriendSuggestionContainerFalse,
+} from "../Components/HomePageComponents/FriendSuggestionContainer";
 
 export default function HomePage() {
+  const [isLogin, setIsLogin] = useState(true);
+
   return (
     <div className={styles.container}>
       <div className={styles.leftContent}>
-        <div className={styles.upcomingEvent}>
-          <div className={styles.upcomingEventTitle}>Upcoming Events!</div>
-          <div className={styles.upcomingEventContent}>
-            <ul className={styles.events}>
-              <li>dsadsadsadsadsadsd</li>
-              <li>dsadasdsdsdadad</li>
-              <li>dsadasdsadasdsadadsadsadsadasdsa</li>
-              <li>dsadssadadsadasdsadasdasdasdsa</li>
-              <li>ddsdssdsdwqdssadaas</li>
-            </ul>
-            <UnstyledButton className={styles.calendar}>
-              <Image src="/Images/calendar_color_logo.png" />
-            </UnstyledButton>
-          </div>
-        </div>
-        <div className={styles.friendSuggestion}>
-          <div className={styles.friendSuggestionTitle}>
-            People you may know
-          </div>
-
-          <div className={styles.friendSuggestionList}>
-            <FriendSuggestion></FriendSuggestion>
-            <FriendSuggestion></FriendSuggestion>
-            <FriendSuggestion></FriendSuggestion>
-            <FriendSuggestion></FriendSuggestion>
-          </div>
-        </div>
+        {isLogin ? (
+          <UpcomingEventContainerTrue></UpcomingEventContainerTrue>
+        ) : (
+          <UpcomingEventContainerFalse></UpcomingEventContainerFalse>
+        )}
+        {isLogin ? (
+          <FriendSuggestionContainerTrue></FriendSuggestionContainerTrue>
+        ) : (
+          <FriendSuggestionContainerFalse></FriendSuggestionContainerFalse>
+        )}
 
         <ActionIcon
           size="50px"

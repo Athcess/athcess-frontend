@@ -3,19 +3,12 @@ import { Image, Button } from "@mantine/core";
 import styles from "../../scss/HomePageComponents/FriendSuggestion.module.scss";
 export default function FriendSuggestion() {
   return (
-    <div className={styles.friendSuggestionPerson}>
-      <Image
-        className={styles.friendSuggestionImage}
-        src="/Images/profile_logo.jpeg"
-      ></Image>
-      <div className={styles.friendSuggestionPersonContent}>
-        <div className={styles.friendSuggestionPersonName}>
-          วี่หว่อง หว่องวี่
-        </div>
-        <div className={styles.friendSuggestionPersonMutual}>
-          2 mutual friends
-        </div>
-        <div className={styles.friendSuggestionPersonInteraction}>
+    <div className={styles.container}>
+      <Image className={styles.image} src="/Images/profile_logo.jpeg"></Image>
+      <div className={styles.content}>
+        <div className={styles.name}>วี่หว่อง หว่องวี่</div>
+        <div className={styles.mutual}>2 mutual friends</div>
+        <div className={styles.interaction}>
           <div style={{ width: 110 }}>
             <Button
               fullWidth
