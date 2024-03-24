@@ -14,7 +14,6 @@ import {
 import { IconPlus } from "@tabler/icons-react";
 
 import Post from "../Components/HomePageComponents/Post";
-import FriendSuggestion from "../Components/HomePageComponents/FriendSuggestion";
 import {
   UpcomingEventContainerTrue,
   UpcomingEventContainerFalse,
@@ -52,6 +51,8 @@ export default function HomePage() {
         </ActionIcon>
       </div>
       <div className={styles.rightContent}>
+        <Post></Post>
+        <Post></Post>
         <Post></Post>
       </div>
     </div>

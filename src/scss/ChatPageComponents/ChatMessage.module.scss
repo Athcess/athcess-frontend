@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  width: 100%;
+}
+.self {
+  justify-content: flex-end;
+  .message {
+    border: 1px solid #bbbbbb;
+    background-color: #14ae5c;
+    border-radius: 1rem;
+    color: white;
+    padding: 0.5rem;
+    width: fit-content;
+    max-width: 40%;
+  }
+}
+.other {
+  justify-content: flex-start;
+  .message {
+    border: 1px solid #bbbbbb;
+    background-color: #bbbbbb;
+    border-radius: 1rem;
+    color: white;
+    padding: 0.5rem;
+    width: fit-content;
+    max-width: 40%;
+  }
+}
