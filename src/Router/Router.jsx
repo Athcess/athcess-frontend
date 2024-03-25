@@ -5,7 +5,7 @@ import SignUpPage from "../Pages/SignUpPage";
 import SelectRolePage from "../Pages/SelectRolePage";
 import SignInPage from "../Pages/SignInPage";
 import HomePage from "../Pages/HomePage";
-import ChatBoxPage from "../Pages/ChatBoxPage";
+import ChatPage from "../Pages/ChatPage";
 import SearchPage from "../Pages/SearchPage";
 import AthleteProfilePage from "../Pages/AthleteProfilePage";
 import ScoutProfilePage from "../Pages/ScoutProfilePage";
@@ -30,9 +30,10 @@ export default function AppRouter() {
               <NavigationBar></NavigationBar>
               <Outlet />
             </>
-          }>
+          }
+        >
           <Route path="/home" element={<HomePage />} />
-          <Route path="/chatbox" element={<ChatBoxPage />} />
+          <Route path="/chat" element={<ChatPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/athleteprofile" element={<AthleteProfilePage />} />
           <Route path="/scoutprofile" element={<ScoutProfilePage />} />

@@ -7,7 +7,10 @@
   gap: 0.625rem;
   background-color: #007458;
   color: white;
-
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
   padding: 0rem 1.875rem 0px 1.875rem;
   .headerText {
     font-size: 1.6rem;
@@ -22,8 +25,7 @@
     width: 3rem;
   }
   .profileImage {
-    width: 6rem;
-  }
-  .burger {
+    width: 3rem;
+    border-radius: 50%;
   }
 }

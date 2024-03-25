@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Group, Image } from "@mantine/core";
+import { Button, Group, Anchor, Image, Text } from "@mantine/core";
 import styles from "../scss/WelcomePage.module.scss";
 
 export default function WelcomePage() {
@@ -12,7 +12,7 @@ export default function WelcomePage() {
         <div>
           <h1>Athcess, a platform to success!</h1>
           <Group justify="center" gap={30}>
-            <div style={{ width: 220 }}>
+            <div className={styles.button}>
               <Button
                 fullWidth
                 color="#007458"
@@ -20,10 +20,10 @@ export default function WelcomePage() {
                 radius="xl"
                 component="a"
                 href="/signin">
-                Sign in
+                SIGN IN
               </Button>
             </div>
-            <div style={{ width: 220 }}>
+            <div className={styles.button}>
               <Button
                 fullWidth
                 color="#00A67E"
@@ -31,10 +31,19 @@ export default function WelcomePage() {
                 radius="xl"
                 component="a"
                 href="/signup">
-                Sign up{" "}
+                SIGN UP
               </Button>
             </div>
           </Group>
+          <Text ta="center">
+            <Anchor
+            underline="always"
+            href="/home" 
+            c="dimmed"
+            size="md">
+            Continue as a Guest
+            </Anchor>
+          </Text>
         </div>
         <div>
           <Image

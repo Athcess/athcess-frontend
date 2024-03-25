@@ -1,0 +1,63 @@
+.container {
+  background-color: white;
+  width: 100%;
+  border: 1px solid #bbbbbb;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  .profile {
+    min-height: 92px;
+    display: flex;
+    gap: 0.5rem;
+    padding: 1.25rem;
+    border-bottom: 1px solid #bbbbbb;
+    overflow: hidden;
+    .profileImage {
+      width: 3rem;
+      border-radius: 50%;
+    }
+    .profileContent {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      .profileName {
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+      .profileDate {
+        font-size: 0.8rem;
+        color: grey;
+      }
+    }
+  }
+  .chatContent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0rem 2rem 0rem 2rem;
+    overflow: auto;
+    gap: 0.5rem;
+  }
+  .interactionBar {
+    border-top: 1px solid #bbbbbb;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    .image {
+      width: 2rem;
+      cursor: pointer;
+    }
+    .search {
+      width: 100%;
+      .sendImage {
+        width: 2rem;
+        cursor: pointer;
+      }
+    }
+  }
+}

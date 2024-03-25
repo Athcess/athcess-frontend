@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  .image {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+    .name {
+      font-weight: bold;
+      font-size: 1.2rem;
+      line-height: 1rem;
+      color: grey;
+    }
+    .mutual {
+      font-size: 0.8rem;
+      color: grey;
+    }
+    .interaction {
+      display: flex;
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+  }
+}
