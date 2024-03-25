@@ -36,7 +36,6 @@ export default function AppRouter() {
           }>
           <Route path="/home" element={<HomePage />} />
           <Route path="/chat" element={<ChatPage />} />
-          <Route path="/search" element={<SearchPage />} />
           <Route path="/athleteprofile" element={<AthleteProfilePage />}>
             <Route index element={<AboutAthlete></AboutAthlete>}></Route>
             <Route path="post" element={<PostAthlete></PostAthlete>}></Route>
@@ -44,6 +43,7 @@ export default function AppRouter() {
               path="highlight"
               element={<HighlightAthlete></HighlightAthlete>}></Route>
           </Route>
+          <Route path="/search/:tosearch" element={<SearchPage />} />
           <Route path="/scoutprofile" element={<ScoutProfilePage />} />
           <Route path="/orgprofile" element={<OrgProfilePage />} />
         </Route>

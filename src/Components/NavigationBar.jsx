@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styles from "../scss/NavigationBar.module.scss";
+import { useNavigate } from "react-router-dom";
+import { useForm } from '@mantine/form';
 import {
-  Autocomplete,
   Group,
   Burger,
   rem,
@@ -9,6 +10,8 @@ import {
   Image,
   Button,
   Menu,
+  TextInput,
+  Anchor
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
@@ -24,21 +27,44 @@ export default function NavigationBar() {
   const [isLogin, setIsLogin] = useState(true);
   const [menuOpened, setmenuOpened] = useState(false);
   const [opened, { toggle }] = useDisclosure();
+  const navigate = useNavigate();
+  const form = useForm({
+    initialValues: {
+      tosearch: '',
+    },
+  });
+  const search = (e) => {
+    
+    navigate("/search/"+ e.tosearch);
+    
+  };
+
   return (
     <header className={styles.container}>
-      <div className={styles.headerText}>ATHCESS</div>
-      <Autocomplete
+      <div>
+      <Anchor className={styles.headerText} underline="never" href="/home" size="xs">
+      ATHCESS
+      </Anchor>
+      </div>
+      <form className={styles.search} onSubmit={form.onSubmit((values) => search(values))}>
+      <TextInput
         className={styles.search}
         placeholder="Search"
         radius="20px"
+        value={form.values.tosearch}
+        onChange={(event) =>
+          form.setFieldValue("tosearch", event.currentTarget.value)
+        }
         leftSection={
           <IconSearch
             style={{ width: rem(16), height: rem(16) }}
             stroke={1.5}
           />
         }
+        
         visibleFrom="xs"
       />
+      </form>
       <UnstyledButton>
         <Image src="/Images/calendar_logo.png" className={styles.image} />
       </UnstyledButton>
