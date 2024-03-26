@@ -8,6 +8,7 @@ import HomePage from "../Pages/HomePage";
 import ChatPage from "../Pages/ChatPage";
 import SearchPage from "../Pages/SearchPage";
 import AthleteProfilePage from "../Pages/AthleteProfilePage";
+import AboutAthlete from "../Components/AthleteProfilePageComponents/AboutAthlete";
 import ScoutProfilePage from "../Pages/ScoutProfilePage";
 import OrgProfilePage from "../Pages/OrgProfilePage";
 import NotFoundPage from "../Pages/NotFoundPage";
@@ -35,7 +36,9 @@ export default function AppRouter() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/search" element={<SearchPage />} />
-          <Route path="/athleteprofile" element={<AthleteProfilePage />} />
+          <Route path="/athleteprofile" element={<AthleteProfilePage />}>
+            <Route index element={<AboutAthlete></AboutAthlete>}></Route>
+          </Route>
           <Route path="/scoutprofile" element={<ScoutProfilePage />} />
           <Route path="/orgprofile" element={<OrgProfilePage />} />
         </Route>
