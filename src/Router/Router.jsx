@@ -20,6 +20,8 @@ import {
   Outlet,
 } from "react-router-dom";
 import styles from "../scss/AppRouter.module.scss";
+import PostAthlete from "../Components/AthleteProfilePageComponents/PostAthlete";
+import HighlightAthlete from "../Components/AthleteProfilePageComponents/HighlightAthlete";
 
 export default function AppRouter() {
   return (
@@ -31,13 +33,16 @@ export default function AppRouter() {
               <NavigationBar></NavigationBar>
               <Outlet />
             </>
-          }
-        >
+          }>
           <Route path="/home" element={<HomePage />} />
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/athleteprofile" element={<AthleteProfilePage />}>
             <Route index element={<AboutAthlete></AboutAthlete>}></Route>
+            <Route path="post" element={<PostAthlete></PostAthlete>}></Route>
+            <Route
+              path="highlight"
+              element={<HighlightAthlete></HighlightAthlete>}></Route>
           </Route>
           <Route path="/scoutprofile" element={<ScoutProfilePage />} />
           <Route path="/orgprofile" element={<OrgProfilePage />} />

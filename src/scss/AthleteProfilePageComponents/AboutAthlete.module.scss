@@ -7,13 +7,18 @@
   background-color: white;
   border-radius: 30px;
   .header {
-    color: white;
-    font-weight: bold;
     border-radius: 30px 30px 0 0;
-    height: 50px;
     background-color: #00a67e;
     display: flex;
     justify-content: space-around;
+    .link {
+      color: white;
+      font-weight: bold;
+      border-radius: 30px 30px 0 0;
+      height: 50px;
+      display: flex;
+      text-decoration: none;
+    }
   }
   .content {
     height: 100%;
@@ -34,26 +39,7 @@
         flex-direction: column;
         width: 100%;
         padding: 1rem 1.5rem 1rem 1.5rem;
-        gap: 2rem;
-        .backgroundElement {
-          display: flex;
-          flex-direction: column;
-          width: 100%;
-          .topic {
-            font-size: 1.2rem;
-            font-weight: bold;
-          }
-          .topicContent {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            .duration,
-            .location {
-              color: grey;
-              font-size: 0.9rem;
-            }
-          }
-        }
+        gap: 0.5rem;
       }
       .radarContent {
         display: flex;
@@ -69,22 +55,6 @@
         flex-direction: column;
         padding: 1rem 1.5rem 1rem 1.5rem;
         gap: 2rem;
-        .achievementElement {
-          gap: 1rem;
-          width: 100%;
-          display: flex;
-          align-items: flex-start;
-          .topic {
-            font-size: 1.2rem;
-            font-weight: bold;
-          }
-          .subtopic {
-          }
-          .date {
-            color: grey;
-            font-size: 0.9rem;
-          }
-        }
       }
     }
   }

@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  .topic {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    gap: 0.5rem;
+    .bullet {
+      background-color: #d9d9d9;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+    }
+  }
+  .content {
+    display: flex;
+    height: 100%;
+    gap: 0.5rem;
+    .verticalLineContainer {
+      display: flex;
+      justify-content: center;
+      width: 1rem;
+      .verticalLine {
+        background-color: #d9d9d9;
+        width: 0.25rem;
+        height: auto;
+        justify-items: center;
+      }
+    }
+
+    .contentRight {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      .duration,
+      .location {
+        color: grey;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}

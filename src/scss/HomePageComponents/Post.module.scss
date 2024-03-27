@@ -3,10 +3,10 @@
   flex-direction: column;
   gap: 10px;
   border-radius: 30px;
-  border: 2px solid grey;
+  border: 2px solid #bbbbbb;
   background-color: white;
-  min-width: 1000px;
   min-height: 1000px;
+  max-width: 100%;
   height: auto;
   padding: 20px;
   div {
@@ -39,6 +39,7 @@
   }
   .postImage {
     max-height: 500px;
+    max-width: 100%; /* Add this line */
     width: fit-content;
     align-self: center;
   }

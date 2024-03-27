@@ -28,16 +28,15 @@
       }
     }
     .profileContent {
-      margin-top: -70px;
+      margin-top: -100px;
       width: 100%;
       min-height: 350px;
       height: auto;
       padding: 1rem;
       .profileImage {
         display: flex;
-        height: 130px;
+        height: 160px;
         margin-bottom: 10px;
-
         align-items: baseline;
         justify-content: space-between;
         .image {
