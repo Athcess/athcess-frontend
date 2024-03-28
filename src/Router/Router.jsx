@@ -7,9 +7,11 @@ import SignInPage from "../Pages/SignInPage";
 import HomePage from "../Pages/HomePage";
 import ChatPage from "../Pages/ChatPage";
 import SearchPage from "../Pages/SearchPage";
-import AthleteProfilePage from "../Pages/AthleteProfilePage";
-import AboutAthlete from "../Components/AthleteProfilePageComponents/AboutAthlete";
-import ScoutProfilePage from "../Pages/ScoutProfilePage";
+import AthleteProfilePage from "../Pages/ProfilePage/AthleteProfilePage";
+import AboutAthlete from "../Components/ProfilePageComponents/AthleteProfilePageComponents/AboutAthlete";
+import PostAthlete from "../Components/ProfilePageComponents/AthleteProfilePageComponents/PostAthlete";
+import HighlightAthlete from "../Components/ProfilePageComponents/AthleteProfilePageComponents/HighlightAthlete";
+import ScoutProfilePage from "../Pages/ProfilePage/ScoutProfilePage";
 import OrgProfilePage from "../Pages/OrgProfilePage";
 import NotFoundPage from "../Pages/NotFoundPage";
 import ForgetPasswordPage from "../Pages/ForgetPasswordPage";
@@ -20,8 +22,6 @@ import {
   Outlet,
 } from "react-router-dom";
 import styles from "../scss/AppRouter.module.scss";
-import PostAthlete from "../Components/AthleteProfilePageComponents/PostAthlete";
-import HighlightAthlete from "../Components/AthleteProfilePageComponents/HighlightAthlete";
 
 export default function AppRouter() {
   return (

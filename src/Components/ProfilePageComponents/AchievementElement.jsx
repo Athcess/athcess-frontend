@@ -1,6 +1,6 @@
 import React from "react";
 import { rem, Image, Spoiler } from "@mantine/core";
-import styles from "../../scss/AthleteProfilePageComponents/AchievementElement.module.scss";
+import styles from "../../scss/ProfilePageComponents/AchievementElement.module.scss";
 
 export default function AchievementElement() {
   return (

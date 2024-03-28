@@ -11,9 +11,9 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
-import styles from "../../scss/AthleteProfilePageComponents/EditProfileModal.module.scss";
+import styles from "../../../scss/ProfilePageComponents/AthleteProfilePageComponents/EditProfileModal.module.scss";
 
-export default function EditProfileModal({ opened, onClose }) {
+export default function EditProfileModalAthlete({ opened, onClose }) {
   const form = useForm({
     initialValues: {
       username: "",

@@ -1,0 +1,72 @@
+.profileContainer {
+  min-height: 600px;
+  min-width: 600px;
+  height: auto;
+  width: 100%;
+  border: 1px solid #bbbbbb;
+  background-color: white;
+
+  border-radius: 30px;
+  .wallpaper {
+    height: 250px;
+    border-bottom: 1px solid #bbbbbb;
+    .wallpaperImage {
+      height: 100%;
+      width: 100%;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+    }
+  }
+  .profileContent {
+    margin-top: -100px;
+    width: 100%;
+    min-height: 350px;
+    height: auto;
+    padding: 1rem;
+    .profileImage {
+      display: flex;
+      height: 160px;
+      margin-bottom: 10px;
+      align-items: baseline;
+      justify-content: space-between;
+      .image {
+        border-radius: 50%;
+      }
+    }
+    .profileName {
+      display: flex;
+      height: 40px;
+      align-items: center;
+      gap: 2rem;
+      .name {
+        font-weight: bold;
+        font-size: 1.5rem;
+      }
+      .verify {
+        width: auto;
+        color: #4285f4;
+        padding: 0.15rem 1rem 0.15rem 1rem;
+        border: 1px solid #4285f4;
+        border-radius: 1rem;
+      }
+      .friend {
+        text-decoration: underline;
+        font-weight: bold;
+      }
+    }
+    .profileInfo {
+      display: flex;
+
+      height: 40px;
+      align-items: center;
+    }
+    .profileLocation {
+      display: flex;
+
+      height: 40px;
+      align-items: center;
+    }
+    .profileBio {
+    }
+  }
+}

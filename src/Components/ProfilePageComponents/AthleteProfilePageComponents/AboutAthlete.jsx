@@ -2,9 +2,9 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { UnstyledButton, rem, Image, Spoiler } from "@mantine/core";
 import CustomRadar from "./CustomRadar";
-import BackgroundElement from "./BackgroundElement";
-import AchievementElement from "./AchievementElement";
-import styles from "../../scss/AthleteProfilePageComponents/AboutAthlete.module.scss";
+import BackgroundElement from "../BackgroundElement";
+import AchievementElement from "../AchievementElement";
+import styles from "../../../scss/ProfilePageComponents/AthleteProfilePageComponents/AboutAthlete.module.scss";
 export default function AboutAthlete() {
   const radarData = {
     labels: ["Strength", "Stamina", "Insight", "Endurance", "Defense", "Magic"],

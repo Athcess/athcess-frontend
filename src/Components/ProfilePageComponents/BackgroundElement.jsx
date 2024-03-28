@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../scss/AthleteProfilePageComponents/BackgroundElement.module.scss";
+import styles from "../../scss/ProfilePageComponents/BackgroundElement.module.scss";
 import { Spoiler } from "@mantine/core";
 export default function BackgroundElement() {
   return (
