@@ -1,0 +1,70 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 30px;
+    border: 2px solid #bbbbbb;
+    background-color: white;
+    
+    max-width: 100%;
+    height: auto;
+    padding: 20px;
+    div {
+      // border: 1px solid red;
+    }
+    .profile {
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+      .profileLeft {
+        margin-left: 2rem;
+        display: flex;
+        gap: 2rem;
+        .profileImage {
+          width: 12rem;
+          border-radius: 10%;
+          
+        }
+        .iconImage {
+            width: 1.5rem;
+            border-radius: 10%;
+            
+          }
+        .profileContent {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          width: 100%;
+          .profileName {
+            font-size: 1.2rem;
+            font-weight: bold;
+          }
+          .profiletext {
+            font-size: 0.8rem;
+            display: flex;
+            gap: 0.5rem;
+          }
+          .profiledescription{
+            font-size: 0.8rem;
+            max-width: 400px;
+            color: grey;
+            text-wrap: wrap;
+            
+          }
+        }
+      }
+      .editPost {
+        width: 2rem;
+        height: 1.5rem;
+        padding-top: 1rem;
+      }
+    }
+  
+    .text {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+  }
+  

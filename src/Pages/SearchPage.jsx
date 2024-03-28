@@ -6,6 +6,8 @@ import { Categories } from "../Components/SearchPageComponents/Categories";
 import { Filter } from "../Components/SearchPageComponents/Filter";
 import Post from "../Components/HomePageComponents/Post";
 import styles from "../scss/SearchPage.module.scss"
+import { Athletelist } from "../Components/SearchPageComponents/Athletelist";
+import { Eventlist } from "../Components/SearchPageComponents/Eventlist";
 export default function SearchPage() {
   let { tosearch } = useParams();
   const [category, setCategory] = useState('');
@@ -31,9 +33,15 @@ export default function SearchPage() {
           </div>
 
         )}
-        {category === 'athletes' &&(
+        {category === 'athlete' &&(
           <div className={styles.rightContent}>
-          
+          <Athletelist></Athletelist>
+          </div>
+
+        )}
+        {category === 'event' &&(
+          <div className={styles.rightContent}>
+          <Eventlist></Eventlist>
           </div>
 
         )}

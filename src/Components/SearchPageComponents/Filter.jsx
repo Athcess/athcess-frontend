@@ -74,7 +74,7 @@ export function Filter({ category }) {
               placeholder="Age"
               data={["<12", "12-15", "15-18", "18-21", ">21"]}
               onChange={(event) => form.setFieldValue("age", event)}
-              w={100}
+              w={150}
               clearable
             />
             <Select
@@ -179,6 +179,7 @@ export function Filter({ category }) {
               data={["Newest", "Most Liked", "Most Commented", "Most Relevant"]}
               onChange={(event) => form.setFieldValue("sort", event)}
               clearable
+              w={180}
             />
             <Select
               classNames={{ input: styles.input }}
@@ -186,6 +187,7 @@ export function Filter({ category }) {
               data={["Football", "Basketball", "Others"]}
               onChange={(event) => form.setFieldValue("sports", event)}
               clearable
+              w={180}
             />
             <Select
               classNames={{ input: styles.input }}
@@ -198,6 +200,7 @@ export function Filter({ category }) {
               ]}
               onChange={(event) => form.setFieldValue("date", event)}
               clearable
+              w={180}
             />
             <Select
               classNames={{ input: styles.input }}
@@ -205,6 +208,7 @@ export function Filter({ category }) {
               data={["Organization A", "Organization B", "Organization C"]}
               onChange={(event) => form.setFieldValue("organization", event)}
               clearable
+              w={180}
             />
           </>
         )}
