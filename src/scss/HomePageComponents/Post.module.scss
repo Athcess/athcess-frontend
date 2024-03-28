@@ -13,31 +13,47 @@
     // border: 1px solid red;
   }
   .profile {
-    height: 70px;
     display: flex;
-    gap: 0.5rem;
-    .profileImage {
-      width: 3rem;
-      border-radius: 50%;
-    }
-    .profileContent {
+    justify-content: space-between;
+    .profileLeft {
+      height: 70px;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      width: 100%;
-      .profileName {
-        font-size: 1.2rem;
-        font-weight: bold;
+      gap: 0.5rem;
+      .profileImage {
+        width: 3rem;
+        border-radius: 50%;
       }
-      .profileDate {
-        font-size: 0.8rem;
-        color: grey;
+      .profileContent {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        .profileName {
+          font-size: 1.2rem;
+          font-weight: bold;
+        }
+        .profileDate {
+          font-size: 0.8rem;
+          color: grey;
+        }
       }
+    }
+    .editPost {
+      width: 2rem;
+      height: 1.5rem;
+      padding-top: 1rem;
     }
   }
+
   .text {
   }
   .postImage {
+    max-height: 500px;
+    max-width: 100%; /* Add this line */
+    width: fit-content;
+    align-self: center;
+  }
+  .postVideo {
     max-height: 500px;
     max-width: 100%; /* Add this line */
     width: fit-content;

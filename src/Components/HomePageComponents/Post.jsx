@@ -8,24 +8,28 @@ export default function Post() {
   return (
     <div className={styles.container}>
       <div className={styles.profile}>
-        <UnstyledButton>
-          <Image
-            src="/Images/profile_logo.jpeg"
-            className={styles.profileImage}
-          />
-        </UnstyledButton>
-        <div className={styles.profileContent}>
-          <div className={styles.profileName}>วี่หว่อง หว่องวี่</div>
-          <div className={styles.profileDate}>1 Jan 2024</div>
+        <div className={styles.profileLeft}>
+          <UnstyledButton>
+            <Image
+              src="/Images/profile_logo.jpeg"
+              className={styles.profileImage}
+            />
+          </UnstyledButton>
+          <div className={styles.profileContent}>
+            <div className={styles.profileName}>วี่หว่อง หว่องวี่</div>
+            <div className={styles.profileDate}>1 Jan 2024</div>
+          </div>
         </div>
+        <UnstyledButton className={styles.editPost}>
+          <Image src="/Images/ProfilePage/editPost_logo.png"></Image>
+        </UnstyledButton>
       </div>
       <Spoiler
         showLabel="Show more"
         hideLabel="Hide"
         maxHeight={125}
         padding={20}
-        className={styles.text}
-      >
+        className={styles.text}>
         I'm baby occupy meditation authentic PBR&B prism, banjo etsy normcore
         sartorial franzen umami subway tile. Disrupt wayfarers lo-fi, bruh art
         party photo booth tilde man bun. Cred crucifix af mustache, direct trade
@@ -47,7 +51,11 @@ export default function Post() {
         everyday carry, food truck paleo gochujang shabby chic wayfarers before
         they sold out.
       </Spoiler>
-      <Image className={styles.postImage} src="/Images/post1_image.png"></Image>
+      <video className={styles.postVideo} controls>
+        <source src="/Videos/1996750-hd_1920_1080_25fps.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      {/* <Image className={styles.postImage} src="/Images/post1_image.png"></Image> */}
       <PostInteraction></PostInteraction>
       <div className={styles.commentContainer}>
         <Comment></Comment>

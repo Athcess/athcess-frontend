@@ -42,7 +42,7 @@ export default function AboutAthlete() {
             Physical Attributes
             <UnstyledButton className={styles.edit}>
               <Image
-                src="/Images/ProfilePage/edit_logo.png"
+                src="/Images/ProfilePage/editSection_logo.png"
                 style={{ width: rem(48) }}></Image>
             </UnstyledButton>
           </div>
@@ -57,7 +57,7 @@ export default function AboutAthlete() {
             Background
             <UnstyledButton className={styles.edit}>
               <Image
-                src="/Images/ProfilePage/edit_logo.png"
+                src="/Images/ProfilePage/editSection_logo.png"
                 style={{ width: rem(48) }}></Image>
             </UnstyledButton>
           </div>
@@ -71,7 +71,7 @@ export default function AboutAthlete() {
             Achievement
             <UnstyledButton className={styles.edit}>
               <Image
-                src="/Images/ProfilePage/edit_logo.png"
+                src="/Images/ProfilePage/editSection_logo.png"
                 style={{ width: rem(48) }}></Image>
             </UnstyledButton>
           </div>

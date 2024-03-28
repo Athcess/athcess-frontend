@@ -42,7 +42,7 @@ export default function AthleteProfilePage() {
                 style={{ width: rem(150), border: "4px solid white" }}></Image>
               <UnstyledButton className={styles.edit} onClick={open}>
                 <Image
-                  src="/Images/ProfilePage/edit_logo.png"
+                  src="/Images/ProfilePage/editSection_logo.png"
                   style={{ width: rem(48) }}></Image>
               </UnstyledButton>
             </div>
