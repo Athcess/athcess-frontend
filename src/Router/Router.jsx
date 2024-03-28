@@ -15,6 +15,8 @@ import ScoutProfilePage from "../Pages/ProfilePage/ScoutProfilePage";
 import OrgProfilePage from "../Pages/OrgProfilePage";
 import NotFoundPage from "../Pages/NotFoundPage";
 import ForgetPasswordPage from "../Pages/ForgetPasswordPage";
+import PostPage from "../Pages/PostPage";
+import FriendListPage from "../Pages/FriendListPage";
 import {
   BrowserRouter as Router,
   Route,
@@ -46,6 +48,8 @@ export default function AppRouter() {
           <Route path="/search/:tosearch" element={<SearchPage />} />
           <Route path="/scoutprofile" element={<ScoutProfilePage />} />
           <Route path="/orgprofile" element={<OrgProfilePage />} />
+          <Route path="/post/:postid" element={<PostPage />} />
+          <Route path="/friend" element={<FriendListPage />} />
         </Route>
         <Route path="/" element={<WelcomePage />} />
         <Route path="/signup" element={<SignUpPage />} />
