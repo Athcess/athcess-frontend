@@ -38,6 +38,26 @@ export default function NavigationBar() {
     navigate("/search/"+ e.tosearch);
     
   };
+  const signout = () => {
+    
+    navigate("/signin");
+    
+  };
+  const chat = () => {
+    
+    navigate("/chat");
+    
+  };
+  const athleteprofile = () => {
+    
+    navigate("/athleteprofile");
+    
+  };
+  const friendlist = () => {
+    
+    navigate("/friend");
+    
+  };
 
   return (
     <header className={styles.container}>
@@ -68,14 +88,14 @@ export default function NavigationBar() {
       <UnstyledButton>
         <Image src="/Images/calendar_logo.png" className={styles.image} />
       </UnstyledButton>
-      <UnstyledButton>
+      <UnstyledButton onClick={chat}>
         <Image src="/Images/chat_logo.png" className={styles.image} />
       </UnstyledButton>
       <UnstyledButton>
         <Image src="/Images/noti_logo.png" className={styles.image} />
       </UnstyledButton>
       {isLogin ? (
-        <UnstyledButton>
+        <UnstyledButton onClick={athleteprofile}>
           <Image
             src="/Images/profile_logo.jpeg"
             className={styles.profileImage}
@@ -119,7 +139,7 @@ export default function NavigationBar() {
           </Menu.Item>
           <Menu.Divider />
           <Menu.Item
-            onClick={toggle}
+            onClick={friendlist}
             leftSection={
               <Image
                 src="/Images/MenuBar/friend_logo.png"
@@ -143,7 +163,7 @@ export default function NavigationBar() {
           </Menu.Item>
           <Menu.Divider />
           <Menu.Item
-            onClick={toggle}
+            onClick={signout}
             leftSection={
               <Image
                 src="/Images/MenuBar/logout_logo.png"

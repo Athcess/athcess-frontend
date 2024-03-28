@@ -1,15 +1,24 @@
 import React from "react";
-import { Image, UnstyledButton, Spoiler, TextInput } from "@mantine/core";
+import { Image, UnstyledButton, Spoiler, TextInput, NavLink } from "@mantine/core";
 import PostInteraction from "./PostInteraction";
 import Comment from "./Comment";
 import styles from "../../scss/HomePageComponents/Post.module.scss";
+import { useNavigate } from "react-router-dom";
+import { Component } from "react";
 
 export default function Post() {
+  const navigate = useNavigate();
+  // const toPost = (e) =>{
+  //   navigate("/post/"+e)
+  // }
+  const postid = "possstid";
   return (
+    
     <div className={styles.container}>
+    <UnstyledButton href={"/post/"+postid} component="a" >
       <div className={styles.profile}>
         <div className={styles.profileLeft}>
-          <UnstyledButton>
+          <UnstyledButton >
             <Image
               src="/Images/profile_logo.jpeg"
               className={styles.profileImage}
@@ -51,6 +60,7 @@ export default function Post() {
         everyday carry, food truck paleo gochujang shabby chic wayfarers before
         they sold out.
       </Spoiler>
+      </UnstyledButton>
       <video className={styles.postVideo} controls>
         <source src="/Videos/1996750-hd_1920_1080_25fps.mp4" type="video/mp4" />
         Your browser does not support the video tag.
@@ -69,5 +79,6 @@ export default function Post() {
         />
       </div>
     </div>
+   
   );
 }
