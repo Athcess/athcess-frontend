@@ -9,7 +9,7 @@ import {
 import PostInteraction from "./HomePageComponents/PostInteraction";
 import { UEvent } from "./Status";
 import Comment from "./HomePageComponents/Comment";
-import styles from "../scss/HomePageComponents/Post.module.scss";
+import styles from "../scss/Post.module.scss";
 import { useNavigate } from "react-router-dom";
 import { Component } from "react";
 
