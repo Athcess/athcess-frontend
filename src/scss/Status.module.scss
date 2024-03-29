@@ -1,0 +1,57 @@
+.verify {
+  display: flex;
+  align-items: center;
+  width: auto;
+  color: #007458;
+  padding: 0.3rem 0.5rem 0.3rem 0.5rem;
+  border: 1px solid #007458;
+  border-radius: 1.5rem;
+  gap: 0.5rem;
+}
+.pending {
+  display: flex;
+  align-items: center;
+  width: auto;
+  color: #fbbc05;
+  padding: 0.3rem 0.5rem 0.3rem 0.5rem;
+  border: 1px solid #fbbc05;
+  border-radius: 1.5rem;
+  gap: 0.5rem;
+}
+.uEvent {
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  width: auto;
+  font-weight: bold;
+  color: white;
+  background-color: #4285f4;
+  padding: 0.12rem 1rem 0.12rem 1rem;
+  border: 1px solid #4285f4;
+  border-radius: 0.7rem;
+  gap: 0.5rem;
+}
+.oEvent {
+  display: flex;
+  align-items: center;
+  width: auto;
+  font-weight: bold;
+  color: white;
+  background-color: #00a67e;
+  padding: 0.12rem 1rem 0.12rem 1rem;
+  border: 1px solid #00a67e;
+  border-radius: 0.7rem;
+  gap: 0.5rem;
+}
+.eEvent {
+  display: flex;
+  align-items: center;
+  width: auto;
+  font-weight: bold;
+  color: white;
+  background-color: #bbbbbb;
+  padding: 0.12rem 1rem 0.12rem 1rem;
+  border: 1px solid #bbbbbb;
+  border-radius: 0.7rem;
+  gap: 0.5rem;
+}

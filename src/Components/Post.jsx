@@ -1,31 +1,27 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import styles from "../scss/PostPage.module.scss";
+import React from "react";
 import {
   Image,
   UnstyledButton,
   Spoiler,
   TextInput,
-  Divider,
-  Button,
+  NavLink,
 } from "@mantine/core";
-import PostInteraction from "../Components/HomePageComponents/PostInteraction";
-import Comment from "../Components/HomePageComponents/Comment";
+import PostInteraction from "./HomePageComponents/PostInteraction";
+import { UEvent } from "./Status";
+import Comment from "./HomePageComponents/Comment";
+import styles from "../scss/HomePageComponents/Post.module.scss";
+import { useNavigate } from "react-router-dom";
+import { Component } from "react";
 
-export default function PostPage() {
-  let { postid } = useParams();
-
+export default function Post({ type }) {
+  const navigate = useNavigate();
+  // const toPost = (e) =>{
+  //   navigate("/post/"+e)
+  // }
+  const postid = "possstid";
   return (
     <div className={styles.container}>
-      {/* <Image className={styles.postImage} src="/Images/post1_image.png"></Image> */}
-      <video className={styles.postVideo} controls>
-        <source src="/Videos/1996750-hd_1920_1080_25fps.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <Button href={"/home/"} component="a" className={styles.Button}>
-        x
-      </Button>
-      <div className={styles.content}>
+      <UnstyledButton href={"/post/" + postid} component="a">
         <div className={styles.profile}>
           <div className={styles.profileLeft}>
             <UnstyledButton>
@@ -35,7 +31,14 @@ export default function PostPage() {
               />
             </UnstyledButton>
             <div className={styles.profileContent}>
-              <div className={styles.profileName}>วี่หว่อง หว่องวี่</div>
+              {type === "event" ? (
+                <div className={styles.profileName}>
+                  วี่หว่อง หว่องวี่ <UEvent></UEvent>
+                </div>
+              ) : (
+                <div className={styles.profileName}>วี่หว่อง หว่องวี่</div>
+              )}
+
               <div className={styles.profileDate}>1 Jan 2024</div>
             </div>
           </div>
@@ -70,19 +73,23 @@ export default function PostPage() {
           jean shorts deep v aesthetic pok pok everyday carry, food truck paleo
           gochujang shabby chic wayfarers before they sold out.
         </Spoiler>
-        <Divider className={styles.divider} size={3}></Divider>
-        <PostInteraction></PostInteraction>
-        <div className={styles.commentContainer}>
-          <Comment></Comment>
-          <Comment></Comment>
-          <Comment></Comment>
-          <TextInput
-            className={styles.commentInput}
-            placeholder="Add Comment"
-            radius={"30px"}
-            color="#eeeeee"
-          />
-        </div>
+      </UnstyledButton>
+      <video className={styles.postVideo} controls>
+        <source src="/Videos/1996750-hd_1920_1080_25fps.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      {/* <Image className={styles.postImage} src="/Images/post1_image.png"></Image> */}
+      <PostInteraction></PostInteraction>
+      <div className={styles.commentContainer}>
+        <Comment></Comment>
+        <Comment></Comment>
+        <Comment></Comment>
+        <TextInput
+          className={styles.commentInput}
+          placeholder="Add Comment"
+          radius={"30px"}
+          color="#eeeeee"
+        />
       </div>
     </div>
   );

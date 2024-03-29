@@ -5,14 +5,14 @@ import styles from "../../scss/ProfilePage.module.scss";
 import ProfileElement from "../../Components/ProfilePageComponents/ProfileElement";
 import EditProfileModalAthlete from "../../Components/ProfilePageComponents/AthleteProfilePageComponents/EditProfileModalAthlete";
 
-export default function ScoutProfilePage() {
+export default function OrgProfilePage() {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
     <>
       <EditProfileModalAthlete opened={opened} onClose={close} />
       <div className={styles.container}>
-        <ProfileElement type="scout"></ProfileElement>
+        <ProfileElement type="org"></ProfileElement>
         <Outlet></Outlet>
       </div>
     </>

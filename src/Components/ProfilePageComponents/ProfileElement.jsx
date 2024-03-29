@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Image, UnstyledButton, Spoiler } from "@mantine/core";
 import { rem } from "@mantine/core";
+import { Verified, UEvent } from "../Status";
 import styles from "../../scss/ProfilePageComponents/ProfileElement.module.scss";
 export default function ProfileElement({ type, openModal }) {
+  const [profileImageSrc, setProfileImageSrc] = useState("");
+  useEffect(() => {
+    if (type === "athlete") {
+      setProfileImageSrc("/Images/ProfilePage/athlete_logo.png");
+    } else if (type === "scout") {
+      setProfileImageSrc("/Images/ProfilePage/scout_logo.png");
+    } else if (type === "org") {
+      setProfileImageSrc("/Images/ProfilePage/org_logo.png");
+    }
+  }, []);
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.wallpaper}>
@@ -24,11 +36,7 @@ export default function ProfileElement({ type, openModal }) {
         </div>
         <div className={styles.profileName}>
           <div className={styles.name}>Daniel Thompson , 21</div>
-          <Image
-            src="/Images/ProfilePage/athlete_logo.png"
-            style={{ width: rem(32) }}></Image>
-
-          <div className={styles.verify}>Verify</div>
+          <Image src={profileImageSrc} style={{ width: rem(32) }}></Image>
           <UnstyledButton className={styles.friend}>Friend (2)</UnstyledButton>
         </div>
         <div className={styles.profileInfo}>

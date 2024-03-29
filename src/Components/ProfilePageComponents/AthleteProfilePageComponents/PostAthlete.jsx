@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { UnstyledButton } from "@mantine/core";
 import styles from "../../../scss/ProfilePageComponents/AthleteProfilePageComponents/PostAthlete.module.scss";
-import Post from "../../HomePageComponents/Post";
+import Post from "../../Post";
 export default function PostAthlete() {
   return (
     <div className={styles.container}>
@@ -18,9 +18,9 @@ export default function PostAthlete() {
         </NavLink>
       </div>
       <div className={styles.content}>
-        <Post></Post>
-        <Post></Post>
-        <Post></Post>
+        <Post type="post"></Post>
+        <Post type="post"></Post>
+        <Post type="post"></Post>
       </div>
     </div>
   );

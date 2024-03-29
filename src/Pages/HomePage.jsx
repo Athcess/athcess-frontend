@@ -13,7 +13,7 @@ import {
 } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 
-import Post from "../Components/HomePageComponents/Post";
+import Post from "../Components/Post";
 import {
   UpcomingEventContainerTrue,
   UpcomingEventContainerFalse,
@@ -39,16 +39,6 @@ export default function HomePage() {
         ) : (
           <FriendSuggestionContainerFalse></FriendSuggestionContainerFalse>
         )}
-
-        <ActionIcon
-          size="50px"
-          variant="filled"
-          aria-label="Settings"
-          radius="xl"
-          className={styles.newPost}
-        >
-          <IconPlus stroke={2} size="50px" />
-        </ActionIcon>
       </div>
       <div className={styles.rightContent}>
         <Post></Post>
