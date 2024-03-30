@@ -2,7 +2,6 @@ import React from "react";
 import NavigationBar from "../Components/NavigationBar";
 import WelcomePage from "../Pages/WelcomePage";
 import SignUpPage from "../Pages/SignUpPage";
-import SelectRolePage from "../Pages/SelectRolePage";
 import SignInPage from "../Pages/SignInPage";
 import HomePage from "../Pages/HomePage";
 import ChatPage from "../Pages/ChatPage";
@@ -68,7 +67,6 @@ export default function AppRouter() {
         </Route>
         <Route path="/" element={<WelcomePage />} />
         <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/selectrole" element={<SelectRolePage />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/forgetpassword" element={<ForgetPasswordPage />} />
         <Route path="*" element={<NotFoundPage />} />
