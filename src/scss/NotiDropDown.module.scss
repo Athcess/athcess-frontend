@@ -1,0 +1,39 @@
+.profile {
+  
+    display: flex;
+    gap: 20px;
+    
+  
+  
+    .profileLeft {
+      height: 40px;
+      display: flex;
+      gap: 0.5rem;
+      .profilenotiImage {
+        width: 2rem;
+        border-radius: 50%;
+      }
+      .profileContent {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        .profileName {
+          display: flex;
+          gap: 2rem;
+          font-size: 1rem;
+          font-weight: bold;
+        }
+        .profiletime {
+          font-size: 0.8rem;
+          color: grey;
+        }
+      }
+    }
+    .text {
+      color: grey;
+      padding-top: 0.5rem;
+    }
+   
+    
+  }

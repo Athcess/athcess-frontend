@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "../scss/NavigationBar.module.scss";
 import { useNavigate } from "react-router-dom";
-import { useForm } from '@mantine/form';
+import { useForm } from "@mantine/form";
 import {
   Group,
   Burger,
@@ -11,7 +11,9 @@ import {
   Button,
   Menu,
   TextInput,
-  Anchor
+  Anchor,
+  Popover,
+  Autocomplete
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
@@ -22,7 +24,7 @@ import {
   IconTrash,
   IconArrowsLeftRight,
 } from "@tabler/icons-react";
-
+import NotiDropDown from "./NotiDropDown.jsx";
 export default function NavigationBar() {
   const [isLogin, setIsLogin] = useState(true);
   const [menuOpened, setmenuOpened] = useState(false);
@@ -30,60 +32,59 @@ export default function NavigationBar() {
   const navigate = useNavigate();
   const form = useForm({
     initialValues: {
-      tosearch: '',
+      tosearch: "",
     },
   });
   const search = (e) => {
-    
-    navigate("/search/"+ e.tosearch);
-    
+    navigate("/search/" + e.tosearch);
   };
   const signout = () => {
-    
     navigate("/signin");
-    
   };
   const chat = () => {
-    
     navigate("/chat");
-    
   };
   const athleteprofile = () => {
-    
     navigate("/athleteprofile");
-    
   };
   const friendlist = () => {
-    
     navigate("/friend");
-    
   };
 
   return (
     <header className={styles.container}>
       <div>
-      <Anchor className={styles.headerText} underline="never" href="/home" size="xs">
-      ATHCESS
-      </Anchor>
+        <Anchor
+          className={styles.headerText}
+          underline="never"
+          href="/home"
+          size="xs"
+        >
+          ATHCESS
+        </Anchor>
       </div>
-      <form className={styles.search} onSubmit={form.onSubmit((values) => search(values))}>
-      <TextInput
+      <form
         className={styles.search}
-        placeholder="Search"
-        radius="20px"
-        value={form.values.tosearch}
-        onChange={(event) =>
-          form.setFieldValue("tosearch", event.currentTarget.value)
-        }
-        leftSection={
-          <IconSearch
-            style={{ width: rem(16), height: rem(16) }}
-            stroke={1.5}
-          />
-        }
-        
-        visibleFrom="xs"
-      />
+        onSubmit={form.onSubmit((values) => search(values))}
+      >
+        <Autocomplete
+          className={styles.search}
+          placeholder="Search"
+          radius="20px"
+          limit={3}
+          data={['Football 1', 'Basketball 1', 'Basketball 2', 'Football 2']}
+          comboboxProps={{ zIndex: 1000, offset:2 }}
+          onChange={(event) =>
+            form.setFieldValue("tosearch", event.currentTarget.value)
+          }
+          leftSection={
+            <IconSearch
+              style={{ width: rem(16), height: rem(16) }}
+              stroke={1.5}
+            />
+          }
+          visibleFrom="xs"
+        />
       </form>
       <UnstyledButton>
         <Image src="/Images/calendar_logo.png" className={styles.image} />
@@ -91,9 +92,17 @@ export default function NavigationBar() {
       <UnstyledButton onClick={chat}>
         <Image src="/Images/chat_logo.png" className={styles.image} />
       </UnstyledButton>
-      <UnstyledButton>
-        <Image src="/Images/noti_logo.png" className={styles.image} />
-      </UnstyledButton>
+
+      <Popover width={400} withArrow shadow="md" position="bottom-start">
+        <Popover.Target>
+          <UnstyledButton>
+            <Image src="/Images/noti_logo.png" className={styles.image} />
+          </UnstyledButton>
+        </Popover.Target>
+        <Popover.Dropdown>
+          <NotiDropDown></NotiDropDown>
+        </Popover.Dropdown>
+      </Popover>
       {isLogin ? (
         <UnstyledButton onClick={athleteprofile}>
           <Image
@@ -110,7 +119,8 @@ export default function NavigationBar() {
             size="md"
             radius="xl"
             component="a"
-            href="/signin">
+            href="/signin"
+          >
             Sign in
           </Button>
         </div>

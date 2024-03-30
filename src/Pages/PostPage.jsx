@@ -22,7 +22,7 @@ export default function PostPage() {
         <source src="/Videos/1996750-hd_1920_1080_25fps.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      <Button href={"/home/"} component="a" className={styles.Button}>
+      <Button href={"javascript: history.go(-1)"} component="a" className={styles.Button}>
         x
       </Button>
       <div className={styles.content}>

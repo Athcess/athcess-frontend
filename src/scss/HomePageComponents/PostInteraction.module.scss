@@ -7,4 +7,110 @@
   .icon {
     width: 50px;
   }
+  
+}
+.modal{
+  min-height: 500px;
+  max-height: 500px;
+  display:flex;
+}
+.profile {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 20px;
+  padding: 1rem;
+  max-height: 600px;
+    
+    .profileContent {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+      .profileName {
+        display: flex;
+        gap: 2rem;
+        font-size: 0.8rem;
+        font-weight: bold;
+      }
+      .profileImage {
+        width: 5rem;
+        border-radius: 50%;
+      }
+    }
+  
+}
+.send{
+  position:absolute;
+  width: 93%;
+  margin-bottom: 10px;
+  bottom:0;
+}
+
+.repost {
+  display: flex;
+  justify-content: space-between;
+
+  .repostLeft {
+    height: 50px;
+    display: flex;
+    gap: 0.5rem;
+    .repostImage {
+      width: 3rem;
+      border-radius: 50%;
+    }
+    .repostContent {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      
+      .repostName {
+        display: flex;
+        gap: 2rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+      .repostDate {
+        font-size: 0.8rem;
+        color: grey;
+      }
+    }
+  }
+}
+
+.text {
+ margin-top: 1rem;
+ margin-bottom: 1rem;
+}
+.postImage {
+  max-height: 500px;
+  max-width: 100%; /* Add this line */
+  width: fit-content;
+  align-self: center;
+}
+.postVideo {
+  max-height: 500px;
+  max-width: 100%; /* Add this line */
+  width: fit-content;
+  align-self: center;
+}
+
+.postcontent {
+  display: flex;
+  flex-direction: column;
+  border-radius: 30px;
+  border: 1px solid #bbbbbb;
+  background-color: white;
+  max-width: 100%;
+  height: auto;
+  padding: 20px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  div {
+    // border: 1px solid red;
+  }
+  
+}
+.text{
+  font-size: 0.8rem;
 }
