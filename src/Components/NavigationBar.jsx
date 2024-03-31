@@ -75,7 +75,7 @@ export default function NavigationBar() {
           data={['Football 1', 'Basketball 1', 'Basketball 2', 'Football 2']}
           comboboxProps={{ zIndex: 1000, offset:2 }}
           onChange={(event) =>
-            form.setFieldValue("tosearch", event.currentTarget.value)
+            form.setFieldValue("tosearch", event)
           }
           leftSection={
             <IconSearch

@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 100%;
+    height: auto;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    background-color: #FEFEFA;
+    div {
+      // border: 1px solid red;
+    }
+    .profileImage {
+        width: 5rem;
+        border-radius: 50%;
+      }
+      .content{
+        display: grid;
+        gap: 5px;
+        grid-template-columns: 1fr 1fr;
+        
+      }
+      
+  }
+  .text{
+    margin-left:  20px !important;
+  }
+.header{
+    background-color: #007458 !important;
+    color: white;
+}
+.title{
+    font-weight: 700 !important;
+    font-size: large !important;
+}
+.close{
+    color: white !important;
+}

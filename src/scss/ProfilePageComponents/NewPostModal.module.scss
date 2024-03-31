@@ -1,0 +1,56 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 100%;
+    height: auto;
+    padding: 20px;
+    background-color: #fefefa;
+    div {
+        // border: 1px solid red;
+    }
+    .content{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .profile {
+        height: 50px;
+        display: flex;
+        gap: 0.5rem;
+        .profileImage {
+            width: 3rem;
+            border-radius: 50%;
+        }
+
+        .profileName {
+            display: flex;
+            gap: 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+    }
+
+
+
+    .image{
+        width: 100%;
+        min-height: 200px;
+        height: auto;
+        border: 2px solid #bbbbbb;
+        border-radius: 5px;
+    }
+}
+
+.header {
+    background-color: #007458 !important;
+    color: white;
+}
+.title {
+    font-weight: 700 !important;
+    font-size: large !important;
+}
+.close {
+    color: white !important;
+}

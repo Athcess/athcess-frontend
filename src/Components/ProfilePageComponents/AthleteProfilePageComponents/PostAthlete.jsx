@@ -1,11 +1,16 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { UnstyledButton } from "@mantine/core";
+import { Image, UnstyledButton, rem } from "@mantine/core";
+import {useDisclosure} from "@mantine/hooks"
 import styles from "../../../scss/ProfilePageComponents/AthleteProfilePageComponents/PostAthlete.module.scss";
 import Post from "../../Post";
+import NewPostModal from "../NewPostModal";
 export default function PostAthlete() {
+  const [opened, { open, close }] = useDisclosure(false);
+
   return (
     <div className={styles.container}>
+      <NewPostModal opened={opened} onClose={close} />
       <div className={styles.header}>
         <NavLink className={styles.link} to="/athleteprofile">
           <UnstyledButton>About</UnstyledButton>
@@ -22,6 +27,11 @@ export default function PostAthlete() {
         <Post type="post"></Post>
         <Post type="post"></Post>
       </div>
+      <UnstyledButton className={styles.add} onClick={open}>
+        <Image
+        src="/Images/MenuBar/add_logo.png"
+        style={{ width: rem(60) }}></Image>
+      </UnstyledButton>
     </div>
   );
 }

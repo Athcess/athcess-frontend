@@ -28,10 +28,11 @@ export default function Post({ type }) {
       onClose={close} 
       withCloseButton={false}
       centered 
-      size="40%"
+      size="lg"
       radius={30}
       padding={30}
       classNames={{content:styles.modal}}
+      zIndex={1000} 
       >
 
       <div className={styles.profile}>

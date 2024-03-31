@@ -1,11 +1,16 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { UnstyledButton, rem, Image, Spoiler } from "@mantine/core";
+import {useDisclosure} from "@mantine/hooks"
 import CustomRadar from "./CustomRadar";
 import BackgroundElement from "../BackgroundElement";
 import AchievementElement from "../AchievementElement";
 import styles from "../../../scss/ProfilePageComponents/AthleteProfilePageComponents/AboutAthlete.module.scss";
+import EditBackgroundModal from "../EditBackgroundModal";
+import EditAchievementModal from "../EditAchievementModal";
 export default function AboutAthlete() {
+  const [Backgroundopened, Background] = useDisclosure(false);
+  const [Achievementopened, Achievement] = useDisclosure(false);
   const radarData = {
     labels: ["Strength", "Stamina", "Insight", "Endurance", "Defense", "Magic"],
     datasets: [
@@ -25,6 +30,8 @@ export default function AboutAthlete() {
   };
   return (
     <div className={styles.container}>
+      <EditBackgroundModal opened={Backgroundopened} onClose={Background.close} />
+      <EditAchievementModal opened={Achievementopened} onClose={Achievement.close} />
       <div className={styles.header}>
         <NavLink className={styles.link} to="/athleteprofile">
           <UnstyledButton>About</UnstyledButton>
@@ -55,7 +62,7 @@ export default function AboutAthlete() {
         <div className={styles.section}>
           <div className={styles.sectionHeader}>
             Background
-            <UnstyledButton className={styles.edit}>
+            <UnstyledButton className={styles.edit} onClick={Background.open}>
               <Image
                 src="/Images/ProfilePage/editSection_logo.png"
                 style={{ width: rem(48) }}></Image>
@@ -69,7 +76,7 @@ export default function AboutAthlete() {
         <div className={styles.section}>
           <div className={styles.sectionHeader}>
             Achievement
-            <UnstyledButton className={styles.edit}>
+            <UnstyledButton className={styles.edit} onClick={Achievement.open}>
               <Image
                 src="/Images/ProfilePage/editSection_logo.png"
                 style={{ width: rem(48) }}></Image>

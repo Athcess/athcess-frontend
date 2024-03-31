@@ -45,7 +45,9 @@ export default function PostInteraction() {
         onClose={shareto.close}
         title="Share to"
         centered
-        classNames={{ content: styles.modal }}
+        classNames={{ content: styles.modal, header:styles.header, title:styles.title, close:styles.close }}
+        radius={20}
+        zIndex={1000} 
       >
         <TextInput
           className={styles.search}
@@ -113,7 +115,9 @@ export default function PostInteraction() {
         onClose={repost.close}
         title="Repost"
         centered
-        classNames={{ content: styles.modal }}
+        classNames={{ content: styles.modal, header:styles.header, title:styles.title, close:styles.close }}
+        radius={20}
+        zIndex={1000} 
       >
         
         <div className={styles.repost}>

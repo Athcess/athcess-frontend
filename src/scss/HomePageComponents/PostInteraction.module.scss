@@ -49,6 +49,7 @@
 .repost {
   display: flex;
   justify-content: space-between;
+  margin-top: 1rem;
 
   .repostLeft {
     height: 50px;
@@ -111,6 +112,20 @@
   }
   
 }
+.search{
+  margin-top: 1rem;
+}
 .text{
   font-size: 0.8rem;
+}
+.header{
+  background-color: #007458 !important;
+  color: white;
+}
+.title{
+  font-weight: 700 !important;
+  font-size: large !important;
+}
+.close{
+  color: white !important;
 }
