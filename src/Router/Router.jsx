@@ -6,6 +6,7 @@ import SignInPage from "../Pages/SignInPage";
 import HomePage from "../Pages/HomePage";
 import ChatPage from "../Pages/ChatPage";
 import SearchPage from "../Pages/SearchPage";
+import BodyAnalyzerPage from "../Pages/BodyAnalyzerPage";
 
 import AthleteProfilePage from "../Pages/ProfilePage/AthleteProfilePage";
 import AboutAthlete from "../Components/ProfilePageComponents/AthleteProfilePageComponents/AboutAthlete";
@@ -45,6 +46,11 @@ export default function AppRouter() {
           }>
           <Route path="/home" element={<HomePage />} />
           <Route path="/chat" element={<ChatPage />} />
+          <Route path="/search/:tosearch" element={<SearchPage />} />
+          <Route path="/post/:postid" element={<PostPage />} />
+          <Route path="/friend" element={<FriendListPage />} />
+          <Route path="/bodyanalyzer" element={<BodyAnalyzerPage />} />
+
           <Route path="/athleteprofile" element={<AthleteProfilePage />}>
             <Route index element={<AboutAthlete></AboutAthlete>}></Route>
             <Route path="post" element={<PostAthlete></PostAthlete>}></Route>
@@ -52,7 +58,6 @@ export default function AppRouter() {
               path="highlight"
               element={<HighlightAthlete></HighlightAthlete>}></Route>
           </Route>
-          <Route path="/search/:tosearch" element={<SearchPage />} />
           <Route path="/scoutprofile" element={<ScoutProfilePage />}>
             <Route index element={<AboutScout></AboutScout>}></Route>
             <Route path="post" element={<PostScout></PostScout>}></Route>
@@ -62,8 +67,6 @@ export default function AppRouter() {
             <Route path="post" element={<PostOrg></PostOrg>}></Route>
             <Route path="event" element={<EventOrg></EventOrg>}></Route>
           </Route>
-          <Route path="/post/:postid" element={<PostPage />} />
-          <Route path="/friend" element={<FriendListPage />} />
         </Route>
         <Route path="/" element={<WelcomePage />} />
         <Route path="/signup" element={<SignUpPage />} />

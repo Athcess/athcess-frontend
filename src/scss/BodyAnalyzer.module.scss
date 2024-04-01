@@ -1,0 +1,56 @@
+.container {
+  width: 100%;
+  background-color: #fefefa;
+  margin-top: 70px;
+  padding: 50px;
+  gap: 30px;
+  display: flex;
+  flex-direction: column;
+  .header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+  .phyAttContainer,
+  .perfVidContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    .phyAttContent {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14rem;
+      .radar {
+        width: 350px;
+      }
+      .bar {
+        width: 700px;
+      }
+    }
+    .perfVidContent {
+      display: flex;
+      flex-wrap: wrap; /* Allow videos to wrap into multiple rows */
+      justify-content: center;
+      .selectVid {
+        display: flex;
+        flex-direction: column;
+        color: #888888;
+        border: 2px solid #bbbbbb;
+        background-color: white;
+        border-radius: 0.5rem;
+        width: 300px;
+        height: 300px;
+        justify-content: center;
+        align-items: center;
+        margin: 2rem 7rem 5rem 7rem;
+      }
+      video {
+        width: 500px;
+      }
+    }
+  }
+}
