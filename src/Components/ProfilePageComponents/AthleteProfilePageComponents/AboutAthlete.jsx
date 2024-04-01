@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { UnstyledButton, rem, Image, Spoiler } from "@mantine/core";
-import {useDisclosure} from "@mantine/hooks"
+import { useDisclosure } from "@mantine/hooks";
 import CustomRadar from "../../CustomRadar";
 import BackgroundElement from "../BackgroundElement";
 import AchievementElement from "../AchievementElement";
@@ -30,8 +30,14 @@ export default function AboutAthlete() {
   };
   return (
     <div className={styles.container}>
-      <EditBackgroundModal opened={Backgroundopened} onClose={Background.close} />
-      <EditAchievementModal opened={Achievementopened} onClose={Achievement.close} />
+      <EditBackgroundModal
+        opened={Backgroundopened}
+        onClose={Background.close}
+      />
+      <EditAchievementModal
+        opened={Achievementopened}
+        onClose={Achievement.close}
+      />
       <div className={styles.header}>
         <NavLink className={styles.link} to="/athleteprofile">
           <UnstyledButton>About</UnstyledButton>

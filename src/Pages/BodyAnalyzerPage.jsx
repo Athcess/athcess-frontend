@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../scss/BodyAnalyzer.module.scss";
 import CustomRadar from "../Components/CustomRadar";
 import { Image, rem, Modal, UnstyledButton } from "@mantine/core";
@@ -12,11 +12,48 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import {
+  PhyAttModal,
+  PerfVidModal,
+} from "../Components/BodyAnalyzerComponents/InfoModal";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 export default function BodyAnalyzerPage() {
-  const [opened, { open, close }] = useDisclosure(false);
+  const [PhyAttOpened, PhyAtt] = useDisclosure(false);
+  const [PerfVidOpened, PerfVid] = useDisclosure(false);
+
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = async (event, exerciseType) => {
+    const file = event.target.files[0];
+
+    // Create FormData object to send file data and exercise type
+    const formData = new FormData();
+    formData.append("video", file);
+    formData.append("exerciseType", exerciseType);
+    console.log(formData);
+
+    // try {
+    //   // Send POST request to the API endpoint
+    //   const response = await fetch("your-api-endpoint-url", {
+    //     method: "POST",
+    //     body: formData,
+    //   });
+
+    //   if (response.ok) {
+    //     // Video uploaded successfully
+    //     console.log("Video uploaded successfully");
+    //   } else {
+    //     // Handle error response from the server
+    //     console.error("Failed to upload video");
+    //   }
+    // } catch (error) {
+    //   // Handle network errors or other exceptions
+    //   console.error("Error uploading video:", error);
+    // }
+  };
+
   const data = {
     labels: [
       "Strength",
@@ -58,16 +95,13 @@ export default function BodyAnalyzerPage() {
   const options = { indexAxis: "y" };
   return (
     <>
-      <Modal
-        opened={opened}
-        onClose={close}
-        title="Physical Attributes"
-        centered></Modal>
+      <PhyAttModal opened={PhyAttOpened} onClose={PhyAtt.close} />
+      <PerfVidModal opened={PerfVidOpened} onClose={PerfVid.close} />
       <div className={styles.container}>
         <div className={styles.phyAttContainer}>
           <div className={styles.header}>
             Physical Attributes
-            <UnstyledButton onClick={open}>
+            <UnstyledButton onClick={PhyAtt.open}>
               <Image
                 src="/Images/info_logo.png"
                 style={{ width: rem(16), height: rem(16) }}></Image>
@@ -85,37 +119,89 @@ export default function BodyAnalyzerPage() {
         <div className={styles.perfVidContainer}>
           <div className={styles.header}>
             Performance Videos
-            <UnstyledButton onClick={open}>
+            <UnstyledButton onClick={PerfVid.open}>
               <Image
                 src="/Images/info_logo.png"
                 style={{ width: rem(16), height: rem(16) }}></Image>
             </UnstyledButton>
           </div>
           <div className={styles.perfVidContent}>
-            <UnstyledButton className={styles.selectVid}>
-              <Image
-                src="/Images/image_placeholder.png"
-                style={{ width: rem(64) }}></Image>
-              Select a video to upload
-            </UnstyledButton>
-            <UnstyledButton className={styles.selectVid}>
-              <Image
-                src="/Images/image_placeholder.png"
-                style={{ width: rem(64) }}></Image>
-              Select a video to upload
-            </UnstyledButton>
-            <UnstyledButton className={styles.selectVid}>
-              <Image
-                src="/Images/image_placeholder.png"
-                style={{ width: rem(64) }}></Image>
-              Select a video to upload
-            </UnstyledButton>
-            <UnstyledButton className={styles.selectVid}>
-              <Image
-                src="/Images/image_placeholder.png"
-                style={{ width: rem(64) }}></Image>
-              Select a video to upload
-            </UnstyledButton>
+            <div className={styles.vidContainer}>
+              <UnstyledButton className={styles.selectVid}>
+                <label htmlFor="pushup">
+                  <Image
+                    src="/Images/image_placeholder.png"
+                    style={{ width: rem(64) }}
+                  />
+                  Select a video to upload
+                </label>
+                <input
+                  id="pushup"
+                  type="file"
+                  accept="video/*"
+                  style={{ display: "none" }}
+                  onChange={(event) => handleFileChange(event, "pushup")}
+                />
+              </UnstyledButton>
+              Push-up
+            </div>
+            <div className={styles.vidContainer}>
+              <UnstyledButton className={styles.selectVid}>
+                <label htmlFor="pullup">
+                  <Image
+                    src="/Images/image_placeholder.png"
+                    style={{ width: rem(64) }}
+                  />
+                  Select a video to upload
+                </label>
+                <input
+                  id="pullup"
+                  type="file"
+                  accept="video/*"
+                  style={{ display: "none" }}
+                  onChange={(event) => handleFileChange(event, "pullup")}
+                />
+              </UnstyledButton>
+              Pull-up
+            </div>
+            <div className={styles.vidContainer}>
+              <UnstyledButton className={styles.selectVid}>
+                <label htmlFor="squat">
+                  <Image
+                    src="/Images/image_placeholder.png"
+                    style={{ width: rem(64) }}
+                  />
+                  Select a video to upload
+                </label>
+                <input
+                  id="squat"
+                  type="file"
+                  accept="video/*"
+                  style={{ display: "none" }}
+                  onChange={(event) => handleFileChange(event, "squat")}
+                />
+              </UnstyledButton>
+              Squat
+            </div>
+            <div className={styles.vidContainer}>
+              <UnstyledButton className={styles.selectVid}>
+                <label htmlFor="running">
+                  <Image
+                    src="/Images/image_placeholder.png"
+                    style={{ width: rem(64) }}
+                  />
+                  Select a video to upload
+                </label>
+                <input
+                  id="running"
+                  type="file"
+                  accept="video/*"
+                  style={{ display: "none" }}
+                  onChange={(event) => handleFileChange(event, "running")}
+                />
+              </UnstyledButton>
+              Running
+            </div>
           </div>
         </div>
       </div>

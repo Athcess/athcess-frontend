@@ -1,0 +1,18 @@
+.header {
+  background-color: #007458 !important;
+  color: white;
+}
+.title {
+  font-weight: 700 !important;
+  font-size: large !important;
+}
+.close {
+  color: white !important;
+}
+.container {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 2rem 1rem 2rem;
+}
