@@ -33,6 +33,8 @@ import {
   Outlet,
 } from "react-router-dom";
 
+import MyCalendar from "../Pages/Calendar";
+
 export default function AppRouter() {
   return (
     <Router>
@@ -50,6 +52,7 @@ export default function AppRouter() {
           <Route path="/post/:postid" element={<PostPage />} />
           <Route path="/friend" element={<FriendListPage />} />
           <Route path="/bodyanalyzer" element={<BodyAnalyzerPage />} />
+          <Route path="/Calendar" element={<MyCalendar />} />
 
           <Route path="/athleteprofile" element={<AthleteProfilePage />}>
             <Route index element={<AboutAthlete></AboutAthlete>}></Route>

@@ -19,6 +19,7 @@ import {
   Stack,
   Select,
   MultiSelect,
+  Checkbox,
 } from "@mantine/core";
 import styles from "../scss/SignUpPage.module.scss";
 import { jwtDecode } from "jwt-decode";
@@ -41,12 +42,7 @@ export default function SignUpPage(props) {
       education: ["", ""],
       //organization
       organization: "",
-      club_name: "", 
-      phone: "",
-      address: "",
-      city: "",
-      province: "",
-      postalcode: "",
+
     },
     validate: {
       email: (val) =>
@@ -83,6 +79,12 @@ export default function SignUpPage(props) {
       //})
     }
   };
+  const setadmin = () =>{
+    if (form.values.role !== "admin"){
+      form.setFieldValue('role',"admin")
+    }
+    else {form.setFieldValue('role',"")}
+  }
 
   return (
     <div className={styles.container}>
@@ -148,22 +150,31 @@ export default function SignUpPage(props) {
                 error={form.errors.confirm_password && "Password is not the same!"}
                 radius="md"
               />
-              <SegmentedControl
-                style={{ marginTop: 15 }}
-                required
-                color="#00A67E"
-                value={form.values.role}
-                onChange={(event) => form.setFieldValue("role", event)}
-                data={[
-                  { label: "Athlete", value: "athlete" },
-                  { label: "Scout", value: "scout" },
-                  { label: "Organization", value: "organization" },
-                ]}
-              />
+              {form.values.role !== "admin" &&<SegmentedControl
+               style={{ marginTop: 15 }}
+               required
+               color="#00A67E"
+               value={form.values.role}
+               onChange={(event) => form.setFieldValue("role", event)}
+               data={[
+                 { label: "Athlete", value: "athlete" },
+                 { label: "Scout", value: "scout" },
+               ]}
+             />
+               }
+             
+              <Checkbox
+              label="Are you organization?"
+              color="#00A67E"
+              onChange={(setadmin)}
+            >
+                
+                
+              </Checkbox>
               {form.errors.role && (
                 <span style={{ color: "red" }}>Please select a role</span>
               )}
-              {form.values.role === "organization" && (
+              {/* {form.values.role === "organization" && (
                 <>
                   <Text ta="center" size="lg" fw={500}>
                     Oraganization Information
@@ -335,7 +346,7 @@ export default function SignUpPage(props) {
                     radius="md"
                   />
                 </>
-              )}
+              )} */}
               {(form.values.role === "athlete" ||
                 form.values.role === "scout") && (
                 <>

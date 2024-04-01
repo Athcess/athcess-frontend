@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ImageUploading from 'react-images-uploading';
 import {
   Modal,
   Text,
@@ -21,11 +22,21 @@ import { useDisclosure } from "@mantine/hooks";
 import styles from "../../scss/ProfilePageComponents/NewPostModal.module.scss";
 
 export default function NewPostModal({ opened, onClose }) {
+  
   const [images, setImages] = useState([]);
+  const maxNumber = 69;
+
+  const onChange = (imageList, addUpdateIndex) => {
+    // data for submit
+    console.log(imageList, addUpdateIndex);
+    setImages(imageList);
+  };
+
 
   const handleFileInputChange = (files) => {
     console.log(files);
     setImages(files);
+    console.log(images.name)
   };
 
   return (
@@ -54,16 +65,44 @@ export default function NewPostModal({ opened, onClose }) {
 
         <div className={styles.content}>
           <Textarea placeholder="Write description"></Textarea>
-          <div className={styles.image}>
-            <Image src={images} />
+          <ImageUploading
+        multiple
+        value={images}
+        onChange={onChange}
+        maxNumber={maxNumber}
+        dataURLKey="data_url"
+        className={styles.image}
+      >
+        {({
+          imageList,
+          onImageUpload,
+          onImageUpdate,
+          onImageRemove,
+          isDragging,
+          dragProps,
+        }) => (
+          // write your building UI
+          <div  >
+            <Anchor
+              style={isDragging ? { color: 'red' } : undefined}
+              onClick={onImageUpload}
+              {...dragProps}
+            >
+              Select Image
+            </Anchor>
+            &nbsp;
+            {imageList.map((image, index) => (
+              <div key={index} className="image-item">
+                <img src={image['data_url']} alt="" width="100" className={styles.image}/>
+                <div className="image-item__btn-wrapper">
+                  <button onClick={() => onImageUpdate(index)}>Update</button>
+                  <button onClick={() => onImageRemove(index)}>Remove</button>
+                </div>
+              </div>
+            ))}
           </div>
-
-          <FileInput
-            variant="unstyled"
-            value={images}
-            onChange={handleFileInputChange}
-            placeholder="Select photos or videos to upload"
-          />
+        )}
+      </ImageUploading>
           <Checkbox
             defaultChecked
             label="Add this post to your highlight page"

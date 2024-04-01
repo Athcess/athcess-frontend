@@ -32,7 +32,7 @@ export default function BodyAnalyzerPage() {
     const formData = new FormData();
     formData.append("video", file);
     formData.append("exerciseType", exerciseType);
-    console.log(formData);
+    console.log(formData.get('video'));
 
     // try {
     //   // Send POST request to the API endpoint
