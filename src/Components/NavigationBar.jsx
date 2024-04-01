@@ -50,6 +50,9 @@ export default function NavigationBar() {
   const friendlist = () => {
     navigate("/friend");
   };
+  const body = () => {
+    navigate("/bodyanalyzer");
+  };
 
   return (
     <header className={styles.container}>
@@ -161,7 +164,7 @@ export default function NavigationBar() {
           </Menu.Item>
           <Menu.Divider />
           <Menu.Item
-            onClick={toggle}
+            onClick={body}
             leftSection={
               <Image
                 src="/Images/MenuBar/body_logo.png"

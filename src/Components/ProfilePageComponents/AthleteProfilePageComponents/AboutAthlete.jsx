@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { UnstyledButton, rem, Image, Spoiler } from "@mantine/core";
 import {useDisclosure} from "@mantine/hooks"
-import CustomRadar from "./CustomRadar";
+import CustomRadar from "../../CustomRadar";
 import BackgroundElement from "../BackgroundElement";
 import AchievementElement from "../AchievementElement";
 import styles from "../../../scss/ProfilePageComponents/AthleteProfilePageComponents/AboutAthlete.module.scss";
