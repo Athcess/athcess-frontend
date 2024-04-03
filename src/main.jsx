@@ -5,11 +5,15 @@ import styles from "./scss/index.module.scss";
 import "@mantine/core/styles.css";
 
 import { MainProvider } from "./Provider/MainProvider";
+import { AuthProvider } from 'react-auth-kit'
+
+
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <MainProvider>
-      <App></App>
+        <App></App>
     </MainProvider>
   </React.StrictMode>
 );

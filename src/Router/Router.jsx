@@ -32,6 +32,8 @@ import {
   Routes,
   Outlet,
 } from "react-router-dom";
+import RequireAuth from '@auth-kit/react-router/RequireAuth'
+import AuthOutlet from '@auth-kit/react-router/AuthOutlet'
 
 import MyCalendar from "../Pages/Calendar";
 
@@ -40,13 +42,14 @@ export default function AppRouter() {
     <Router>
       <Routes>
         <Route
-          element={
+          element={ 
             <>
               <NavigationBar></NavigationBar>
-              <Outlet />
+              <Outlet/>
+              {/* <AuthOutlet fallbackPath='/signin' /> */}
             </>
           }>
-          <Route path="/home" element={<HomePage />} />
+          <Route path="/home" element={<HomePage/>}/>
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/search/:tosearch" element={<SearchPage />} />
           <Route path="/post/:postid" element={<PostPage />} />

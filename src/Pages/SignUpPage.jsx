@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useToggle, upperFirst } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { GoogleLogin } from "@react-oauth/google";
+import {useMutation} from '@tanstack/react-query'
+import useSignIn from 'react-auth-kit/hooks/useSignIn';
 
 import { DatePicker } from "@mui/x-date-pickers";
 import {
@@ -22,7 +23,7 @@ import {
   Checkbox,
 } from "@mantine/core";
 import styles from "../scss/SignUpPage.module.scss";
-import { jwtDecode } from "jwt-decode";
+import { signup } from "../Services/WelcomeAPI";
 
 export default function SignUpPage(props) {
   const navigate = useNavigate();
@@ -67,16 +68,31 @@ export default function SignUpPage(props) {
     },
   });
 
+  const signIn = useSignIn();
+
+  const mutation = useMutation({
+    mutationFn : signup,
+    onSuccess: (data) =>{
+      signIn({
+        token: data.token,
+        expiresIn : 3600,
+        tokenType : "Bearer",
+        authState : {username: form.values.username}
+
+      });
+    }
+  })
+
   const signupUser = (e) => {
     e.preventDefault();
     form.validate();
     if (form.isValid()) {
-      // Axios.post('', {
-      //     data: form.values
-      // }).then(() => {
+
+      mutation.mutate(form.values)
+
       console.log(form.values);
       navigate("/home");
-      //})
+
     }
   };
   const setadmin = () =>{
@@ -592,21 +608,7 @@ export default function SignUpPage(props) {
               <Button color="#00A67E" type="submit" radius="xl" w="100%">
                 Sign Up
               </Button>
-            </Group>
-            <Divider label="Or sign up with" labelPosition="center" my="lg" />
-            <Group grow mb="md" mt="md">
-              {/* <GoogleLogin
-              onSuccess={(credentialResponse) => {
-                var credentialResponseDecoded = jwtDecode(
-                  credentialResponse.credential
-                );
-                console.log("Login Success", credentialResponseDecoded);
-                navigate("/home");
-              }}
-              onError={(error) => {
-                console.log("Login Failed", error);
-              }}></GoogleLogin> */}
-            </Group>
+            </Group>           
             <Text ta="center" c="dimmed" size="xs">
               {" "}
               Already have an account? &nbsp;
