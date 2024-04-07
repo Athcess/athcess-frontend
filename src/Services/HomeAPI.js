@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const getPost = async () => {
+export const getPost = async () => {
     try {
         const res = await axios.get('');
     }catch(error) {
@@ -8,7 +8,7 @@ const getPost = async () => {
     }
 }
 
-const getProfilePic = async () => {
+export const getProfilePic = async () => {
     try {
         const res = await axios.get('');
     }catch(error) {
