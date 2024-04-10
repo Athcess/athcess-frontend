@@ -24,7 +24,39 @@ export const getComment = async () => {
     }
 }
 
-export const postComment = async (e) => {
+export const getEvent = async () => {
+    try {
+        const res = await axios.get('');
+    }catch(error) {
+        console.log(error);
+    }
+}
+
+export const getFriend = async () => {
+    try {
+        const res = await axios.get('');
+    }catch(error) {
+        console.log(error);
+    }
+}
+
+export const getFriendRequest = async () => {
+    try {
+        const res = await axios.get('');
+    }catch(error) {
+        console.log(error);
+    }
+}
+
+export const getNotification = async () => {
+    try {
+        const res = await axios.get('');
+    }catch(error) {
+        console.log(error);
+    }
+}
+
+export const postPost = async (e) => {
     try {
         const res = await axios.post('', {
             data : e
@@ -34,7 +66,7 @@ export const postComment = async (e) => {
     }
 }
 
-export const postPost = async (e) => {
+export const postComment = async (e) => {
     try {
         const res = await axios.post('', {
             data : e
