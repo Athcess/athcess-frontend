@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useToggle, upperFirst } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import useSignIn from "react-auth-kit/hooks/useSignIn";
 import { useMutation }from "@tanstack/react-query"
+import { useAuth } from "../hooks/useAuth";
 
 import {
   TextInput,
@@ -21,6 +21,7 @@ import styles from "../scss/SignInPage.module.scss";
 import { signin } from "../Services/WelcomeAPI";
 
 export default function SignInPage(props) {
+  const { login } = useAuth();
   const navigate = useNavigate();
   const form = useForm({
     initialValues: {
@@ -29,17 +30,13 @@ export default function SignInPage(props) {
     },
   });
 
-  const signIn = useSignIn();
 
   const mutation = useMutation({
     mutationFn: signin,
     onSuccess: (data) => {
-      signIn({
-        token: data.token,
-        expiresIn: 3600,
-        tokenType: "Bearer",
-        authState: { username: form.values.username },
-      });
+      console.log(data.access_token)
+      login(form.values.username);
+
       navigate("/home");
     },
   });

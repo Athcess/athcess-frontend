@@ -32,21 +32,26 @@ import {
   Routes,
   Outlet,
 } from "react-router-dom";
-import RequireAuth from '@auth-kit/react-router/RequireAuth'
-import AuthOutlet from '@auth-kit/react-router/AuthOutlet'
+import { ProtectedRoute } from "../Components/ProtectedRoute";
+import { AuthProvider } from "../hooks/useAuth";
 
 import MyCalendar from "../Pages/Calendar";
 
 export default function AppRouter() {
   return (
-    <Router>
+
+    
+      <Router>
+        <AuthProvider>
       <Routes>
+      
         <Route
           element={ 
-            <>
+            <><ProtectedRoute>
               <NavigationBar></NavigationBar>
               <Outlet/>
-              {/* <AuthOutlet fallbackPath='/signin' /> */}
+              </ProtectedRoute>
+            
             </>
           }>
           <Route path="/home" element={<HomePage/>}/>
@@ -73,13 +78,17 @@ export default function AppRouter() {
             <Route path="post" element={<PostOrg></PostOrg>}></Route>
             <Route path="event" element={<EventOrg></EventOrg>}></Route>
           </Route>
+         
         </Route>
+        
         <Route path="/" element={<WelcomePage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/forgetpassword" element={<ForgetPasswordPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </Router>
+      </AuthProvider>
+      </Router>
+    
   );
 }
