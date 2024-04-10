@@ -25,6 +25,7 @@ import {
   IconArrowsLeftRight,
 } from "@tabler/icons-react";
 import NotiDropDown from "./NotiDropDown.jsx";
+import { useAuth } from "../hooks/useAuth";
 export default function NavigationBar() {
   const [isLogin, setIsLogin] = useState(true);
   const [menuOpened, setmenuOpened] = useState(false);
@@ -35,11 +36,12 @@ export default function NavigationBar() {
       tosearch: "",
     },
   });
+  const { logout } = useAuth();
   const search = (e) => {
     navigate("/search/" + e.tosearch);
   };
   const signout = () => {
-    navigate("/signin");
+    logout();
   };
   const chat = () => {
     navigate("/chat");

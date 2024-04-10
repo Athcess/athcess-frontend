@@ -3,7 +3,6 @@ import { useToggle, upperFirst } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import {useMutation} from '@tanstack/react-query'
-import useSignIn from 'react-auth-kit/hooks/useSignIn';
 
 import { DatePicker } from "@mui/x-date-pickers";
 import {
@@ -49,7 +48,7 @@ export default function SignUpPage(props) {
       email: (val) =>
         /^\S+@\S+$/.test(val) || val === "" ? null : "Invalid email",
       password: (val) =>
-        val.length <= 6
+        val.length < 6
           ? "Password should include at least 6 characters"
           : null,
       confirm_password: (val) =>
@@ -68,18 +67,12 @@ export default function SignUpPage(props) {
     },
   });
 
-  const signIn = useSignIn();
+
 
   const mutation = useMutation({
     mutationFn : signup,
     onSuccess: (data) =>{
-      signIn({
-        token: data.token,
-        expiresIn : 3600,
-        tokenType : "Bearer",
-        authState : {username: form.values.username}
-
-      });
+     
     }
   })
 
@@ -415,7 +408,7 @@ export default function SignUpPage(props) {
                   </Group>
                   {form.values.role === "athlete" && (
                     <>
-                      <MultiSelect
+                      <Select
                         radius="md"
                         label="Position"
                         placeholder="Select positions"
@@ -429,17 +422,17 @@ export default function SignUpPage(props) {
                           form.setFieldValue("position", event)
                         }
                         data={[
-                          ("GK", "Goalkeeper"),
-                          ("CB", "Center Back"),
-                          ("LB", "Left Back"),
-                          ("RB", "Right Back"),
-                          ("CM", "Center Midfield"),
-                          ("LM", "Left Midfield"),
-                          ("RM", "Right Midfield"),
-                          ("CAM", "Center Attacking Midfield"),
-                          ("LW", "Left Wing"),
-                          ("RW", "Right Wing"),
-                          ("ST", "Striker"),
+                          {value : "GK", label :"Goalkeeper"},
+                          {value :"CB", label :"Center Back"},
+                          {value :"LB", label :"Left Back"},
+                          {value :"RB", label :"Right Back"},
+                          {value :"CM", label :"Center Midfield"},
+                          {value :"LM", label :"Left Midfield"},
+                          {value :"RM", label :"Right Midfield"},
+                          {value :"CAM",label : "Center Attacking Midfield"},
+                          {value :"LW", label :"Left Wing"},
+                          {value :"RW", label :"Right Wing"},
+                          {value :"ST", label :"Striker"},
                         ]}
                       />
                       <Group className={styles.education}>
