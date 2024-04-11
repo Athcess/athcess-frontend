@@ -36,12 +36,8 @@ export default function WelcomePage() {
             </div>
           </Group>
           <Text ta="center">
-            <Anchor
-            underline="always"
-            href="/home" 
-            c="dimmed"
-            size="md">
-            Continue as a Guest
+            <Anchor underline="always" href="/homeguest" c="dimmed" size="md">
+              Continue as a Guest
             </Anchor>
           </Text>
         </div>

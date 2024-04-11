@@ -36,59 +36,56 @@ import { ProtectedRoute } from "../Components/ProtectedRoute";
 import { AuthProvider } from "../hooks/useAuth";
 
 import MyCalendar from "../Pages/Calendar";
+import HomePageGuest from "../Pages/HomePageGuest";
 
 export default function AppRouter() {
   return (
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route
+            element={
+              <>
+                <ProtectedRoute>
+                  <NavigationBar></NavigationBar>
+                  <Outlet />
+                </ProtectedRoute>
+              </>
+            }>
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/homeguest" element={<HomePageGuest />} />
+            <Route path="/chat" element={<ChatPage />} />
+            <Route path="/search/:tosearch" element={<SearchPage />} />
+            <Route path="/post/:postid" element={<PostPage />} />
+            <Route path="/friend" element={<FriendListPage />} />
+            <Route path="/bodyanalyzer" element={<BodyAnalyzerPage />} />
+            <Route path="/Calendar" element={<MyCalendar />} />
 
-    
-      <Router>
-        <AuthProvider>
-      <Routes>
-      
-        <Route
-          element={ 
-            <><ProtectedRoute>
-              <NavigationBar></NavigationBar>
-              <Outlet/>
-              </ProtectedRoute>
-            
-            </>
-          }>
-          <Route path="/home" element={<HomePage/>}/>
-          <Route path="/chat" element={<ChatPage />} />
-          <Route path="/search/:tosearch" element={<SearchPage />} />
-          <Route path="/post/:postid" element={<PostPage />} />
-          <Route path="/friend" element={<FriendListPage />} />
-          <Route path="/bodyanalyzer" element={<BodyAnalyzerPage />} />
-          <Route path="/Calendar" element={<MyCalendar />} />
+            <Route path="/athleteprofile" element={<AthleteProfilePage />}>
+              <Route index element={<AboutAthlete></AboutAthlete>}></Route>
+              <Route path="post" element={<PostAthlete></PostAthlete>}></Route>
+              <Route
+                path="highlight"
+                element={<HighlightAthlete></HighlightAthlete>}></Route>
+            </Route>
+            <Route path="/scoutprofile" element={<ScoutProfilePage />}>
+              <Route index element={<AboutScout></AboutScout>}></Route>
+              <Route path="post" element={<PostScout></PostScout>}></Route>
+            </Route>
+            <Route path="/orgprofile" element={<OrgProfilePage />}>
+              <Route index element={<AboutOrg></AboutOrg>}></Route>
+              <Route path="post" element={<PostOrg></PostOrg>}></Route>
+              <Route path="event" element={<EventOrg></EventOrg>}></Route>
+            </Route>
+          </Route>
 
-          <Route path="/athleteprofile" element={<AthleteProfilePage />}>
-            <Route index element={<AboutAthlete></AboutAthlete>}></Route>
-            <Route path="post" element={<PostAthlete></PostAthlete>}></Route>
-            <Route
-              path="highlight"
-              element={<HighlightAthlete></HighlightAthlete>}></Route>
-          </Route>
-          <Route path="/scoutprofile" element={<ScoutProfilePage />}>
-            <Route index element={<AboutScout></AboutScout>}></Route>
-            <Route path="post" element={<PostScout></PostScout>}></Route>
-          </Route>
-          <Route path="/orgprofile" element={<OrgProfilePage />}>
-            <Route index element={<AboutOrg></AboutOrg>}></Route>
-            <Route path="post" element={<PostOrg></PostOrg>}></Route>
-            <Route path="event" element={<EventOrg></EventOrg>}></Route>
-          </Route>
-         
-        </Route>
-        
-        <Route path="/" element={<WelcomePage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/signin" element={<SignInPage />} />
-        <Route path="/forgetpassword" element={<ForgetPasswordPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+          <Route path="/" element={<WelcomePage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/signin" element={<SignInPage />} />
+          <Route path="/forgetpassword" element={<ForgetPasswordPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
       </AuthProvider>
-      </Router>
-    
+    </Router>
   );
 }
