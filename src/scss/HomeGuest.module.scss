@@ -1,0 +1,79 @@
+
+.container{
+    justify-items: center;
+    height: 100%;
+  }
+  .content {
+    width: 100%;
+    background-color: #fefefa;
+    padding: 70px;
+    gap: 30px;
+    display: flex;
+    
+    div {
+    }
+    
+    .leftContent {
+      display: flex;
+      flex-direction: column;
+      width: 25%;
+      min-width: 250px;
+      height: auto;
+      gap: 20px;
+  
+      .friendSuggestion {
+        display: flex;
+        flex-direction: column;
+        border-radius: 30px;
+        border: 1px solid grey;
+        background-color: white;
+        width: 100%;
+        padding: 20px;
+        gap: 30px;
+        height: auto;
+        .friendSuggestionTitle {
+          font-weight: bold;
+          color: grey;
+          align-self: center;
+        }
+        .friendSuggestionList {
+          display: flex;
+          width: 100%;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 30px;
+        }
+      }
+    }
+    .rightContent {
+      width: 75%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    
+    width: 100%;
+    height: 70px;
+    gap: 0.625rem;
+    background-color: #007458;
+    color: white;
+    justify-content: space-between;
+  
+    padding: 0rem 1.875rem 0px 1.875rem;
+    .button{
+        color: #007458;
+        margin-right: 2rem;
+    }
+    .headerText {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-left: 2rem;
+    }
+  }
+  

@@ -53,7 +53,6 @@ export default function AppRouter() {
               </>
             }>
             <Route path="/home" element={<HomePage />} />
-            <Route path="/homeguest" element={<HomePageGuest />} />
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/search/:tosearch" element={<SearchPage />} />
             <Route path="/post/:postid" element={<PostPage />} />
@@ -80,6 +79,7 @@ export default function AppRouter() {
           </Route>
 
           <Route path="/" element={<WelcomePage />} />
+          <Route path="/homeguest" element={<HomePageGuest />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/signin" element={<SignInPage />} />
           <Route path="/forgetpassword" element={<ForgetPasswordPage />} />
