@@ -37,6 +37,8 @@ import { AuthProvider } from "../hooks/useAuth";
 
 import MyCalendar from "../Pages/Calendar";
 import HomePageGuest from "../Pages/HomePageGuest";
+import SubscriptionPage from "../Pages/SubscriptionPage";
+import CheckoutPage from "../Pages/CheckoutPage";
 
 export default function AppRouter() {
   return (
@@ -54,6 +56,11 @@ export default function AppRouter() {
             }>
             <Route path="/home" element={<HomePage />} />
             <Route path="/chat" element={<ChatPage />} />
+            <Route path="/calendar" element={<MyCalendar />} />
+            <Route path="/subscription" element={<SubscriptionPage />} />
+            <Route
+              path="/checkout"
+              element={<CheckoutPage></CheckoutPage>}></Route>
             <Route path="/search/:tosearch" element={<SearchPage />} />
             <Route path="/post/:postid" element={<PostPage />} />
             <Route path="/friend" element={<FriendListPage />} />

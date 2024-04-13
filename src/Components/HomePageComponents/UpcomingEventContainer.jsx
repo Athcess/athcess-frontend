@@ -14,9 +14,6 @@ export function UpcomingEventContainerTrue() {
           <li>dsadssadadsadasdsadasdasdasdsa</li>
           <li>ddsdssdsdwqdssadaas</li>
         </ul>
-        <UnstyledButton className={styles.calendar}>
-          <Image src="/Images/calendar_color_logo.png" />
-        </UnstyledButton>
       </div>
     </div>
   );
@@ -34,8 +31,7 @@ export function UpcomingEventContainerFalse() {
           size="md"
           radius="xl"
           component="a"
-          href="/signin"
-        >
+          href="/signin">
           Sign in
         </Button>
       </div>

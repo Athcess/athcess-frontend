@@ -7,14 +7,14 @@
   background-color: white;
   min-height: 1000px;
   max-width: 100%;
+  min-width: 700px;
   height: auto;
   padding: 20px;
   div {
     // border: 1px solid red;
   }
-  
 }
-.modal{
+.modal {
   border: 2px solid black;
 }
 .profile {
@@ -34,7 +34,7 @@
       flex-direction: column;
       justify-content: center;
       width: 100%;
-      
+
       .profileName {
         display: flex;
         gap: 2rem;
@@ -58,8 +58,8 @@
 }
 
 .text {
- margin-top: 1rem;
- margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 .postImage {
   max-height: 500px;

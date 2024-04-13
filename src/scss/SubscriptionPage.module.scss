@@ -1,0 +1,89 @@
+.container {
+  width: 100%;
+  margin-top: 70px;
+  padding: 6rem;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  gap: 3rem;
+
+  .packageContainer {
+    width: 400px;
+    height: 500px;
+    border: 1px solid #007458;
+    background-color: #007458;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    width: 100%;
+    color: white;
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
+  .content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0 0 30px 30px;
+    background-color: white;
+    padding: 1.5rem;
+    gap: 1.7rem;
+    .feature {
+      display: flex;
+      flex-direction: column;
+      height: 200px;
+      gap: 1rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+    div {
+      display: flex;
+      justify-content: space-between;
+    }
+    .priceContainer {
+      margin-top: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-weight: bold;
+      color: #007458;
+      font-size: 1.4rem;
+      .price {
+        font-size: 3rem;
+        line-height: 2.2rem;
+      }
+    }
+    .notCurrent {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50px;
+      width: 100%;
+      color: white;
+      border-radius: 5px;
+      border: 1px solid #007458;
+      background-color: #007458;
+      font-weight: bold;
+    }
+    .current {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50px;
+      width: 100%;
+      color: #007458;
+      border-radius: 5px;
+      border: 1px solid #007458;
+      background-color: white;
+      font-weight: bold;
+    }
+  }
+}

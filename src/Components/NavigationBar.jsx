@@ -13,7 +13,7 @@ import {
   TextInput,
   Anchor,
   Popover,
-  Autocomplete
+  Autocomplete,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
@@ -43,8 +43,14 @@ export default function NavigationBar() {
   const signout = () => {
     logout();
   };
+  const gopro = () => {
+    navigate("/subscription");
+  };
   const chat = () => {
     navigate("/chat");
+  };
+  const calendar = () => {
+    navigate("/calendar");
   };
   const athleteprofile = () => {
     navigate("/athleteprofile");
@@ -63,25 +69,21 @@ export default function NavigationBar() {
           className={styles.headerText}
           underline="never"
           href="/home"
-          size="xs"
-        >
+          size="xs">
           ATHCESS
         </Anchor>
       </div>
       <form
         className={styles.search}
-        onSubmit={form.onSubmit((values) => search(values))}
-      >
+        onSubmit={form.onSubmit((values) => search(values))}>
         <Autocomplete
           className={styles.search}
           placeholder="Search"
           radius="20px"
           limit={3}
-          data={['Football 1', 'Basketball 1', 'Basketball 2', 'Football 2']}
-          comboboxProps={{ zIndex: 1000, offset:2 }}
-          onChange={(event) =>
-            form.setFieldValue("tosearch", event)
-          }
+          data={["Football 1", "Basketball 1", "Basketball 2", "Football 2"]}
+          comboboxProps={{ zIndex: 1000, offset: 2 }}
+          onChange={(event) => form.setFieldValue("tosearch", event)}
           leftSection={
             <IconSearch
               style={{ width: rem(16), height: rem(16) }}
@@ -91,7 +93,7 @@ export default function NavigationBar() {
           visibleFrom="xs"
         />
       </form>
-      <UnstyledButton>
+      <UnstyledButton onClick={calendar}>
         <Image src="/Images/calendar_logo.png" className={styles.image} />
       </UnstyledButton>
       <UnstyledButton onClick={chat}>
@@ -124,8 +126,7 @@ export default function NavigationBar() {
             size="md"
             radius="xl"
             component="a"
-            href="/signin"
-          >
+            href="/signin">
             Sign in
           </Button>
         </div>
@@ -146,10 +147,8 @@ export default function NavigationBar() {
             leftSection={
               <Image
                 src="/Images/MenuBar/add_logo.png"
-                style={{ width: rem(32), height: rem(32) }}
-              ></Image>
-            }
-          >
+                style={{ width: rem(32), height: rem(32) }}></Image>
+            }>
             Post
           </Menu.Item>
           <Menu.Divider />
@@ -158,10 +157,8 @@ export default function NavigationBar() {
             leftSection={
               <Image
                 src="/Images/MenuBar/friend_logo.png"
-                style={{ width: rem(32), height: rem(32) }}
-              ></Image>
-            }
-          >
+                style={{ width: rem(32), height: rem(32) }}></Image>
+            }>
             Friends
           </Menu.Item>
           <Menu.Divider />
@@ -170,10 +167,8 @@ export default function NavigationBar() {
             leftSection={
               <Image
                 src="/Images/MenuBar/body_logo.png"
-                style={{ width: rem(32), height: rem(32) }}
-              ></Image>
-            }
-          >
+                style={{ width: rem(32), height: rem(32) }}></Image>
+            }>
             Body Analyzer
           </Menu.Item>
           <Menu.Divider />
@@ -182,11 +177,21 @@ export default function NavigationBar() {
             leftSection={
               <Image
                 src="/Images/MenuBar/logout_logo.png"
-                style={{ width: rem(32), height: rem(32) }}
-              ></Image>
-            }
-          >
+                style={{ width: rem(32), height: rem(32) }}></Image>
+            }>
             Logout
+          </Menu.Item>
+          <Menu.Divider />
+          <Menu.Item
+            style={{
+              color: "gold",
+              fontWeight: "bold",
+              textAlign: "center",
+              fontSize: rem(24),
+            }}
+            onClick={gopro}
+            className={styles.gopro}>
+            GO PRO
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>

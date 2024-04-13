@@ -8,25 +8,27 @@ export default function FriendSuggestion() {
       <div className={styles.content}>
         <div className={styles.name}>วี่หว่อง หว่องวี่</div>
         <div className={styles.mutual}>2 mutual friends</div>
-        <div style={{ width: 110 }}>
-          <Button
-            fullWidth
-            variant="filled"
-            color="green"
-            radius="xl"
-            component="a">
-            Add friend
-          </Button>
-        </div>
-        <div style={{ width: 110 }}>
-          <Button
-            fullWidth
-            variant="filled"
-            color="grey"
-            radius="xl"
-            component="a">
-            Remove
-          </Button>
+        <div className={styles.buttonContainer}>
+          <div style={{ width: 110 }}>
+            <Button
+              fullWidth
+              variant="filled"
+              color="green"
+              radius="xl"
+              component="a">
+              Add friend
+            </Button>
+          </div>
+          <div style={{ width: 110 }}>
+            <Button
+              fullWidth
+              variant="filled"
+              color="grey"
+              radius="xl"
+              component="a">
+              Remove
+            </Button>
+          </div>
         </div>
       </div>
     </div>
