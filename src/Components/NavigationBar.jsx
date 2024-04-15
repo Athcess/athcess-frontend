@@ -26,7 +26,8 @@ import {
 } from "@tabler/icons-react";
 import NotiDropDown from "./NotiDropDown.jsx";
 import { useAuth } from "../hooks/useAuth";
-export default function NavigationBar() {
+import NewPostModal from "../Components/ProfilePageComponents/NewPostModal.jsx";
+export default function NavigationBar({ user, updateteir}) {
   const [isLogin, setIsLogin] = useState(true);
   const [menuOpened, setmenuOpened] = useState(false);
   const [opened, { toggle }] = useDisclosure();
@@ -62,20 +63,26 @@ export default function NavigationBar() {
     navigate("/bodyanalyzer");
   };
 
+  const [NewPostModalopened, { open, close }] = useDisclosure(false);
+  
+
   return (
     <header className={styles.container}>
+      <NewPostModal opened={NewPostModalopened} onClose={close} />
       <div>
         <Anchor
           className={styles.headerText}
           underline="never"
           href="/home"
-          size="xs">
+          size="xs"
+        >
           ATHCESS
         </Anchor>
       </div>
       <form
         className={styles.search}
-        onSubmit={form.onSubmit((values) => search(values))}>
+        onSubmit={form.onSubmit((values) => search(values))}
+      >
         <Autocomplete
           className={styles.search}
           placeholder="Search"
@@ -126,7 +133,8 @@ export default function NavigationBar() {
             size="md"
             radius="xl"
             component="a"
-            href="/signin">
+            href="/signin"
+          >
             Sign in
           </Button>
         </div>
@@ -143,12 +151,14 @@ export default function NavigationBar() {
         </Menu.Target>
         <Menu.Dropdown>
           <Menu.Item
-            onClick={toggle}
+            onClick={open}
             leftSection={
               <Image
                 src="/Images/MenuBar/add_logo.png"
-                style={{ width: rem(32), height: rem(32) }}></Image>
-            }>
+                style={{ width: rem(32), height: rem(32) }}
+              ></Image>
+            }
+          >
             Post
           </Menu.Item>
           <Menu.Divider />
@@ -157,8 +167,10 @@ export default function NavigationBar() {
             leftSection={
               <Image
                 src="/Images/MenuBar/friend_logo.png"
-                style={{ width: rem(32), height: rem(32) }}></Image>
-            }>
+                style={{ width: rem(32), height: rem(32) }}
+              ></Image>
+            }
+          >
             Friends
           </Menu.Item>
           <Menu.Divider />
@@ -167,8 +179,10 @@ export default function NavigationBar() {
             leftSection={
               <Image
                 src="/Images/MenuBar/body_logo.png"
-                style={{ width: rem(32), height: rem(32) }}></Image>
-            }>
+                style={{ width: rem(32), height: rem(32) }}
+              ></Image>
+            }
+          >
             Body Analyzer
           </Menu.Item>
           <Menu.Divider />
@@ -177,22 +191,39 @@ export default function NavigationBar() {
             leftSection={
               <Image
                 src="/Images/MenuBar/logout_logo.png"
-                style={{ width: rem(32), height: rem(32) }}></Image>
-            }>
+                style={{ width: rem(32), height: rem(32) }}
+              ></Image>
+            }
+          >
             Logout
           </Menu.Item>
-          <Menu.Divider />
-          <Menu.Item
-            style={{
-              color: "gold",
-              fontWeight: "bold",
-              textAlign: "center",
-              fontSize: rem(24),
-            }}
-            onClick={gopro}
-            className={styles.gopro}>
-            GO PRO
-          </Menu.Item>
+          {!user.teir && (
+            <>
+              <Menu.Divider />
+              <Menu.Item
+                style={{
+                  color: "gold",
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  fontSize: rem(24),
+                }}
+                onClick={gopro}
+                className={styles.gopro}
+              >
+                GO PRO
+              </Menu.Item>
+            </>
+          )}
+          {user.teir && (
+            <>
+              <Menu.Divider />
+              <Menu.Item
+                onClick={() => navigate('/subscription')}
+              >
+                Manage subscription
+              </Menu.Item>
+            </>
+          )}
         </Menu.Dropdown>
       </Menu>
     </header>

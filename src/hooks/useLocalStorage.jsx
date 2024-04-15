@@ -24,3 +24,12 @@ export const useLocalStorage = (keyName, defaultValue) => {
   };
   return [storedValue, setValue];
 };
+
+export const saveUserToLocalStorage = (user) => {
+  localStorage.setItem('user', JSON.stringify(user));
+};
+
+export const getUserFromLocalStorage = () => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  return user || {}; // return an empty object if user data is not found
+};

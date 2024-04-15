@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import NavigationBar from "../Components/NavigationBar";
 import WelcomePage from "../Pages/WelcomePage";
 import SignUpPage from "../Pages/SignUpPage";
@@ -34,6 +34,7 @@ import {
 } from "react-router-dom";
 import { ProtectedRoute } from "../Components/ProtectedRoute";
 import { AuthProvider } from "../hooks/useAuth";
+import { getUserFromLocalStorage, saveUserToLocalStorage } from "../hooks/useLocalStorage";
 
 import MyCalendar from "../Pages/Calendar";
 import HomePageGuest from "../Pages/HomePageGuest";
@@ -41,6 +42,34 @@ import SubscriptionPage from "../Pages/SubscriptionPage";
 import CheckoutPage from "../Pages/CheckoutPage";
 
 export default function AppRouter() {
+  const [user, setUser] = useState(getUserFromLocalStorage() || {
+    username: "",
+    first_name: "",
+    last_name: "",
+    role: "",
+    age: "",
+    hometown: "",
+    position: "",
+    birth_date: "",
+    education: ["", ""],
+    teir: false,
+    //organization
+    organization: "",
+  });
+
+    const updateteir = (newteir) => {
+      setUser(prevUser => ({
+        ...prevUser,
+        teir: newteir
+      }));
+    };
+  
+    // Save user data to local storage whenever it changes
+    useEffect(() => {
+      saveUserToLocalStorage(user);
+    }, [user]);
+  
+  
   return (
     <Router>
       <AuthProvider>
@@ -49,7 +78,7 @@ export default function AppRouter() {
             element={
               <>
                 <ProtectedRoute>
-                  <NavigationBar></NavigationBar>
+                  <NavigationBar user={user} updateteir = {updateteir}></NavigationBar>
                   <Outlet />
                 </ProtectedRoute>
               </>
@@ -57,11 +86,11 @@ export default function AppRouter() {
             <Route path="/home" element={<HomePage />} />
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/calendar" element={<MyCalendar />} />
-            <Route path="/subscription" element={<SubscriptionPage />} />
+            <Route path="/subscription" element={<SubscriptionPage user={user} updateteir = {updateteir}/>} />
             <Route
               path="/checkout"
-              element={<CheckoutPage></CheckoutPage>}></Route>
-            <Route path="/search/:tosearch" element={<SearchPage />} />
+              element={<CheckoutPage updateteir={updateteir} ></CheckoutPage>}></Route>
+            <Route path="/search/:tosearch" element={<SearchPage user={user}/>} />
             <Route path="/post/:postid" element={<PostPage />} />
             <Route path="/friend" element={<FriendListPage />} />
             <Route path="/bodyanalyzer" element={<BodyAnalyzerPage />} />

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ImageUploading from 'react-images-uploading';
+import ImageUploading from "react-images-uploading";
 import {
   Modal,
   Text,
@@ -18,25 +18,33 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
+import { useMutation } from "@tanstack/react-query";
 
 import styles from "../../scss/ProfilePageComponents/NewPostModal.module.scss";
+import { postPost } from "../../Services/HomeAPI";
 
 export default function NewPostModal({ opened, onClose }) {
-  
-  const [images, setImages] = useState([]);
-  const maxNumber = 69;
+  const form = useForm({
+    initialValues: {
+      username: "tri",
+      description: "",
+      file: null,
+      highlight: false,
+    },
+  });
 
-  const onChange = (imageList, addUpdateIndex) => {
-    // data for submit
-    console.log(imageList, addUpdateIndex);
-    setImages(imageList);
-  };
+  const mutation = useMutation({
+    mutationFn: postPost,
+    onSuccess: (data) => {
+      console.log(data)
+    },
+   });
 
-
-  const handleFileInputChange = (files) => {
-    console.log(files);
-    setImages(files);
-    console.log(images.name)
+  const post = (e) => {
+    e.preventDefault();
+    console.log(form.values);
+    mutation.mutate(form.values);
+    
   };
 
   return (
@@ -62,52 +70,29 @@ export default function NewPostModal({ opened, onClose }) {
           />
           <div className={styles.profileName}>วี่หว่อง หว่องวี่</div>
         </div>
-
-        <div className={styles.content}>
-          <Textarea placeholder="Write description"></Textarea>
-          <ImageUploading
-        multiple
-        value={images}
-        onChange={onChange}
-        maxNumber={maxNumber}
-        dataURLKey="data_url"
-        className={styles.image}
-      >
-        {({
-          imageList,
-          onImageUpload,
-          onImageUpdate,
-          onImageRemove,
-          isDragging,
-          dragProps,
-        }) => (
-          // write your building UI
-          <div  >
-            <Anchor
-              style={isDragging ? { color: 'red' } : undefined}
-              onClick={onImageUpload}
-              {...dragProps}
-            >
-              Select Image
-            </Anchor>
-            &nbsp;
-            {imageList.map((image, index) => (
-              <div key={index} className="image-item">
-                <img src={image['data_url']} alt="" width="100" className={styles.image}/>
-                <div className="image-item__btn-wrapper">
-                  <button onClick={() => onImageUpdate(index)}>Update</button>
-                  <button onClick={() => onImageRemove(index)}>Remove</button>
-                </div>
-              </div>
-            ))}
+        <form onSubmit={post}>
+          <div className={styles.content}>
+            <Textarea
+              placeholder="Write description"
+              onChange={(event) =>
+                form.setFieldValue("description", event.currentTarget.value)
+              }
+            ></Textarea>
+            <FileInput
+              onChange={(event) => form.setFieldValue("file", event)}
+            />
+            <Checkbox
+              defaultChecked
+              label="Add this post to your highlight page"
+              onChange={(event) =>
+                form.setFieldValue("highlight", event.currentTarget.checked)
+              }
+            />
           </div>
-        )}
-      </ImageUploading>
-          <Checkbox
-            defaultChecked
-            label="Add this post to your highlight page"
-          />
-        </div>
+          <Button fullWidth color="#00A67E" type="submit">
+            POST
+          </Button>
+        </form>
       </div>
     </Modal>
   );

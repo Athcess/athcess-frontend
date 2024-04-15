@@ -40,7 +40,8 @@ function CheckoutPage(props) {
           radius="md"
           p="xl"
           withBorder
-          {...props}>
+          {...props}
+        >
           <Text ta="center" size="lg" fw={500}>
             Card Information
           </Text>
@@ -82,8 +83,10 @@ function CheckoutPage(props) {
                 type="submit"
                 style={{ backgroundColor: "#007458" }}
                 onClick={() => {
-                  navigate("/home");
-                }}>
+                  props.updateteir(true); 
+                  navigate("/home"); 
+                }}
+              >
                 Pay Now
               </Button>
             </Stack>

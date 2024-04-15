@@ -23,6 +23,8 @@ import {
   FriendSuggestionContainerFalse,
 } from "../Components/HomePageComponents/FriendSuggestionContainer";
 
+
+
 export default function HomePage() {
   const [isLogin, setIsLogin] = useState(true);
 
