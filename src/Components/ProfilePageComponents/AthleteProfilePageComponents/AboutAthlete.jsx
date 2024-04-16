@@ -12,11 +12,11 @@ export default function AboutAthlete() {
   const [Backgroundopened, Background] = useDisclosure(false);
   const [Achievementopened, Achievement] = useDisclosure(false);
   const radarData = {
-    labels: ["Strength", "Stamina", "Insight", "Endurance", "Defense", "Magic"],
+    labels: ["Running", "Pushup", "Situp"],
     datasets: [
       {
         label: "Physical Attributes",
-        data: [3, 6, 9, 12, 15, 18],
+        data: [3, 6, 9],
         fill: true,
         radius: 1,
         backgroundColor: "green",

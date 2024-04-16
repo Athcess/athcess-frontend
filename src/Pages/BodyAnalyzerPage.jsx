@@ -32,7 +32,7 @@ export default function BodyAnalyzerPage() {
     const formData = new FormData();
     formData.append("video", file);
     formData.append("exerciseType", exerciseType);
-    console.log(formData.get('video'));
+    console.log(formData.get("video"));
 
     // try {
     //   // Send POST request to the API endpoint
@@ -55,15 +55,8 @@ export default function BodyAnalyzerPage() {
   };
 
   const data = {
-    labels: [
-      "Strength",
-      "Endurance",
-      "Flexibility",
-      "Speed",
-      "Balance",
-      "Power",
-    ],
-    amounts: [3, 6, 9, 12, 15, 18],
+    labels: ["Running", "Pushup", "Situp"],
+    amounts: [3, 6, 9],
   };
   const radarData = {
     labels: data.labels,

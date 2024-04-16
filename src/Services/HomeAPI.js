@@ -118,3 +118,11 @@ export const getEventToCalendar = async () => {
     console.log(error);
   }
 };
+
+export const getPhyAtt = async () => {
+  try {
+    const res = await axios.get("");
+  } catch (error) {
+    console.log(error);
+  }
+};
