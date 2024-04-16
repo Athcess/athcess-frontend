@@ -1,6 +1,5 @@
 import axios from "axios";
-import Cookies from 'js-cookie'
-
+import Cookies from "js-cookie";
 
 export const getPost = async () => {
   try {
@@ -60,17 +59,21 @@ export const getNotification = async () => {
 
 export const postPost = async (e) => {
   try {
-    const access_token = Cookies.get('auth_token')
-    const res = await axios.post("http://127.0.0.1:8000/services/post/", {
-      username: e.username,
-      description: e.description,
-      has_attachment: true,
-    },{
+    const access_token = Cookies.get("auth_token");
+    const res = await axios.post(
+      "http://127.0.0.1:8000/services/post/",
+      {
+        username: e.username,
+        description: e.description,
+        has_attachment: true,
+      },
+      {
         headers: {
-          'Authorization': `Bearer ${access_token}` 
-        }
-      })
-      console.log(res)
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    console.log(res);
   } catch (error) {
     console.log(error);
   }
@@ -103,6 +106,14 @@ export const postSearch = async (e) => {
       },
       search_info: e.keyword,
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getEventToCalendar = async () => {
+  try {
+    const res = await axios.get("");
   } catch (error) {
     console.log(error);
   }
