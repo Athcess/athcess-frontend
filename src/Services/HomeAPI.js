@@ -111,11 +111,19 @@ export const postSearch = async (e) => {
   }
 };
 
-export const getEventToCalendar = async () => {
+export const getCalendar = async () => {
   try {
-    const res = await axios.get("");
+    const res = await axios.get("http://127.0.0.1:8000/service/calendar/get/");
+
+    // if (res.status < 200 || res.status >= 300 || res.name == "AxiosError") {
+    //   console.log("ERROR");
+    //   throw new Error("Failed to fetch data");
+    // }
+
+    return res;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching data:", error);
+    throw error;
   }
 };
 
