@@ -1,6 +1,8 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
+const access_token = Cookies.get("auth_token");
+const auth_username = Cookies.get("auth_username");
 export const getPost = async () => {
   try {
     const res = await axios.get("");
@@ -59,13 +61,15 @@ export const getNotification = async () => {
 
 export const postPost = async (e) => {
   try {
-    const access_token = Cookies.get("auth_token");
+
+
     const res = await axios.post(
       "http://127.0.0.1:8000/services/post/",
       {
-        username: e.username,
+        username: auth_username,
         description: e.description,
         has_attachment: true,
+        highlight : e.highlight,
       },
       {
         headers: {
@@ -78,6 +82,29 @@ export const postPost = async (e) => {
     console.log(error);
   }
 };
+
+export const postEvent = async (e) => {
+  try {
+
+
+    const res = await axios.post(
+      "http://127.0.0.1:8000/services/calendar/",
+      {
+        content: e.description,
+        org_name : "Mcgrath Group",
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    console.log(res);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 export const postComment = async (e) => {
   try {

@@ -6,11 +6,11 @@ import ProfileElement from "../../Components/ProfilePageComponents/ProfileElemen
 import EditProfileModalAthlete from "../../Components/ProfilePageComponents/AthleteProfilePageComponents/EditProfileModalAthlete";
 
 export default function OrgProfilePage() {
-  const [opened, { open, close }] = useDisclosure(false);
+
 
   return (
     <>
-      <EditProfileModalAthlete opened={opened} onClose={close} />
+   
       <div className={styles.container}>
         <ProfileElement type="org"></ProfileElement>
         <Outlet></Outlet>

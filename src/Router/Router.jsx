@@ -63,8 +63,12 @@ export default function AppRouter() {
         teir: newteir
       }));
     };
+
+    const newUser = (data) =>{
+      setUser(data)
+      console.log(user)
+    }
   
-    // Save user data to local storage whenever it changes
     useEffect(() => {
       saveUserToLocalStorage(user);
     }, [user]);
@@ -96,14 +100,14 @@ export default function AppRouter() {
             <Route path="/bodyanalyzer" element={<BodyAnalyzerPage />} />
             <Route path="/Calendar" element={<MyCalendar />} />
 
-            <Route path="/athleteprofile" element={<AthleteProfilePage />}>
+            <Route path="/athleteprofile" element={<AthleteProfilePage user={user}/>}>
               <Route index element={<AboutAthlete></AboutAthlete>}></Route>
-              <Route path="post" element={<PostAthlete></PostAthlete>}></Route>
+              <Route path="post" element={<PostAthlete user={user}></PostAthlete>}></Route>
               <Route
                 path="highlight"
                 element={<HighlightAthlete></HighlightAthlete>}></Route>
             </Route>
-            <Route path="/scoutprofile" element={<ScoutProfilePage />}>
+            <Route path="/scoutprofile" element={<ScoutProfilePage user={user}/>}>
               <Route index element={<AboutScout></AboutScout>}></Route>
               <Route path="post" element={<PostScout></PostScout>}></Route>
             </Route>
@@ -117,7 +121,7 @@ export default function AppRouter() {
           <Route path="/" element={<WelcomePage />} />
           <Route path="/homeguest" element={<HomePageGuest />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/signin" element={<SignInPage />} />
+          <Route path="/signin" element={<SignInPage newUser={newUser}/>} />
           <Route path="/forgetpassword" element={<ForgetPasswordPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

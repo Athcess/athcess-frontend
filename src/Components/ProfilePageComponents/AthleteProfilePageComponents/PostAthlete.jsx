@@ -5,12 +5,13 @@ import {useDisclosure} from "@mantine/hooks"
 import styles from "../../../scss/ProfilePageComponents/AthleteProfilePageComponents/PostAthlete.module.scss";
 import Post from "../../Post";
 import NewPostModal from "../NewPostModal";
-export default function PostAthlete() {
+export default function PostAthlete({user}) {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
     <div className={styles.container}>
-      <NewPostModal opened={opened} onClose={close} />
+      {user.role}
+      <NewPostModal opened={opened} onClose={close} user={user} />
       <div className={styles.header}>
         <NavLink className={styles.link} to="/athleteprofile">
           <UnstyledButton>About</UnstyledButton>

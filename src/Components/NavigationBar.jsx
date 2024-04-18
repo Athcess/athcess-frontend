@@ -53,8 +53,14 @@ export default function NavigationBar({ user, updateteir}) {
   const calendar = () => {
     navigate("/calendar");
   };
-  const athleteprofile = () => {
-    navigate("/athleteprofile");
+  const profile = () => {
+    if(user.role==="athlete"){
+    navigate("/athleteprofile")}
+    if(user.role==="scout"){
+      navigate("/scoutprofile")}
+    if(user.role==="admin"){
+        navigate("/orgprofile")}
+    ;
   };
   const friendlist = () => {
     navigate("/friend");
@@ -68,7 +74,7 @@ export default function NavigationBar({ user, updateteir}) {
 
   return (
     <header className={styles.container}>
-      <NewPostModal opened={NewPostModalopened} onClose={close} />
+      <NewPostModal opened={NewPostModalopened} onClose={close} user={user}/>
       <div>
         <Anchor
           className={styles.headerText}
@@ -118,7 +124,7 @@ export default function NavigationBar({ user, updateteir}) {
         </Popover.Dropdown>
       </Popover>
       {isLogin ? (
-        <UnstyledButton onClick={athleteprofile}>
+        <UnstyledButton onClick={profile}>
           <Image
             src="/Images/profile_logo.jpeg"
             className={styles.profileImage}
@@ -197,7 +203,9 @@ export default function NavigationBar({ user, updateteir}) {
           >
             Logout
           </Menu.Item>
-          {!user.teir && (
+
+          
+          {(!user.teir && user.role==="scout") && (
             <>
               <Menu.Divider />
               <Menu.Item
@@ -214,7 +222,7 @@ export default function NavigationBar({ user, updateteir}) {
               </Menu.Item>
             </>
           )}
-          {user.teir && (
+          {(user.teir && user.role==="scout")&& (
             <>
               <Menu.Divider />
               <Menu.Item

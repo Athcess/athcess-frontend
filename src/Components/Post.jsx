@@ -99,7 +99,7 @@ export default function Post({ type }) {
                 className={styles.profileImage}
               />
             </UnstyledButton>
-            <p className={styles.profileContent}>
+            <div className={styles.profileContent}>
               {type === "event" ? (
                 <div className={styles.profileName}>
                   วี่หว่อง หว่องวี่ <UEvent></UEvent>
@@ -109,7 +109,7 @@ export default function Post({ type }) {
               )}
 
               <div className={styles.profileDate}>1 Jan 2024</div>
-            </p>
+            </div>
           </div>
           <UnstyledButton className={styles.editPost} onClick={open}>
             <Image src="/Images/ProfilePage/editPost_logo.png"></Image>

@@ -35,7 +35,20 @@ export default function SignInPage(props) {
   const mutation = useMutation({
     mutationFn: signin,
     onSuccess: (data) => {
-      console.log(data.access_token)
+      props.newUser(
+      {username: form.values.username,
+      first_name: 'tri',
+      last_name: "tri",
+      role: 'athlete',
+      age: data.data[0].age,
+      hometown: data.data[0].hometown,
+      position: data.data[0].position,
+      birth_date: data.data[0].birth_date,
+      education: data.data[0].education,
+      teir: data.data[0].tier,
+      //organization
+      organization: data.data[0].club,})
+
       login(form.values.username);
 
       navigate("/home");

@@ -21,30 +21,39 @@ import { useDisclosure } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
 
 import styles from "../../scss/ProfilePageComponents/NewPostModal.module.scss";
-import { postPost } from "../../Services/HomeAPI";
+import { postEvent, postPost } from "../../Services/HomeAPI";
 
-export default function NewPostModal({ opened, onClose }) {
+export default function NewPostModal({ opened, onClose, user }) {
   const form = useForm({
     initialValues: {
-      username: "tri",
       description: "",
       file: null,
       highlight: false,
+      event: false,
     },
   });
 
-  const mutation = useMutation({
+  const mutationpost = useMutation({
     mutationFn: postPost,
     onSuccess: (data) => {
-      console.log(data)
+      console.log(data);
     },
-   });
+  });
+  const mutationevent = useMutation({
+    mutationFn: postEvent,
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
 
   const post = (e) => {
     e.preventDefault();
     console.log(form.values);
-    mutation.mutate(form.values);
-    
+    if (form.values.event) {
+      mutationevent.mutate(form.values);
+    } else {
+      mutationpost.mutate(form.values);
+    }
   };
 
   return (
@@ -63,6 +72,7 @@ export default function NewPostModal({ opened, onClose }) {
       }}
     >
       <div className={styles.container}>
+        {user.role}
         <div className={styles.profile}>
           <Image
             src="/Images/profile_logo.jpeg"
@@ -81,14 +91,24 @@ export default function NewPostModal({ opened, onClose }) {
             <FileInput
               onChange={(event) => form.setFieldValue("file", event)}
             />
-            <Checkbox
-              defaultChecked
-              label="Add this post to your highlight page"
-              onChange={(event) =>
-                form.setFieldValue("highlight", event.currentTarget.checked)
-              }
-            />
+            {user.role == "athlete" && (
+              <Checkbox
+                label="Add this post to your highlight page"
+                onChange={(event) =>
+                  form.setFieldValue("highlight", event.currentTarget.checked)
+                }
+              />
+            )}
+            {user.role == "admin" && (
+              <Checkbox
+                label="Add to event"
+                onChange={(event) =>
+                  form.setFieldValue("event", event.currentTarget.checked)
+                }
+              />
+            )}
           </div>
+          <br></br>
           <Button fullWidth color="#00A67E" type="submit">
             POST
           </Button>

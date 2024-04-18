@@ -15,10 +15,34 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
+import { useMutation } from "@tanstack/react-query";
 
 import styles from "../../scss/ProfilePageComponents/EditAchievementModal.module.scss";
+import { post_achievement } from "../../Services/ProfileAPI";
 
 export default function EditAchievementModal({ opened, onClose }) {
+  const form = useForm({
+    initialValues: {
+      topic: "",
+      subTopic: "",
+      date: "",
+      description: "",
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: post_achievement, // Assuming you have a function named updateAchievement for updating achievements
+    onSuccess: (data) => {
+      console.log(data);
+      onClose(); // Close the modal on successful update
+    },
+  });
+
+  const postAchievement = (e) => {
+    e.preventDefault();
+    console.log(form.values);
+    mutation.mutate(form.values);
+  };
   return (
     <Modal
       opened={opened}
@@ -42,7 +66,9 @@ export default function EditAchievementModal({ opened, onClose }) {
           ></Image>
           <div className={styles.content}>
             <div className={styles.topic}>Youth National Basketball Team</div>
-            <div className={styles.description}>High School Diploma, Mathematics and Sciences</div>
+            <div className={styles.description}>
+              High School Diploma, Mathematics and Sciences
+            </div>
             <div className={styles.sub}>Jan 2024 </div>
             <div className={styles.description}> -Grade: 3.89</div>
           </div>
@@ -64,15 +90,35 @@ export default function EditAchievementModal({ opened, onClose }) {
         </div>
 
         <div className={styles.backgroundadd}>
-          <TextInput placeholder="Topic"></TextInput>
-          <TextInput placeholder="Sub topic"></TextInput>
-          <TextInput placeholder="Date"></TextInput>
-          <Textarea placeholder="Write description"></Textarea>
-          <Button color="#00A67E">ADD</Button>
+          <Textarea
+            autosize
+            placeholder="Topic"
+            onChange={(event) =>
+              form.setFieldValue("topic", event.target.value)
+            }
+          />
+          <Textarea
+            autosize
+            placeholder="Sub topic"
+            onChange={(event) =>
+              form.setFieldValue("subTopic", event.target.value)
+            }
+          />
+          <Textarea
+            autosize
+            placeholder="Date"
+            onChange={(event) => form.setFieldValue("date", event.target.value)}
+          />
+          <Textarea
+            placeholder="Write description"
+            onChange={(event) =>
+              form.setFieldValue("description", event.target.value)
+            }
+          />
+          <Button w={500} color="#00A67E" onClick={postAchievement}>
+            SAVE
+          </Button>
         </div>
-        <Button w={500} color="#00A67E">
-          SAVE
-        </Button>
       </div>
     </Modal>
   );

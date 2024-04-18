@@ -5,14 +5,11 @@ import styles from "../../scss/ProfilePage.module.scss";
 import EditProfileModalAthlete from "../../Components/ProfilePageComponents/AthleteProfilePageComponents/EditProfileModalAthlete";
 import ProfileElement from "../../Components/ProfilePageComponents/ProfileElement";
 
-export default function AthleteProfilePage() {
-  const [opened, { open, close }] = useDisclosure(false);
-
+export default function AthleteProfilePage({ user }) {
   return (
     <>
-      <EditProfileModalAthlete opened={opened} onClose={close} />
       <div className={styles.container}>
-        <ProfileElement type="athlete" openModal={open} />
+        <ProfileElement type="athlete" user={user} />
         <Outlet />
       </div>
     </>

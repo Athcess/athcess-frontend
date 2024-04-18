@@ -38,6 +38,7 @@ export const signin = async (e) =>{
     });
         console.log(response);
         Cookies.set('auth_token', response.data.access_token)
+        Cookies.set('auth_username', e.username)
         return response.data
     } catch(error){
         console.log(error);
