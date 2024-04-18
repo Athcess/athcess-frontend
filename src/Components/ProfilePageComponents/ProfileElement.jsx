@@ -23,6 +23,19 @@ export default function ProfileElement({ type, openModal, user }) {
 
   const queryClient = useQueryClient();
   const query = useQuery({ queryKey: ["repoData"], queryFn: profileAthlete });
+  const Position = {
+    GK: "Goalkeeper",
+    CB: "Center Back",
+    LB: "Left Back",
+    RB: "Right Back",
+    CM: "Center Midfield",
+    LM: "Left Midfield",
+    RM: "Right Midfield",
+    CAM: "Center Attacking Midfield",
+    LW: "Left Wing",
+    RW: "Right Wing",
+    ST: "Striker",
+  };
   if (query.status === "success") {
     const birthDate = new Date(query.data.data.birth_date);
     
@@ -52,7 +65,7 @@ export default function ProfileElement({ type, openModal, user }) {
           </div>
           <div className={styles.profileName}>
             <div className={styles.name}>
-              Daniel Thompson , {query.data.data.age}
+              {query.data.data.first_name} {query.data.data.last_name} , {query.data.data.age}
             </div>
             <Image src={profileImageSrc} style={{ width: rem(32) }}></Image>
             <UnstyledButton className={styles.friend}>
@@ -61,7 +74,7 @@ export default function ProfileElement({ type, openModal, user }) {
           </div>
           {user.role === "athlete" && (
           <div className={styles.profileInfo}>
-            {birthDate.getFullYear()}, Height: 180 cm, Weight: 68 kg, {query.data.data.position}
+            {birthDate.getFullYear()}, {Position[query.data.data.position]}
           </div>
           )}
           {user.role === "scout" && (

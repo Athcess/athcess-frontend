@@ -46,15 +46,17 @@ export const editProfile_athleteInformation = async (e) => {
       "http://127.0.0.1:8000/services/users/" + auth_username + "/",
       {
         username: auth_username,
-        firstName: e.firstName,
-        lastName: e.lastName,
         description: e.description,
         age: e.age,
         birth_date: e.birthdate,
         hometown: e.location,
         position: e.position,
-        height: e.height,
-        weight: e.weight,
+        education: e.education
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
       }
     );
     console.log(response);
@@ -78,8 +80,11 @@ export const post_achievement = async (e) => {
       "http://127.0.0.1:8000/services/achievement/",
       {
         username: auth_username,
-        date: "2000-02-02",
-        achievement: e.topic,
+        date: e.date,
+        topic: e.topic,
+        sub_topic : e.subTopic,
+        description: e.description
+
       },
       {
         headers: {

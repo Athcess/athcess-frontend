@@ -8,6 +8,8 @@ import AchievementElement from "../AchievementElement";
 import styles from "../../../scss/ProfilePageComponents/AthleteProfilePageComponents/AboutAthlete.module.scss";
 import EditBackgroundModal from "../EditBackgroundModal";
 import EditAchievementModal from "../EditAchievementModal";
+import { profileAthlete } from "../../../Services/ProfileAPI";
+import { useQuery } from "@tanstack/react-query";
 export default function AboutAthlete() {
   const [Backgroundopened, Background] = useDisclosure(false);
   const [Achievementopened, Achievement] = useDisclosure(false);
@@ -28,6 +30,9 @@ export default function AboutAthlete() {
       },
     ],
   };
+  const query = useQuery({ queryKey: ["repoData"], queryFn: profileAthlete });
+  if (query.status === "success"){
+   const Achievements = query.data.data.achievements
   return (
     <div className={styles.container}>
       <EditBackgroundModal
@@ -37,6 +42,8 @@ export default function AboutAthlete() {
       <EditAchievementModal
         opened={Achievementopened}
         onClose={Achievement.close}
+        Achievements={Achievements}
+       
       />
       <div className={styles.header}>
         <NavLink className={styles.link} to="/athleteprofile">
@@ -89,11 +96,15 @@ export default function AboutAthlete() {
             </UnstyledButton>
           </div>
           <div className={styles.achievementContent}>
-            <AchievementElement></AchievementElement>
-            <AchievementElement></AchievementElement>
+            {Achievements?.map((e)=> {
+              return <>
+              <AchievementElement key={e.topic} data={e}></AchievementElement></>
+             
+            })}
           </div>
         </div>
       </div>
     </div>
   );
+}
 }

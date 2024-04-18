@@ -61,15 +61,13 @@ export const getNotification = async () => {
 
 export const postPost = async (e) => {
   try {
-
-
     const res = await axios.post(
       "http://127.0.0.1:8000/services/post/",
       {
         username: auth_username,
         description: e.description,
         has_attachment: true,
-        highlight : e.highlight,
+        highlight: e.highlight,
       },
       {
         headers: {
@@ -78,6 +76,36 @@ export const postPost = async (e) => {
       }
     );
     console.log(res);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const postBlob = async (e) => {
+  try {
+    const res = await axios.post(
+      "http://127.0.0.1:8000/services/upload/",
+      {
+        content_type: e.file.type,
+        description: "test",
+        file_name: e.file.name,
+        is_profile_picture: true,
+        file_size: e.file.size,
+        skill_type: null,
+        post: null,
+        verify: null,
+        club_name: null,
+        physical_attribute: null,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    
+    console.log(res);
+    return res.data
   } catch (error) {
     console.log(error);
   }
@@ -85,13 +113,11 @@ export const postPost = async (e) => {
 
 export const postEvent = async (e) => {
   try {
-
-
     const res = await axios.post(
       "http://127.0.0.1:8000/services/calendar/",
       {
         content: e.description,
-        org_name : "Mcgrath Group",
+        org_name: "Mcgrath Group",
       },
       {
         headers: {
@@ -104,7 +130,6 @@ export const postEvent = async (e) => {
     console.log(error);
   }
 };
-
 
 export const postComment = async (e) => {
   try {

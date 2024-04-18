@@ -21,7 +21,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
 
 import styles from "../../scss/ProfilePageComponents/NewPostModal.module.scss";
-import { postEvent, postPost } from "../../Services/HomeAPI";
+import { postBlob, postEvent, postPost } from "../../Services/HomeAPI";
 
 export default function NewPostModal({ opened, onClose, user }) {
   const form = useForm({
@@ -35,6 +35,12 @@ export default function NewPostModal({ opened, onClose, user }) {
 
   const mutationpost = useMutation({
     mutationFn: postPost,
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
+  const mutationBlob = useMutation({
+    mutationFn: postBlob,
     onSuccess: (data) => {
       console.log(data);
     },
@@ -54,6 +60,7 @@ export default function NewPostModal({ opened, onClose, user }) {
     } else {
       mutationpost.mutate(form.values);
     }
+    mutationBlob.mutate(form.values);
   };
 
   return (
@@ -72,7 +79,7 @@ export default function NewPostModal({ opened, onClose, user }) {
       }}
     >
       <div className={styles.container}>
-        {user.role}
+     
         <div className={styles.profile}>
           <Image
             src="/Images/profile_logo.jpeg"
@@ -91,6 +98,7 @@ export default function NewPostModal({ opened, onClose, user }) {
             <FileInput
               onChange={(event) => form.setFieldValue("file", event)}
             />
+            
             {user.role == "athlete" && (
               <Checkbox
                 label="Add this post to your highlight page"

@@ -37,9 +37,9 @@ export default function SignInPage(props) {
     onSuccess: (data) => {
       props.newUser(
       {username: form.values.username,
-      first_name: 'tri',
-      last_name: "tri",
-      role: 'athlete',
+      first_name: data.data[0].first_name,
+      last_name: data.data[0].last_name,
+      role: data.data[0].role,
       age: data.data[0].age,
       hometown: data.data[0].hometown,
       position: data.data[0].position,
@@ -52,6 +52,7 @@ export default function SignInPage(props) {
       login(form.values.username);
 
       navigate("/home");
+      history.go(0)
     },
   });
 

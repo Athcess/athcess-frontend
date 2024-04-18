@@ -13,14 +13,16 @@ import {
   Textarea,
   rem,
 } from "@mantine/core";
+import dayjs from "dayjs";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 import styles from "../../scss/ProfilePageComponents/EditAchievementModal.module.scss";
-import { post_achievement } from "../../Services/ProfileAPI";
+import { post_achievement, profileAthlete } from "../../Services/ProfileAPI";
+import { DatePicker } from "@mui/x-date-pickers";
 
-export default function EditAchievementModal({ opened, onClose }) {
+export default function EditAchievementModal({ opened, onClose}) {
   const form = useForm({
     initialValues: {
       topic: "",
@@ -43,6 +45,9 @@ export default function EditAchievementModal({ opened, onClose }) {
     console.log(form.values);
     mutation.mutate(form.values);
   };
+  const query = useQuery({ queryKey: ["repoData"], queryFn: profileAthlete });
+  if (query.status === "success"){
+   const Achievements = query.data.data.achievements
   return (
     <Modal
       opened={opened}
@@ -59,18 +64,20 @@ export default function EditAchievementModal({ opened, onClose }) {
       }}
     >
       <div className={styles.container}>
-        <div className={styles.achievementcontent}>
+      {Achievements?.map((e)=> {
+        return(
+        <div className={styles.achievementcontent} key={e}>
           <Image
             style={{ width: rem(48), height: rem(48) }}
             src="/Images/ProfilePage/instu_logo.png"
           ></Image>
           <div className={styles.content}>
-            <div className={styles.topic}>Youth National Basketball Team</div>
+            <div className={styles.topic}>{e.topic}</div>
             <div className={styles.description}>
-              High School Diploma, Mathematics and Sciences
+              {e.sub_topic}
             </div>
-            <div className={styles.sub}>Jan 2024 </div>
-            <div className={styles.description}> -Grade: 3.89</div>
+            <div className={styles.sub}>{e.date}</div>
+            <div className={styles.description}> {e.description}</div>
           </div>
 
           <div>
@@ -88,7 +95,8 @@ export default function EditAchievementModal({ opened, onClose }) {
             </UnstyledButton>
           </div>
         </div>
-
+        )
+      })}
         <div className={styles.backgroundadd}>
           <Textarea
             autosize
@@ -104,10 +112,11 @@ export default function EditAchievementModal({ opened, onClose }) {
               form.setFieldValue("subTopic", event.target.value)
             }
           />
-          <Textarea
-            autosize
-            placeholder="Date"
-            onChange={(event) => form.setFieldValue("date", event.target.value)}
+          <DatePicker
+            slotProps={{ textField: { size: "small"} }}
+            
+            className={styles.dateinner}
+            onChange={(event) => form.setFieldValue("date", event)}
           />
           <Textarea
             placeholder="Write description"
@@ -122,4 +131,4 @@ export default function EditAchievementModal({ opened, onClose }) {
       </div>
     </Modal>
   );
-}
+}}
