@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useToggle, upperFirst } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import {useMutation} from '@tanstack/react-query'
+import { useMutation } from "@tanstack/react-query";
 
 import { DatePicker } from "@mui/x-date-pickers";
 import {
@@ -42,15 +42,12 @@ export default function SignUpPage(props) {
       education: ["", ""],
       //organization
       organization: "",
-
     },
     validate: {
       email: (val) =>
         /^\S+@\S+$/.test(val) || val === "" ? null : "Invalid email",
       password: (val) =>
-        val.length < 6
-          ? "Password should include at least 6 characters"
-          : null,
+        val.length < 6 ? "Password should include at least 6 characters" : null,
       confirm_password: (val) =>
         form.values.password === val ? null : "Password is not the same",
       role: (val) => (val != "" ? null : "Please select a role"),
@@ -67,33 +64,28 @@ export default function SignUpPage(props) {
     },
   });
 
-
-
   const mutation = useMutation({
-    mutationFn : signup,
-    onSuccess: (data) =>{
-     
-    }
-  })
+    mutationFn: signup,
+    onSuccess: (data) => {},
+  });
 
   const signupUser = (e) => {
     e.preventDefault();
     form.validate();
     if (form.isValid()) {
-
-      mutation.mutate(form.values)
+      mutation.mutate(form.values);
 
       console.log(form.values);
       navigate("/home");
-
     }
   };
-  const setadmin = () =>{
-    if (form.values.role !== "admin"){
-      form.setFieldValue('role',"admin")
+  const setadmin = () => {
+    if (form.values.role !== "admin") {
+      form.setFieldValue("role", "admin");
+    } else {
+      form.setFieldValue("role", "");
     }
-    else {form.setFieldValue('role',"")}
-  }
+  };
 
   return (
     <div className={styles.container}>
@@ -106,8 +98,7 @@ export default function SignUpPage(props) {
           radius="md"
           p="xl"
           withBorder
-          {...props}
-        >
+          {...props}>
           <Text className={styles.center} size="lg" fw={500}>
             SIGN UP
           </Text>
@@ -154,32 +145,48 @@ export default function SignUpPage(props) {
                 placeholder="Confirm password"
                 value={form.values.confirm_password}
                 onChange={(event) =>
-                  form.setFieldValue("confirm_password", event.currentTarget.value)
+                  form.setFieldValue(
+                    "confirm_password",
+                    event.currentTarget.value
+                  )
                 }
-                error={form.errors.confirm_password && "Password is not the same!"}
+                error={
+                  form.errors.confirm_password && "Password is not the same!"
+                }
                 radius="md"
               />
-              {form.values.role !== "admin" &&<SegmentedControl
-               style={{ marginTop: 15 }}
-               required
-               color="#00A67E"
-               value={form.values.role}
-               onChange={(event) => form.setFieldValue("role", event)}
-               data={[
-                 { label: "Athlete", value: "athlete" },
-                 { label: "Scout", value: "scout" },
-               ]}
-             />
-               }
-             
+              {form.values.role !== "admin" && (
+                <SegmentedControl
+                  style={{ marginTop: 15 }}
+                  required
+                  color="#00A67E"
+                  value={form.values.role}
+                  onChange={(event) => form.setFieldValue("role", event)}
+                  data={[
+                    { label: "Athlete", value: "athlete" },
+                    { label: "Scout", value: "scout" },
+                  ]}
+                />
+              )}
               <Checkbox
-              label="Are you organization?"
-              color="#00A67E"
-              onChange={(setadmin)}
-            >
-                
-                
-              </Checkbox>
+                label="Are you organization?"
+                color="#00A67E"
+                onChange={setadmin}></Checkbox>
+              {form.values.role === "admin" && (
+                <TextInput
+                  required
+                  label="Organization Name"
+                  placeholder="Your organization"
+                  value={form.values.organization}
+                  onChange={(event) =>
+                    form.setFieldValue(
+                      "organization",
+                      event.currentTarget.value
+                    )
+                  }
+                  radius="md"
+                />
+              )}
               {form.errors.role && (
                 <span style={{ color: "red" }}>Please select a role</span>
               )}
@@ -369,7 +376,10 @@ export default function SignUpPage(props) {
                     placeholder="Your first name"
                     value={form.values.first_name}
                     onChange={(event) =>
-                      form.setFieldValue("first_name", event.currentTarget.value)
+                      form.setFieldValue(
+                        "first_name",
+                        event.currentTarget.value
+                      )
                     }
                     radius="md"
                   />
@@ -399,7 +409,9 @@ export default function SignUpPage(props) {
                       </Text>
                     </Text>
                     <DatePicker
-                      slotProps={{ textField: { size: 'small', required: true } }}
+                      slotProps={{
+                        textField: { size: "small", required: true },
+                      }}
                       className={styles.dateinner}
                       onChange={(event) =>
                         form.setFieldValue("birth_date", event)
@@ -422,17 +434,17 @@ export default function SignUpPage(props) {
                           form.setFieldValue("position", event)
                         }
                         data={[
-                          {value : "GK", label :"Goalkeeper"},
-                          {value :"CB", label :"Center Back"},
-                          {value :"LB", label :"Left Back"},
-                          {value :"RB", label :"Right Back"},
-                          {value :"CM", label :"Center Midfield"},
-                          {value :"LM", label :"Left Midfield"},
-                          {value :"RM", label :"Right Midfield"},
-                          {value :"CAM",label : "Center Attacking Midfield"},
-                          {value :"LW", label :"Left Wing"},
-                          {value :"RW", label :"Right Wing"},
-                          {value :"ST", label :"Striker"},
+                          { value: "GK", label: "Goalkeeper" },
+                          { value: "CB", label: "Center Back" },
+                          { value: "LB", label: "Left Back" },
+                          { value: "RB", label: "Right Back" },
+                          { value: "CM", label: "Center Midfield" },
+                          { value: "LM", label: "Left Midfield" },
+                          { value: "RM", label: "Right Midfield" },
+                          { value: "CAM", label: "Center Attacking Midfield" },
+                          { value: "LW", label: "Left Wing" },
+                          { value: "RW", label: "Right Wing" },
+                          { value: "ST", label: "Striker" },
                         ]}
                       />
                       <Group className={styles.education}>
@@ -578,21 +590,20 @@ export default function SignUpPage(props) {
                       "Yala",
                       "Yasothon",
                     ]}
-                    
                   />
                   {form.values.role === "scout" && (
-                  <TextInput
-                    label="If belong to an organization"
-                    placeholder="Enter organization name"
-                    value={form.values.organization}
-                    onChange={(event) =>
-                      form.setFieldValue(
-                        "organization",
-                        event.currentTarget.value
-                      )
-                    }
-                    radius="md"
-                  />
+                    <TextInput
+                      label="If belong to an organization"
+                      placeholder="Enter organization name"
+                      value={form.values.organization}
+                      onChange={(event) =>
+                        form.setFieldValue(
+                          "organization",
+                          event.currentTarget.value
+                        )
+                      }
+                      radius="md"
+                    />
                   )}
                 </>
               )}
@@ -601,7 +612,7 @@ export default function SignUpPage(props) {
               <Button color="#00A67E" type="submit" radius="xl" w="100%">
                 Sign Up
               </Button>
-            </Group>           
+            </Group>
             <Text ta="center" c="dimmed" size="xs">
               {" "}
               Already have an account? &nbsp;
