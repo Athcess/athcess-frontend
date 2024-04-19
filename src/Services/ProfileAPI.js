@@ -67,8 +67,24 @@ export const editProfile_athleteInformation = async (e) => {
 
 export const put_achievement = async (e) => {
   try {
-    const response = await axios.put("url", { data: e });
-    console.log(response);
+    const res = await axios.put(
+      "http://127.0.0.1:8000/services/achievement/"+e.id+"/",
+      {
+        username: auth_username,
+        created_at: e.created_at,
+        date: e.date,
+        topic: e.topic,
+        sub_topic : e.subTopic,
+        description: e.description
+
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    console.log(res);
   } catch (error) {
     console.log(error);
   }
@@ -92,18 +108,28 @@ export const post_achievement = async (e) => {
         },
       }
     );
+    console.log(res);
   } catch (error) {
     console.log(error);
   }
 };
 
-export const del_achievement = async () => {
+export const del_achievement = async (e) => {
   try {
-    const res = await axios.delete("");
+    const res = await axios.delete(
+      "http://127.0.0.1:8000/services/achievement/"+e.id+"/",
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    console.log(res);
   } catch (error) {
     console.log(error);
   }
 };
+
 
 export const profileScout = async () => {
   try {

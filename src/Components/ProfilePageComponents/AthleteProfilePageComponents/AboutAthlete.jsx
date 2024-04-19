@@ -30,7 +30,7 @@ export default function AboutAthlete() {
       },
     ],
   };
-  const query = useQuery({ queryKey: ["repoData"], queryFn: profileAthlete });
+  const query = useQuery({ queryKey: ["profile"], queryFn: profileAthlete });
   if (query.status === "success"){
    const Achievements = query.data.data.achievements
   return (
@@ -98,7 +98,7 @@ export default function AboutAthlete() {
           <div className={styles.achievementContent}>
             {Achievements?.map((e)=> {
               return <>
-              <AchievementElement key={e.topic} data={e}></AchievementElement></>
+              <AchievementElement key={e.created_at} data={e}></AchievementElement></>
              
             })}
           </div>

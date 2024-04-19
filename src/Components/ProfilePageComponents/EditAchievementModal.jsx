@@ -16,11 +16,12 @@ import {
 import dayjs from "dayjs";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import styles from "../../scss/ProfilePageComponents/EditAchievementModal.module.scss";
 import { post_achievement, profileAthlete } from "../../Services/ProfileAPI";
 import { DatePicker } from "@mui/x-date-pickers";
+import AchievementModalElement from "./AchievementModalElement";
 
 export default function EditAchievementModal({ opened, onClose}) {
   const form = useForm({
@@ -32,10 +33,16 @@ export default function EditAchievementModal({ opened, onClose}) {
     },
   });
 
+  const queryClient = useQueryClient()
+
+
   const mutation = useMutation({
     mutationFn: post_achievement, // Assuming you have a function named updateAchievement for updating achievements
     onSuccess: (data) => {
       console.log(data);
+      queryClient.invalidateQueries({ queryKey: ['achievement'] })
+      queryClient.invalidateQueries({ queryKey: ['profile'] })
+
       onClose(); // Close the modal on successful update
     },
   });
@@ -45,9 +52,11 @@ export default function EditAchievementModal({ opened, onClose}) {
     console.log(form.values);
     mutation.mutate(form.values);
   };
-  const query = useQuery({ queryKey: ["repoData"], queryFn: profileAthlete });
+  const query = useQuery({ queryKey: ["achievement"], queryFn: profileAthlete });
   if (query.status === "success"){
+
    const Achievements = query.data.data.achievements
+   console.log(Achievements)
   return (
     <Modal
       opened={opened}
@@ -65,37 +74,7 @@ export default function EditAchievementModal({ opened, onClose}) {
     >
       <div className={styles.container}>
       {Achievements?.map((e)=> {
-        return(
-        <div className={styles.achievementcontent} key={e}>
-          <Image
-            style={{ width: rem(48), height: rem(48) }}
-            src="/Images/ProfilePage/instu_logo.png"
-          ></Image>
-          <div className={styles.content}>
-            <div className={styles.topic}>{e.topic}</div>
-            <div className={styles.description}>
-              {e.sub_topic}
-            </div>
-            <div className={styles.sub}>{e.date}</div>
-            <div className={styles.description}> {e.description}</div>
-          </div>
-
-          <div>
-            <UnstyledButton>
-              <Image
-                src="/Images/ProfilePage/editSection_logo.png"
-                style={{ width: rem(30) }}
-              ></Image>
-            </UnstyledButton>
-            <UnstyledButton>
-              <Image
-                src="/Images/ProfilePage/Bin.png"
-                style={{ width: rem(30) }}
-              ></Image>
-            </UnstyledButton>
-          </div>
-        </div>
-        )
+        return <AchievementModalElement key={e.ahievement_id} adata={e}></AchievementModalElement>
       })}
         <div className={styles.backgroundadd}>
           <Textarea
@@ -116,7 +95,7 @@ export default function EditAchievementModal({ opened, onClose}) {
             slotProps={{ textField: { size: "small"} }}
             
             className={styles.dateinner}
-            onChange={(event) => form.setFieldValue("date", event)}
+            onChange={(event) => form.setFieldValue("date", dayjs(event).format('YYYY-MM-DD'))}
           />
           <Textarea
             placeholder="Write description"
