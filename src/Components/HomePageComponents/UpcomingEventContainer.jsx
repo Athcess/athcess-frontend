@@ -1,19 +1,35 @@
 import React from "react";
 import { Image, UnstyledButton, Button } from "@mantine/core";
 import styles from "../../scss/HomePageComponents/UpcomingEventContainer.module.scss";
+import { useQuery, QueryClient } from "@tanstack/react-query";
+import { getCalendar } from "../../Services/HomeAPI";
+import { Loader } from "@mantine/core";
 
 export function UpcomingEventContainerTrue() {
+  const { isPending, error, data } = useQuery({
+    queryKey: ["getCalendar"],
+    queryFn: getCalendar,
+  });
   return (
     <div className={styles.true}>
       <div className={styles.title}>Upcoming Events!</div>
       <div className={styles.content}>
-        <ul className={styles.events}>
+        {/* <ul className={styles.events}>
           <li>dsadsadsadsadsadsd</li>
           <li>dsadasdsdsdadad</li>
           <li>dsadasdsadasdsadadsadsadsadasdsa</li>
           <li>dsadssadadsadasdsadasdasdasdsa</li>
           <li>ddsdssdsdwqdssadaas</li>
-        </ul>
+        </ul> */}
+        {isPending ? (
+          <Loader color="teal" className={styles.loading} />
+        ) : error ? (
+          <div className={styles.error}>ERROR: {error.message}</div>
+        ) : (
+          data.map((event) => {
+            return <li key={event.event_id}>{event.content}</li>;
+          })
+        )}
       </div>
     </div>
   );

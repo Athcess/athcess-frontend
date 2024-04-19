@@ -16,8 +16,11 @@
   }
   .content {
     height: 80%;
+    min-height: 200px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     flex-grow: 1;
     border-radius: 0 0 30px 30px;
     background-color: white;
