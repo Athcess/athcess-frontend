@@ -27,7 +27,8 @@ import {
 import NotiDropDown from "./NotiDropDown.jsx";
 import { useAuth } from "../hooks/useAuth";
 import NewPostModal from "../Components/ProfilePageComponents/NewPostModal.jsx";
-export default function NavigationBar({ user, updateteir}) {
+import NewEventModal from "./ProfilePageComponents/NewEventModal.jsx";
+export default function NavigationBar({ user, updateteir }) {
   const [isLogin, setIsLogin] = useState(true);
   const [menuOpened, setmenuOpened] = useState(false);
   const [opened, { toggle }] = useDisclosure();
@@ -54,13 +55,15 @@ export default function NavigationBar({ user, updateteir}) {
     navigate("/calendar");
   };
   const profile = () => {
-    if(user.role==="athlete"){
-    navigate("/athleteprofile")}
-    if(user.role==="scout"){
-      navigate("/scoutprofile")}
-    if(user.role==="admin"){
-        navigate("/orgprofile")}
-    ;
+    if (user.role === "athlete") {
+      navigate("/athleteprofile");
+    }
+    if (user.role === "scout") {
+      navigate("/scoutprofile");
+    }
+    if (user.role === "admin") {
+      navigate("/orgprofile");
+    }
   };
   const friendlist = () => {
     navigate("/friend");
@@ -68,27 +71,37 @@ export default function NavigationBar({ user, updateteir}) {
   const body = () => {
     navigate("/bodyanalyzer");
   };
-
-  const [NewPostModalopened, { open, close }] = useDisclosure(false);
-  
-
+  console.log(user);
+  const [NewPostModalOpened, NewPost] = useDisclosure(false);
+  const [NewEventModalOpened, NewEvent] = useDisclosure(false);
   return (
     <header className={styles.container}>
-      <NewPostModal opened={NewPostModalopened} onClose={close} user={user}/>
+      {user.role === "athlete" || user.role == "scout" ? (
+        <NewPostModal
+          opened={NewPostModalOpened}
+          onClose={NewPost.close}
+          user={user}
+        />
+      ) : (
+        <NewEventModal
+          opened={NewEventModalOpened}
+          onClose={NewEvent.close}
+          user={user}
+        />
+      )}
+
       <div>
         <Anchor
           className={styles.headerText}
           underline="never"
           href="/home"
-          size="xs"
-        >
+          size="xs">
           ATHCESS
         </Anchor>
       </div>
       <form
         className={styles.search}
-        onSubmit={form.onSubmit((values) => search(values))}
-      >
+        onSubmit={form.onSubmit((values) => search(values))}>
         <Autocomplete
           className={styles.search}
           placeholder="Search"
@@ -139,8 +152,7 @@ export default function NavigationBar({ user, updateteir}) {
             size="md"
             radius="xl"
             component="a"
-            href="/signin"
-          >
+            href="/signin">
             Sign in
           </Button>
         </div>
@@ -156,27 +168,36 @@ export default function NavigationBar({ user, updateteir}) {
           />
         </Menu.Target>
         <Menu.Dropdown>
-          <Menu.Item
-            onClick={open}
-            leftSection={
-              <Image
-                src="/Images/MenuBar/add_logo.png"
-                style={{ width: rem(32), height: rem(32) }}
-              ></Image>
-            }
-          >
-            Post
-          </Menu.Item>
+          {user.role === "athlete" || user.role === "scout" ? (
+            <Menu.Item
+              onClick={NewPost.open}
+              leftSection={
+                <Image
+                  src="/Images/MenuBar/add_logo.png"
+                  style={{ width: rem(32), height: rem(32) }}></Image>
+              }>
+              Post
+            </Menu.Item>
+          ) : (
+            <Menu.Item
+              onClick={NewEvent.open}
+              leftSection={
+                <Image
+                  src="/Images/MenuBar/add_logo.png"
+                  style={{ width: rem(32), height: rem(32) }}></Image>
+              }>
+              Event
+            </Menu.Item>
+          )}
+
           <Menu.Divider />
           <Menu.Item
             onClick={friendlist}
             leftSection={
               <Image
                 src="/Images/MenuBar/friend_logo.png"
-                style={{ width: rem(32), height: rem(32) }}
-              ></Image>
-            }
-          >
+                style={{ width: rem(32), height: rem(32) }}></Image>
+            }>
             Friends
           </Menu.Item>
           <Menu.Divider />
@@ -185,10 +206,8 @@ export default function NavigationBar({ user, updateteir}) {
             leftSection={
               <Image
                 src="/Images/MenuBar/body_logo.png"
-                style={{ width: rem(32), height: rem(32) }}
-              ></Image>
-            }
-          >
+                style={{ width: rem(32), height: rem(32) }}></Image>
+            }>
             Body Analyzer
           </Menu.Item>
           <Menu.Divider />
@@ -197,15 +216,12 @@ export default function NavigationBar({ user, updateteir}) {
             leftSection={
               <Image
                 src="/Images/MenuBar/logout_logo.png"
-                style={{ width: rem(32), height: rem(32) }}
-              ></Image>
-            }
-          >
+                style={{ width: rem(32), height: rem(32) }}></Image>
+            }>
             Logout
           </Menu.Item>
 
-          
-          {(!user.teir && user.role==="scout") && (
+          {!user.teir && user.role === "scout" && (
             <>
               <Menu.Divider />
               <Menu.Item
@@ -216,18 +232,15 @@ export default function NavigationBar({ user, updateteir}) {
                   fontSize: rem(24),
                 }}
                 onClick={gopro}
-                className={styles.gopro}
-              >
+                className={styles.gopro}>
                 GO PRO
               </Menu.Item>
             </>
           )}
-          {(user.teir && user.role==="scout")&& (
+          {user.teir && user.role === "scout" && (
             <>
               <Menu.Divider />
-              <Menu.Item
-                onClick={() => navigate('/subscription')}
-              >
+              <Menu.Item onClick={() => navigate("/subscription")}>
                 Manage subscription
               </Menu.Item>
             </>

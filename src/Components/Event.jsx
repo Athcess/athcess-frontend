@@ -16,9 +16,9 @@ import styles from "../scss/Post.module.scss";
 import { useNavigate } from "react-router-dom";
 import { Component } from "react";
 
-export default function Post() {
+export default function Event() {
   const [opened, { open, close }] = useDisclosure(false);
-  const postid = "possstid";
+  const eventid = "eventid";
   return (
     <div className={styles.container}>
       <Modal
@@ -40,7 +40,9 @@ export default function Post() {
               />
             </UnstyledButton>
             <div className={styles.profileContent}>
-              <div className={styles.profileName}>วี่หว่อง หว่องวี่</div>
+              <div className={styles.profileName}>
+                วี่หว่อง หว่องวี่ <UEvent></UEvent>
+              </div>
 
               <div className={styles.profileDate}>1 Jan 2024</div>
             </div>
@@ -94,7 +96,10 @@ export default function Post() {
             />
           </UnstyledButton>
           <div className={styles.profileContent}>
-            <div className={styles.profileName}>วี่หว่อง หว่องวี่</div>
+            <div className={styles.profileName}>
+              วี่หว่อง หว่องวี่ <UEvent></UEvent>
+            </div>
+
             <div className={styles.profileDate}>1 Jan 2024</div>
           </div>
         </div>
@@ -102,7 +107,7 @@ export default function Post() {
           <Image src="/Images/ProfilePage/editPost_logo.png"></Image>
         </UnstyledButton>
       </div>
-      <UnstyledButton href={"/post/" + postid} component="a">
+      <UnstyledButton href={"/post/" + eventid} component="a">
         <Spoiler
           showLabel="Show more"
           hideLabel="Hide"
