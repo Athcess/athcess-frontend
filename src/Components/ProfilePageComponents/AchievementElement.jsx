@@ -2,8 +2,8 @@ import React from "react";
 import { rem, Image, Spoiler } from "@mantine/core";
 import styles from "../../scss/ProfilePageComponents/AchievementElement.module.scss";
 
-export default function AchievementElement({data}) {
-  console.log(data)
+export default function AchievementElement({ data }) {
+  console.log(data);
   return (
     <div className={styles.container}>
       <Image
@@ -11,9 +11,7 @@ export default function AchievementElement({data}) {
         src="/Images/ProfilePage/instu_logo.png"></Image>
       <div className={styles.content}>
         <div className={styles.topic}>{data.topic}</div>
-        <div className={styles.subtopic}>
-        {data.sub_topic}
-        </div>
+        <div className={styles.subtopic}>{data.sub_topic}</div>
         <div className={styles.date}>{data.date}</div>
         <Spoiler
           showLabel="Show more"

@@ -165,7 +165,7 @@ export const postSearch = async (e) => {
 
 export const getCalendar = async () => {
   try {
-    const res = await axios.get("http://127.0.0.1:8000/service/calendar/get/");
+    const res = await axios.get("http://127.0.0.1:8000/services/calendar/get/");
 
     // if (res.status < 200 || res.status >= 300 || res.name == "AxiosError") {
     //   console.log("ERROR");
