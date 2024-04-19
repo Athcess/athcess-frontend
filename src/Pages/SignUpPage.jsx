@@ -172,21 +172,6 @@ export default function SignUpPage(props) {
                 label="Are you organization?"
                 color="#00A67E"
                 onChange={setadmin}></Checkbox>
-              {form.values.role === "admin" && (
-                <TextInput
-                  required
-                  label="Organization Name"
-                  placeholder="Your organization"
-                  value={form.values.organization}
-                  onChange={(event) =>
-                    form.setFieldValue(
-                      "organization",
-                      event.currentTarget.value
-                    )
-                  }
-                  radius="md"
-                />
-              )}
               {form.errors.role && (
                 <span style={{ color: "red" }}>Please select a role</span>
               )}
@@ -364,7 +349,8 @@ export default function SignUpPage(props) {
                 </>
               )} */}
               {(form.values.role === "athlete" ||
-                form.values.role === "scout") && (
+                form.values.role === "scout" ||
+                form.values.role === "admin") && (
                 <>
                   <Text ta="center" size="lg" fw={500}>
                     Personal Information
@@ -393,6 +379,21 @@ export default function SignUpPage(props) {
                     }
                     radius="md"
                   />
+                  {form.values.role === "admin" && (
+                    <TextInput
+                      required
+                      label="Organization Name"
+                      placeholder="Your organization"
+                      value={form.values.organization}
+                      onChange={(event) =>
+                        form.setFieldValue(
+                          "organization",
+                          event.currentTarget.value
+                        )
+                      }
+                      radius="md"
+                    />
+                  )}
                   <NumberInput
                     required
                     label="Age"
@@ -591,6 +592,21 @@ export default function SignUpPage(props) {
                       "Yasothon",
                     ]}
                   />
+                  {form.values.role === "admin" && (
+                    <TextInput
+                      required
+                      label="Organization Name"
+                      placeholder="Your organization"
+                      value={form.values.organization}
+                      onChange={(event) =>
+                        form.setFieldValue(
+                          "organization",
+                          event.currentTarget.value
+                        )
+                      }
+                      radius="md"
+                    />
+                  )}
                   {form.values.role === "scout" && (
                     <TextInput
                       label="If belong to an organization"
