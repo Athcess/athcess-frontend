@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -11,52 +12,64 @@ import { getCalendar } from "../Services/HomeAPI";
 import { Loader } from "@mantine/core";
 
 export default function MyCalendar() {
+  const [eventsData, setEventsData] = useState([]);
   const { isPending, error, data } = useQuery({
     queryKey: ["getCalendar"],
     queryFn: getCalendar,
   });
+  useEffect(() => {
+    if (data) {
+      const eventsData = data.map((event) => ({
+        event_id: event.event_id,
+        title: event.content,
+        created_at: event.created_at,
+        like: event.like,
+        start: `${event.date_start}T${event.start_time}`,
+        end: `${event.date_end}T00:00`,
+        backgroundColor: "#007458",
+        textColor: "white",
+        display: "block",
+      }));
+      setEventsData(eventsData);
+    }
+  }, [data]);
+
   const events = [
     {
-      title: "Event Event Event 1111 22222",
-      start: "2024-04-16T09:00",
-      end: "2024-04-16T10:00",
-      backgroundColor: "#007458",
-      textColor: "white",
-      display: "block",
-    },
-    {
-      title: "Event Event Event 1111 22222 333333",
-      start: "2024-04-18T09:00",
-      end: "2024-04-20T10:00",
+      event_id: 1,
+      title: "isoudfxbhioeajfiovds",
+      created_at: "2024-04-19T07:49:30.848871Z",
+      like: [],
+      start: "2024-04-20T09:00",
+      end: "2024-04-21T00:00",
       backgroundColor: "#007458",
       textColor: "white",
       display: "block",
     },
   ];
 
-  console.log(data, isPending, error);
+  console.log(eventsData, isPending, error);
   return (
     <div className={styles.container}>
       <div className={styles.header}>Calendar</div>
       <div className={styles.content}>
-        {/* {isPending ? (
+        {isPending ? (
           <Loader color="teal" className={styles.loading} />
         ) : error ? (
           <div className={styles.error}>ERROR: {error.message}</div>
-        ) : ( */}
-        <FullCalendar
-          className={styles.calendar}
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          initialView="dayGridMonth"
-          headerToolbar={{
-            start: "today,prev,next",
-            center: "title",
-            end: "dayGridMonth,timeGridWeek,timeGridDay",
-          }}
-          events={events}
-        />
-        {/* // <div> {data.name}</div>
-        )} */}
+        ) : (
+          <FullCalendar
+            className={styles.calendar}
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+            initialView="dayGridMonth"
+            headerToolbar={{
+              start: "today,prev,next",
+              center: "title",
+              end: "dayGridMonth,timeGridWeek,timeGridDay",
+            }}
+            events={eventsData}
+          />
+        )}
       </div>
     </div>
   );

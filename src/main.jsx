@@ -6,11 +6,10 @@ import "@mantine/core/styles.css";
 
 import { MainProvider } from "./Provider/MainProvider";
 
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <MainProvider>
-        <App></App>
+      <App></App>
     </MainProvider>
   </React.StrictMode>
 );

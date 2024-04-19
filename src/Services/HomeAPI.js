@@ -103,9 +103,9 @@ export const postBlob = async (e) => {
         },
       }
     );
-    
+
     console.log(res);
-    return res.data
+    return res.data;
   } catch (error) {
     console.log(error);
   }
@@ -165,14 +165,18 @@ export const postSearch = async (e) => {
 
 export const getCalendar = async () => {
   try {
-    const res = await axios.get("http://127.0.0.1:8000/services/calendar/get/");
+    const res = await axios.get("http://127.0.0.1:8000/services/calendar/get", {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
 
     // if (res.status < 200 || res.status >= 300 || res.name == "AxiosError") {
     //   console.log("ERROR");
     //   throw new Error("Failed to fetch data");
     // }
 
-    return res;
+    return res.data;
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;
