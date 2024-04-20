@@ -392,44 +392,70 @@ export const postPhyAttVid = async (e) => {
 
     //-------------------------------------------------------
 
-    const putResponse = await axios.put(
-      postResponseData.signed_url,
-      e.file,
-
-      {
-        headers: {
-          "content-type": e.content_type,
-          "x-ms-blob-type": "BlockBlob",
-        },
-      }
-    );
+    const putResponse = await axios.put(postResponseData.signed_url, e.file, {
+      headers: {
+        "content-type": e.content_type,
+        "x-ms-blob-type": "BlockBlob",
+      },
+    });
     console.log(putResponse.data);
 
     //-------------------------------------------------------
 
     const getResponse = await axios.get(
-      `http://127.0.0.1:8000/services/analytics/?player_name=${e.username}&analytic_type=${e.physical_attribute_type}`
+      `http://127.0.0.1:8000/services/analytics/?player_name=${e.username}&analytic_type=${e.physical_attribute_type}&height=${e.height}`,
+      { timeout: 10000000 }
     );
     console.log(getResponse.data);
+    return getResponse.data;
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;
   }
 };
 
-// export const getPhyAttVid = async ({ player_name, analytic_type }) => {
-//   try {
-//     const response = await axios.get(
-//       `http://127.0.0.1:8000/services/analytics/?player_name=${player_name}&analytic_type=${analytic_type}`
-//     );
-//     if (!response.ok) {
-//       throw new Error(`Error fetching data: ${response.statusText}`);
-//     }
-//     const data = await response.json();
-//     return data || {}; // Return the data, or an empty object if data is undefined
-//   } catch (error) {
-//     console.error("Error fetching video data:", error);
-//     // Return a default value such as an empty object or array
-//     return {}; // Adjust as needed based on your expected data structure
-//   }
-// };
+export const postPhyStats = async (e) => {
+  try {
+    const res = await axios.post(
+      "http://127.0.0.1:8000/services/physical_attribute/",
+      {
+        height: "",
+        weight: "",
+        fat_mass: "",
+        muscle_mass: "",
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    console.log(res.data);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+};
+
+export const putPhyStats = async (e) => {
+  try {
+    const res = await axios.put(
+      "http://127.0.0.1:8000/services/physical_attribute/",
+      {
+        height: e.height,
+        weight: e.weight,
+        fat_mass: e.fat_mass,
+        muscle_mass: e.muscle_mass,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    console.log(res.data);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+};

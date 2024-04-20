@@ -1,7 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../scss/BodyAnalyzer.module.scss";
 import CustomRadar from "../Components/CustomRadar";
-import { Image, rem, Modal, UnstyledButton, Button } from "@mantine/core";
+import {
+  Image,
+  rem,
+  Modal,
+  UnstyledButton,
+  Button,
+  Group,
+  Text,
+  Paper,
+  Select,
+  NumberInput,
+  TextInput,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { Bar } from "react-chartjs-2";
@@ -18,13 +30,19 @@ import {
   PerfVidModal,
 } from "../Components/BodyAnalyzerComponents/InfoModal";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { postPhyAttVid } from "../Services/HomeAPI";
+import { postPhyAttVid, postPhyStats, putPhyStats } from "../Services/HomeAPI";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 export default function BodyAnalyzerPage({ user }) {
   const form = useForm({
     initialValues: {
+      phyStat: {
+        height: null,
+        weight: null,
+        fat_mass: null,
+        muscle_mass: null,
+      },
       pushup: {
         file_name: null,
         content_type: null,
@@ -32,6 +50,7 @@ export default function BodyAnalyzerPage({ user }) {
         username: user.username,
         file: null,
         physical_attribute_type: "push_up",
+        height: 180,
       },
       situp: {
         file_name: null,
@@ -40,6 +59,7 @@ export default function BodyAnalyzerPage({ user }) {
         username: user.username,
         file: null,
         physical_attribute_type: "sit_up",
+        height: 180,
       },
       running: {
         file_name: null,
@@ -48,6 +68,7 @@ export default function BodyAnalyzerPage({ user }) {
         username: user.username,
         file: null,
         physical_attribute_type: "run",
+        height: 180,
       },
     },
   });
@@ -103,6 +124,7 @@ export default function BodyAnalyzerPage({ user }) {
         file: binaryFile,
         username: user.username,
         physical_attribute_type: form.values[fieldName].physical_attribute_type,
+        height: form.values[fieldName].height,
       });
     };
 
@@ -126,30 +148,41 @@ export default function BodyAnalyzerPage({ user }) {
   //   queryFn: () =>
   //     getPhyAttVid({ player_name: user.username, analytic_type: "run" }),
   // });
-
+  const mutationPhyStat = useMutation({
+    mutationFn: postPhyStats,
+    onSuccess: () => {
+      console.log("Physical Stats posted successfully");
+    },
+  });
+  // const mutationPhyStat = useMutation({
+  //   mutationFn: putPhyStats,
+  //   onSuccess: () => {
+  //     console.log("Physical Stats put successfully");
+  //   },
+  // });
   const mutationPushup = useMutation({
     mutationFn: postPhyAttVid,
     onSuccess: () => {
       console.log("Push-up video uploaded successfully");
-      refetchPushup(); // Refetch push-up data
+      refetchPushup();
     },
   });
   const mutationSitup = useMutation({
     mutationFn: postPhyAttVid,
     onSuccess: () => {
-      console.log("Push-up video uploaded successfully");
-      refetchSitup(); // Refetch push-up data
+      console.log("Sit-up video uploaded successfully");
+      refetchSitup();
     },
   });
 
   const mutationRunning = useMutation({
     mutationFn: postPhyAttVid,
     onSuccess: () => {
-      console.log("Push-up video uploaded successfully");
-      refetchRunning(); // Refetch push-up data
+      console.log("Running video uploaded successfully");
+      refetchRunning();
     },
   });
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     console.log(form.values);
     // Check if any videos are missing
@@ -163,10 +196,14 @@ export default function BodyAnalyzerPage({ user }) {
     }
 
     // Execute the mutations for each type of video
+    mutationPhyStat.mutate(form.values.phyStat);
     mutationPushup.mutate(form.values.pushup);
     mutationSitup.mutate(form.values.situp);
     mutationRunning.mutate(form.values.running);
   };
+  // useEffect(() => {
+  //   initPhyStat.mutate();
+  // }, []);
 
   console.log(user);
   return (
@@ -194,86 +231,136 @@ export default function BodyAnalyzerPage({ user }) {
         </div>
         <div className={styles.perfVidContainer}>
           <div className={styles.header}>
-            Performance Videos
+            Physical Stats & Performance Videos
             <UnstyledButton onClick={PerfVid.open}>
               <Image
                 src="/Images/info_logo.png"
                 style={{ width: rem(16), height: rem(16) }}></Image>
             </UnstyledButton>
           </div>
-          <form onSubmit={handleFormSubmit} className={styles.form}>
-            <div className={styles.perfVidContent}>
-              <div className={styles.vidContainer}>
-                <UnstyledButton className={styles.selectVid}>
-                  <label htmlFor="pushup">
-                    <Image
-                      src="/Images/image_placeholder.png"
-                      style={{ width: rem(64) }}
-                    />
-                    {form.values.pushup.file_name
-                      ? "Successfully Uploaded"
-                      : "Select a video to upload"}
-                  </label>
-                  <input
-                    id="pushup"
-                    type="file"
-                    accept="video/*"
-                    style={{ display: "none" }}
-                    onChange={handleFileChange("pushup")}
+          <form onSubmit={handleFormSubmit}>
+            <div className={styles.form}>
+              <div className={styles.phyStatContainer}>
+                <Group gap={9}>
+                  <NumberInput
+                    w="24%"
+                    required
+                    label="Height (cm)"
+                    placeholder="Enter your height"
+                    value={form.values.height}
+                    onChange={(event) =>
+                      form.setFieldValue("phyStat.height", event)
+                    }
+                    radius="md"
                   />
-                </UnstyledButton>
-                Push-up
+                  <NumberInput
+                    w="24.5%"
+                    required
+                    label="Weight (kg)"
+                    placeholder="Enter your weight"
+                    value={form.values.weight}
+                    onChange={(event) =>
+                      form.setFieldValue("phyStat.weight", event)
+                    }
+                    radius="md"
+                  />
+                  <NumberInput
+                    w="24.5%"
+                    required
+                    label="Fat Mass (kg)"
+                    placeholder="Enter your fat mass"
+                    value={form.values.fat_mass}
+                    onChange={(event) =>
+                      form.setFieldValue("phyStat.fat_mass", event)
+                    }
+                    radius="md"
+                  />
+                  <NumberInput
+                    w="24.5%"
+                    required
+                    label="Body Mass (kg)"
+                    placeholder="Enter your muscle mass"
+                    value={form.values.muscle_mass}
+                    onChange={(event) =>
+                      form.setFieldValue("phyStat.muscle_mass", event)
+                    }
+                    radius="md"
+                  />
+                </Group>
               </div>
-              <div className={styles.vidContainer}>
-                <UnstyledButton className={styles.selectVid}>
-                  <label htmlFor="situp">
-                    <Image
-                      src="/Images/image_placeholder.png"
-                      style={{ width: rem(64) }}
+              <div className={styles.perfVidContent}>
+                <div className={styles.vidContainer}>
+                  <UnstyledButton className={styles.selectVid}>
+                    <label htmlFor="pushup">
+                      <Image
+                        src="/Images/image_placeholder.png"
+                        style={{ width: rem(64) }}
+                      />
+                      {form.values.pushup.file_name
+                        ? "Successfully Uploaded"
+                        : "Select a video to upload"}
+                    </label>
+                    <input
+                      id="pushup"
+                      type="file"
+                      accept="video/*"
+                      style={{ display: "none" }}
+                      onChange={handleFileChange("pushup")}
                     />
-                    {form.values.situp.file_name
-                      ? "Successfully Uploaded"
-                      : "Select a video to upload"}
-                  </label>
+                  </UnstyledButton>
+                  Push-up
+                </div>
+                <div className={styles.vidContainer}>
+                  <UnstyledButton className={styles.selectVid}>
+                    <label htmlFor="situp">
+                      <Image
+                        src="/Images/image_placeholder.png"
+                        style={{ width: rem(64) }}
+                      />
+                      {form.values.situp.file_name
+                        ? "Successfully Uploaded"
+                        : "Select a video to upload"}
+                    </label>
 
-                  <input
-                    id="situp"
-                    type="file"
-                    accept="video/*"
-                    style={{ display: "none" }}
-                    onChange={handleFileChange("situp")}
-                  />
-                </UnstyledButton>
-                Sit-Up
-              </div>
-              <div className={styles.vidContainer}>
-                <UnstyledButton className={styles.selectVid}>
-                  <label htmlFor="running">
-                    <Image
-                      src="/Images/image_placeholder.png"
-                      style={{ width: rem(64) }}
+                    <input
+                      id="situp"
+                      type="file"
+                      accept="video/*"
+                      style={{ display: "none" }}
+                      onChange={handleFileChange("situp")}
                     />
-                    {form.values.running.file_name
-                      ? "Successfully Uploaded"
-                      : "Select a video to upload"}
-                  </label>
-                  <input
-                    id="running"
-                    type="file"
-                    accept="video/*"
-                    style={{ display: "none" }}
-                    onChange={handleFileChange("running")}
-                  />
-                </UnstyledButton>
-                Running
+                  </UnstyledButton>
+                  Sit-Up
+                </div>
+                <div className={styles.vidContainer}>
+                  <UnstyledButton className={styles.selectVid}>
+                    <label htmlFor="running">
+                      <Image
+                        src="/Images/image_placeholder.png"
+                        style={{ width: rem(64) }}
+                      />
+                      {form.values.running.file_name
+                        ? "Successfully Uploaded"
+                        : "Select a video to upload"}
+                    </label>
+                    <input
+                      id="running"
+                      type="file"
+                      accept="video/*"
+                      style={{ display: "none" }}
+                      onChange={handleFileChange("running")}
+                    />
+                  </UnstyledButton>
+                  Running
+                </div>
+                <Button
+                  fullWidth
+                  color="#00A67E"
+                  type="submit"
+                  style={{ width: "100%" }}>
+                  Submit
+                </Button>
               </div>
-              <Button
-                fullWidth
-                color="#00A67E"
-                type="submit"
-                style={{ width: "300px" }}>
-                Submit
-              </Button>
             </div>
           </form>
         </div>
