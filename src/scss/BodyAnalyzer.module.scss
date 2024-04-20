@@ -31,10 +31,12 @@
         width: 700px;
       }
     }
+
     .perfVidContent {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+
       gap: 2rem 5rem;
       .vidContainer {
         display: flex;

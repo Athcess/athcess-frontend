@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styles from "../scss/BodyAnalyzer.module.scss";
 import CustomRadar from "../Components/CustomRadar";
-import { Image, rem, Modal, UnstyledButton } from "@mantine/core";
+import { Image, rem, Modal, UnstyledButton, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { useForm } from "@mantine/form";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -16,43 +17,43 @@ import {
   PhyAttModal,
   PerfVidModal,
 } from "../Components/BodyAnalyzerComponents/InfoModal";
+import { useMutation } from "@tanstack/react-query";
+import { postPhyAttVid } from "../Services/HomeAPI";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-export default function BodyAnalyzerPage() {
+export default function BodyAnalyzerPage({ user }) {
+  const form = useForm({
+    initialValues: {
+      pushup: {
+        file_name: null,
+        content_type: null,
+        file_size: null,
+        username: user.username,
+        file: null,
+        physical_attribute_type: "push_up",
+      },
+      situp: {
+        file_name: null,
+        content_type: null,
+        file_size: null,
+        username: user.username,
+        file: null,
+        physical_attribute_type: "sit_up",
+      },
+      running: {
+        file_name: null,
+        content_type: null,
+        file_size: null,
+        username: user.username,
+        file: null,
+        physical_attribute_type: "run",
+      },
+    },
+  });
   const [PhyAttOpened, PhyAtt] = useDisclosure(false);
   const [PerfVidOpened, PerfVid] = useDisclosure(false);
-
   const [selectedFile, setSelectedFile] = useState(null);
-
-  const handleFileChange = async (event, exerciseType) => {
-    const file = event.target.files[0];
-
-    // Create FormData object to send file data and exercise type
-    const formData = new FormData();
-    formData.append("video", file);
-    formData.append("exerciseType", exerciseType);
-    console.log(formData.get("video"));
-
-    // try {
-    //   // Send POST request to the API endpoint
-    //   const response = await fetch("your-api-endpoint-url", {
-    //     method: "POST",
-    //     body: formData,
-    //   });
-
-    //   if (response.ok) {
-    //     // Video uploaded successfully
-    //     console.log("Video uploaded successfully");
-    //   } else {
-    //     // Handle error response from the server
-    //     console.error("Failed to upload video");
-    //   }
-    // } catch (error) {
-    //   // Handle network errors or other exceptions
-    //   console.error("Error uploading video:", error);
-    // }
-  };
 
   const data = {
     labels: ["Running", "Pushup", "Situp"],
@@ -86,6 +87,53 @@ export default function BodyAnalyzerPage() {
     ],
   };
   const options = { indexAxis: "y" };
+
+  const handleFileChange = (fieldName) => (event) => {
+    const file = event.target.files[0];
+
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+
+    reader.onload = () => {
+      const binaryFile = reader.result;
+      form.setFieldValue(fieldName, {
+        file_name: file.name,
+        content_type: file.type,
+        file_size: file.size,
+        file: binaryFile,
+        username: user.username,
+        physical_attribute_type: form.values[fieldName].physical_attribute_type,
+      });
+    };
+
+    // Update the form values with the file information
+  };
+  const mutationPushup = useMutation({
+    mutationFn: postPhyAttVid,
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
+  const post = (e) => {
+    e.preventDefault();
+    console.log(form.values);
+    if (
+      form.values.pushup.file_name == null ||
+      form.values.situp.file_name == null ||
+      form.values.running.file_name == null
+    ) {
+      alert("Please upload all required videos");
+    } else {
+      mutationPushup.mutate({
+        file_name: form.values.pushup.file_name,
+        content_type: form.values.pushup.content_type,
+        file_size: form.values.pushup.file_size,
+        file: form.values.pushup.file,
+        username: user.username,
+      });
+    }
+  };
+  console.log(user);
   return (
     <>
       <PhyAttModal opened={PhyAttOpened} onClose={PhyAtt.close} />
@@ -111,72 +159,88 @@ export default function BodyAnalyzerPage() {
         </div>
         <div className={styles.perfVidContainer}>
           <div className={styles.header}>
-            Physical Stats & Performance Videos
+            Performance Videos
             <UnstyledButton onClick={PerfVid.open}>
               <Image
                 src="/Images/info_logo.png"
                 style={{ width: rem(16), height: rem(16) }}></Image>
             </UnstyledButton>
           </div>
-          <div className={styles.perfVidContent}>
-            <div className={styles.vidContainer}>
-              <UnstyledButton className={styles.selectVid}>
-                <label htmlFor="pushup">
-                  <Image
-                    src="/Images/image_placeholder.png"
-                    style={{ width: rem(64) }}
+          <form onSubmit={post} className={styles.form}>
+            <div className={styles.perfVidContent}>
+              <div className={styles.vidContainer}>
+                <UnstyledButton className={styles.selectVid}>
+                  <label htmlFor="pushup">
+                    <Image
+                      src="/Images/image_placeholder.png"
+                      style={{ width: rem(64) }}
+                    />
+                    {form.values.pushup.file_name
+                      ? "Successfully Uploaded"
+                      : "Select a video to upload"}
+                  </label>
+                  <input
+                    id="pushup"
+                    type="file"
+                    accept="video/*"
+                    style={{ display: "none" }}
+                    onChange={handleFileChange("pushup")}
                   />
-                  Select a video to upload
-                </label>
-                <input
-                  id="pushup"
-                  type="file"
-                  accept="video/*"
-                  style={{ display: "none" }}
-                  onChange={(event) => handleFileChange(event, "pushup")}
-                />
-              </UnstyledButton>
-              Push-up
-            </div>
-            <div className={styles.vidContainer}>
-              <UnstyledButton className={styles.selectVid}>
-                <label htmlFor="pullup">
-                  <Image
-                    src="/Images/image_placeholder.png"
-                    style={{ width: rem(64) }}
+                </UnstyledButton>
+                Push-up
+              </div>
+              <div className={styles.vidContainer}>
+                <UnstyledButton className={styles.selectVid}>
+                  <label htmlFor="situp">
+                    <Image
+                      src="/Images/image_placeholder.png"
+                      style={{ width: rem(64) }}
+                    />
+                    {form.values.situp.file_name
+                      ? "Successfully Uploaded"
+                      : "Select a video to upload"}
+                  </label>
+
+                  <input
+                    id="situp"
+                    type="file"
+                    accept="video/*"
+                    style={{ display: "none" }}
+                    onChange={handleFileChange("situp")}
                   />
-                  Select a video to upload
-                </label>
-                <input
-                  id="pullup"
-                  type="file"
-                  accept="video/*"
-                  style={{ display: "none" }}
-                  onChange={(event) => handleFileChange(event, "pullup")}
-                />
-              </UnstyledButton>
-              Pull-up
-            </div>
-            <div className={styles.vidContainer}>
-              <UnstyledButton className={styles.selectVid}>
-                <label htmlFor="running">
-                  <Image
-                    src="/Images/image_placeholder.png"
-                    style={{ width: rem(64) }}
+                </UnstyledButton>
+                Sit-Up
+              </div>
+              <div className={styles.vidContainer}>
+                <UnstyledButton className={styles.selectVid}>
+                  <label htmlFor="running">
+                    <Image
+                      src="/Images/image_placeholder.png"
+                      style={{ width: rem(64) }}
+                    />
+                    {form.values.running.file_name
+                      ? "Successfully Uploaded"
+                      : "Select a video to upload"}
+                  </label>
+                  <input
+                    id="running"
+                    type="file"
+                    accept="video/*"
+                    style={{ display: "none" }}
+                    onChange={handleFileChange("running")}
                   />
-                  Select a video to upload
-                </label>
-                <input
-                  id="running"
-                  type="file"
-                  accept="video/*"
-                  style={{ display: "none" }}
-                  onChange={(event) => handleFileChange(event, "running")}
-                />
-              </UnstyledButton>
-              Running
+                </UnstyledButton>
+                Running
+              </div>
+              <Button
+                fullWidth
+                color="#00A67E"
+                type="submit"
+                style={{ width: "300px" }}>
+                Submit
+              </Button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </>

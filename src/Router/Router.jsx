@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import NavigationBar from "../Components/NavigationBar";
 import WelcomePage from "../Pages/WelcomePage";
 import SignUpPage from "../Pages/SignUpPage";
@@ -34,7 +34,10 @@ import {
 } from "react-router-dom";
 import { ProtectedRoute } from "../Components/ProtectedRoute";
 import { AuthProvider } from "../hooks/useAuth";
-import { getUserFromLocalStorage, saveUserToLocalStorage } from "../hooks/useLocalStorage";
+import {
+  getUserFromLocalStorage,
+  saveUserToLocalStorage,
+} from "../hooks/useLocalStorage";
 
 import MyCalendar from "../Pages/Calendar";
 import HomePageGuest from "../Pages/HomePageGuest";
@@ -42,38 +45,39 @@ import SubscriptionPage from "../Pages/SubscriptionPage";
 import CheckoutPage from "../Pages/CheckoutPage";
 
 export default function AppRouter() {
-  const [user, setUser] = useState(getUserFromLocalStorage() || {
-    username: "",
-    first_name: "",
-    last_name: "",
-    role: "",
-    age: "",
-    hometown: "",
-    position: "",
-    birth_date: "",
-    education: ["", ""],
-    teir: false,
-    //organization
-    organization: "",
-  });
-
-    const updateteir = (newteir) => {
-      setUser(prevUser => ({
-        ...prevUser,
-        teir: newteir
-      }));
-    };
-
-    const newUser = (data) =>{
-      setUser(data)
-      console.log(user)
+  const [user, setUser] = useState(
+    getUserFromLocalStorage() || {
+      username: "",
+      first_name: "",
+      last_name: "",
+      role: "",
+      age: "",
+      hometown: "",
+      position: "",
+      birth_date: "",
+      education: ["", ""],
+      teir: false,
+      //organization
+      organization: "",
     }
-  
-    useEffect(() => {
-      saveUserToLocalStorage(user);
-    }, [user]);
-  
-  
+  );
+
+  const updateteir = (newteir) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      teir: newteir,
+    }));
+  };
+
+  const newUser = (data) => {
+    setUser(data);
+    console.log(user);
+  };
+
+  useEffect(() => {
+    saveUserToLocalStorage(user);
+  }, [user]);
+
   return (
     <Router>
       <AuthProvider>
@@ -82,7 +86,9 @@ export default function AppRouter() {
             element={
               <>
                 <ProtectedRoute>
-                  <NavigationBar user={user} updateteir = {updateteir}></NavigationBar>
+                  <NavigationBar
+                    user={user}
+                    updateteir={updateteir}></NavigationBar>
                   <Outlet />
                 </ProtectedRoute>
               </>
@@ -90,24 +96,41 @@ export default function AppRouter() {
             <Route path="/home" element={<HomePage />} />
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/calendar" element={<MyCalendar />} />
-            <Route path="/subscription" element={<SubscriptionPage user={user} updateteir = {updateteir}/>} />
+            <Route
+              path="/subscription"
+              element={<SubscriptionPage user={user} updateteir={updateteir} />}
+            />
             <Route
               path="/checkout"
-              element={<CheckoutPage updateteir={updateteir} ></CheckoutPage>}></Route>
-            <Route path="/search/:tosearch" element={<SearchPage user={user}/>} />
+              element={
+                <CheckoutPage updateteir={updateteir}></CheckoutPage>
+              }></Route>
+            <Route
+              path="/search/:tosearch"
+              element={<SearchPage user={user} />}
+            />
             <Route path="/post/:postid" element={<PostPage />} />
             <Route path="/friend" element={<FriendListPage />} />
-            <Route path="/bodyanalyzer" element={<BodyAnalyzerPage />} />
+            <Route
+              path="/bodyanalyzer"
+              element={<BodyAnalyzerPage user={user} />}
+            />
             <Route path="/Calendar" element={<MyCalendar />} />
 
-            <Route path="/athleteprofile" element={<AthleteProfilePage user={user}/>}>
+            <Route
+              path="/athleteprofile"
+              element={<AthleteProfilePage user={user} />}>
               <Route index element={<AboutAthlete></AboutAthlete>}></Route>
-              <Route path="post" element={<PostAthlete user={user}></PostAthlete>}></Route>
+              <Route
+                path="post"
+                element={<PostAthlete user={user}></PostAthlete>}></Route>
               <Route
                 path="highlight"
                 element={<HighlightAthlete></HighlightAthlete>}></Route>
             </Route>
-            <Route path="/scoutprofile" element={<ScoutProfilePage user={user}/>}>
+            <Route
+              path="/scoutprofile"
+              element={<ScoutProfilePage user={user} />}>
               <Route index element={<AboutScout></AboutScout>}></Route>
               <Route path="post" element={<PostScout></PostScout>}></Route>
             </Route>
@@ -121,7 +144,7 @@ export default function AppRouter() {
           <Route path="/" element={<WelcomePage />} />
           <Route path="/homeguest" element={<HomePageGuest />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/signin" element={<SignInPage newUser={newUser}/>} />
+          <Route path="/signin" element={<SignInPage newUser={newUser} />} />
           <Route path="/forgetpassword" element={<ForgetPasswordPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

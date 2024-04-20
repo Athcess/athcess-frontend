@@ -193,3 +193,33 @@ export const getPhyAtt = async () => {
     console.log(error);
   }
 };
+export const postPhyAttVid = async (e) => {
+  try {
+    const postResponse = await axios.post(
+      "http://127.0.0.1:8000/services/upload/",
+      {
+        file_name: e.file_name,
+        content_type: e.content_type,
+        file_size: e.file_size,
+        username: e.username,
+        description: e.file_name + "video",
+        physical_attribute_type: e.physical_attribute_type,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    const postResponseData = postResponse.data;
+    console.log(postResponseData);
+    console.log(e.file);
+    const putResponse = await axios.put(postResponseData.signed_url, {
+      file: e.file,
+    });
+    console.log(putResponse.data);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+};
