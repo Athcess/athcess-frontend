@@ -3,15 +3,15 @@ import Cookies from "js-cookie";
 
 const fileToBinary = (file) => {
   return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-          const binaryData = reader.result;
-          resolve(binaryData);
-      };
-      reader.onerror = () => {
-          reject(new Error('Unable to read the file as binary data'));
-      };
-      reader.readAsArrayBuffer(file);
+    const reader = new FileReader();
+    reader.onload = () => {
+      const binaryData = reader.result;
+      resolve(binaryData);
+    };
+    reader.onerror = () => {
+      reject(new Error("Unable to read the file as binary data"));
+    };
+    reader.readAsArrayBuffer(file);
   });
 };
 
@@ -20,7 +20,7 @@ const auth_username = Cookies.get("auth_username");
 export const getPost = async (e) => {
   try {
     const response = await axios.get(
-      "http://127.0.0.1:8000/services/post/"+e +"/",
+      "http://127.0.0.1:8000/services/post/" + e + "/",
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -38,7 +38,7 @@ export const getPost = async (e) => {
 export const del_post = async (e) => {
   try {
     const response = await axios.delete(
-      "http://127.0.0.1:8000/services/post/"+e +"/",
+      "http://127.0.0.1:8000/services/post/" + e + "/",
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -103,14 +103,11 @@ export const getNotification = async () => {
 
 export const getFeed = async () => {
   try {
-    const response = await axios.get(
-      "http://127.0.0.1:8000/services/post/",
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    const response = await axios.get("http://127.0.0.1:8000/services/post/", {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
 
     console.log(response);
     return response;
@@ -135,13 +132,11 @@ export const postPost = async (e) => {
         },
       }
     );
-    return(res)
-
+    return res;
   } catch (error) {
     console.log(error);
   }
 };
-
 
 export const postBlob = async (e) => {
   try {
@@ -158,7 +153,7 @@ export const postBlob = async (e) => {
         verify: null,
         club_name: null,
         physical_attribute: null,
-        status : e.status
+        status: e.status,
       },
       {
         headers: {
@@ -174,12 +169,11 @@ export const postBlob = async (e) => {
   }
 };
 
-
 export const getBlobPost = async (e) => {
   try {
-    console.log(e)
+    console.log(e);
     const res = await axios.get(
-      "http://127.0.0.1:8000/services/upload/?post_id=" +e,
+      "http://127.0.0.1:8000/services/upload/?post_id=" + e,
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -196,9 +190,9 @@ export const getBlobPost = async (e) => {
 export const uploadedBlob = async (e) => {
   try {
     const res = await axios.put(
-      "http://127.0.0.1:8000/services/upload/"+e+"/",
+      "http://127.0.0.1:8000/services/upload/" + e + "/",
       {
-        status : "uploaded"
+        status: "uploaded",
       },
       {
         headers: {
@@ -216,18 +210,14 @@ export const uploadedBlob = async (e) => {
 
 export const putBlob = async (e) => {
   try {
-    console.log(e)
+    console.log(e);
     const binaryData = await fileToBinary(e.file);
-    console.log(binaryData)
-    const res = await axios.put(
-      e.url, binaryData,
-      {
-        headers: {
-          'x-ms-blob-type' : 'BlockBlob',
-        },
-      }
-    );
-    
+    console.log(binaryData);
+    const res = await axios.put(e.url, binaryData, {
+      headers: {
+        "x-ms-blob-type": "BlockBlob",
+      },
+    });
 
     console.log(res);
     return res.data;
@@ -235,9 +225,6 @@ export const putBlob = async (e) => {
     console.log(error);
   }
 };
-
-
-
 
 export const postEvent = async (e) => {
   try {
@@ -296,11 +283,14 @@ export const postSearch = async (e) => {
 
 export const getCalendar = async () => {
   try {
-    const res = await axios.get("http://127.0.0.1:8000/services/calendar/get/", {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
+    const res = await axios.get(
+      "http://127.0.0.1:8000/services/calendar/get/",
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
 
     // if (res.status < 200 || res.status >= 300 || res.name == "AxiosError") {
     //   console.log("ERROR");
@@ -342,12 +332,47 @@ export const postPhyAttVid = async (e) => {
     const postResponseData = postResponse.data;
     console.log(postResponseData);
     console.log(e.file);
-    const putResponse = await axios.put(postResponseData.signed_url, {
-      file: e.file,
-    });
+
+    //-------------------------------------------------------
+
+    const putResponse = await axios.put(
+      postResponseData.signed_url,
+      e.file,
+
+      {
+        headers: {
+          "content-type": e.content_type,
+          "x-ms-blob-type": "BlockBlob",
+        },
+      }
+    );
     console.log(putResponse.data);
+
+    //-------------------------------------------------------
+
+    const getResponse = await axios.get(
+      `http://127.0.0.1:8000/services/analytics/?player_name=${e.username}&analytic_type=${e.physical_attribute_type}`
+    );
+    console.log(getResponse.data);
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;
   }
 };
+
+// export const getPhyAttVid = async ({ player_name, analytic_type }) => {
+//   try {
+//     const response = await axios.get(
+//       `http://127.0.0.1:8000/services/analytics/?player_name=${player_name}&analytic_type=${analytic_type}`
+//     );
+//     if (!response.ok) {
+//       throw new Error(`Error fetching data: ${response.statusText}`);
+//     }
+//     const data = await response.json();
+//     return data || {}; // Return the data, or an empty object if data is undefined
+//   } catch (error) {
+//     console.error("Error fetching video data:", error);
+//     // Return a default value such as an empty object or array
+//     return {}; // Adjust as needed based on your expected data structure
+//   }
+// };

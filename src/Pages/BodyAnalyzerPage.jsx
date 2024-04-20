@@ -17,7 +17,7 @@ import {
   PhyAttModal,
   PerfVidModal,
 } from "../Components/BodyAnalyzerComponents/InfoModal";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { postPhyAttVid } from "../Services/HomeAPI";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
@@ -108,31 +108,66 @@ export default function BodyAnalyzerPage({ user }) {
 
     // Update the form values with the file information
   };
+
+  // const { data: pushupData, refetch: refetchPushup } = useQuery({
+  //   queryKey: ["getPushup", user.username],
+  //   queryFn: () =>
+  //     getPhyAttVid({ player_name: user.username, analytic_type: "push_up" }),
+  // });
+
+  // const { data: situpData, refetch: refetchSitup } = useQuery({
+  //   queryKey: ["getSitup", user.username],
+  //   queryFn: () =>
+  //     getPhyAttVid({ player_name: user.username, analytic_type: "sit_up" }),
+  // });
+
+  // const { data: runningData, refetch: refetchRunning } = useQuery({
+  //   queryKey: ["getRunning", user.username],
+  //   queryFn: () =>
+  //     getPhyAttVid({ player_name: user.username, analytic_type: "run" }),
+  // });
+
   const mutationPushup = useMutation({
     mutationFn: postPhyAttVid,
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: () => {
+      console.log("Push-up video uploaded successfully");
+      refetchPushup(); // Refetch push-up data
     },
   });
-  const post = (e) => {
+  const mutationSitup = useMutation({
+    mutationFn: postPhyAttVid,
+    onSuccess: () => {
+      console.log("Push-up video uploaded successfully");
+      refetchSitup(); // Refetch push-up data
+    },
+  });
+
+  const mutationRunning = useMutation({
+    mutationFn: postPhyAttVid,
+    onSuccess: () => {
+      console.log("Push-up video uploaded successfully");
+      refetchRunning(); // Refetch push-up data
+    },
+  });
+  const handleFormSubmit = (e) => {
     e.preventDefault();
     console.log(form.values);
+    // Check if any videos are missing
     if (
-      form.values.pushup.file_name == null ||
-      form.values.situp.file_name == null ||
-      form.values.running.file_name == null
+      !form.values.pushup.file_name ||
+      !form.values.situp.file_name ||
+      !form.values.running.file_name
     ) {
       alert("Please upload all required videos");
-    } else {
-      mutationPushup.mutate({
-        file_name: form.values.pushup.file_name,
-        content_type: form.values.pushup.content_type,
-        file_size: form.values.pushup.file_size,
-        file: form.values.pushup.file,
-        username: user.username,
-      });
+      return;
     }
+
+    // Execute the mutations for each type of video
+    mutationPushup.mutate(form.values.pushup);
+    mutationSitup.mutate(form.values.situp);
+    mutationRunning.mutate(form.values.running);
   };
+
   console.log(user);
   return (
     <>
@@ -166,7 +201,7 @@ export default function BodyAnalyzerPage({ user }) {
                 style={{ width: rem(16), height: rem(16) }}></Image>
             </UnstyledButton>
           </div>
-          <form onSubmit={post} className={styles.form}>
+          <form onSubmit={handleFormSubmit} className={styles.form}>
             <div className={styles.perfVidContent}>
               <div className={styles.vidContainer}>
                 <UnstyledButton className={styles.selectVid}>
