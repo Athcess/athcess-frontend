@@ -37,13 +37,13 @@ export default function EditAchievementModal({ opened, onClose}) {
 
 
   const mutation = useMutation({
-    mutationFn: post_achievement, // Assuming you have a function named updateAchievement for updating achievements
+    mutationFn: post_achievement,
     onSuccess: (data) => {
       console.log(data);
       queryClient.invalidateQueries({ queryKey: ['achievement'] })
       queryClient.invalidateQueries({ queryKey: ['profile'] })
 
-      onClose(); // Close the modal on successful update
+      onClose();
     },
   });
 
@@ -104,9 +104,12 @@ export default function EditAchievementModal({ opened, onClose}) {
             }
           />
           <Button w={500} color="#00A67E" onClick={postAchievement}>
-            SAVE
+            ADD
           </Button>
         </div>
+        <Button fullWidth color="#00A67E" onClick={()=>onClose()}>
+            SAVE
+          </Button>
       </div>
     </Modal>
   );

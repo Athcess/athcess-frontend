@@ -3,7 +3,6 @@ import { rem, Image, Spoiler } from "@mantine/core";
 import styles from "../../scss/ProfilePageComponents/AchievementElement.module.scss";
 
 export default function AchievementElement({ data}) {
-  console.log(data);
   return (
     <div className={styles.container}>
       <Image

@@ -33,11 +33,13 @@ export default function AboutAthlete() {
   const query = useQuery({ queryKey: ["profile"], queryFn: profileAthlete });
   if (query.status === "success"){
    const Achievements = query.data.data.achievements
+   const Backgrounds = query.data.data.experiences
   return (
     <div className={styles.container}>
       <EditBackgroundModal
         opened={Backgroundopened}
         onClose={Background.close}
+        Backgrounds = {Backgrounds}
       />
       <EditAchievementModal
         opened={Achievementopened}
@@ -82,8 +84,11 @@ export default function AboutAthlete() {
             </UnstyledButton>
           </div>
           <div className={styles.backgroundContent}>
-            <BackgroundElement></BackgroundElement>
-            <BackgroundElement></BackgroundElement>
+          {Backgrounds?.map((e)=> {
+              return <>
+              <BackgroundElement key={e.experience_id} data={e}></BackgroundElement></>
+             
+            })}
           </div>
         </div>
         <div className={styles.section}>
@@ -98,7 +103,7 @@ export default function AboutAthlete() {
           <div className={styles.achievementContent}>
             {Achievements?.map((e)=> {
               return <>
-              <AchievementElement key={e.created_at} data={e}></AchievementElement></>
+              <AchievementElement key={e.ahievement_id} data={e}></AchievementElement></>
              
             })}
           </div>

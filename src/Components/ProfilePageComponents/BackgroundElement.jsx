@@ -1,12 +1,19 @@
 import React from "react";
 import styles from "../../scss/ProfilePageComponents/BackgroundElement.module.scss";
 import { Spoiler } from "@mantine/core";
-export default function BackgroundElement() {
+import dayjs from "dayjs";
+export default function BackgroundElement({ data }) {
+  const date1 = dayjs(data.start_date);
+  const date2 = dayjs(data.end_date);
+
+  let month = date2.diff(date1, "month");
+  const year = Math.floor(month / 12);
+  month = month - year * 12;
   return (
     <div className={styles.container}>
       <div className={styles.topic}>
         <div className={styles.bullet}>&nbsp;</div>
-        Youth National Basketball Team
+        {data.topic}
       </div>
       <div className={styles.content}>
         <div className={styles.verticalLineContainer}>
@@ -14,50 +21,15 @@ export default function BackgroundElement() {
         </div>
         <div className={styles.contentRight}>
           <div className={styles.duration}>
-            Feb 2023 - Present &nbsp;&nbsp;&nbsp;1 yr 1 mo
+            {date1.format("MMM YYYY")} - {date2.format("MMM YYYY")} &nbsp;&nbsp;&nbsp;{year} yr {month} mo
           </div>
-          <div className={styles.location}>Bangkok, Thailand</div>
           <Spoiler
             showLabel="Show more"
             hideLabel="Hide"
             maxHeight={115}
             padding={20}
-            className={styles.description}>
-            <ul>
-              <li>
-                Hammock chia hexagon fanny pack microdosing swag VHS authentic.
-                Intelligentsia narwhal crucifix thundercats master cleanse
-                unicorn. Kale chips cardigan meditation celiac, yr pok pok
-                narwhal vibecession glossier fanny pack beard bespoke kinfolk
-                unicorn locavore. Pitchfork jianbing truffaut narwhal solarpunk.
-              </li>
-              <li>Successfully became the main player of the team.</li>
-              <li>
-                Successfully became a member of the national basketball team in
-                the youth generation.
-              </li>
-              <li>Successfully became the main player of the team.</li>
-              <li>
-                Successfully became a member of the national basketball team in
-                the youth generation.
-              </li>
-              <li>Successfully became the main player of the team.</li>
-              <li>
-                Successfully became a member of the national basketball team in
-                the youth generation.
-              </li>
-              <li>Successfully became the main player of the team.</li>
-              <li>
-                Successfully became a member of the national basketball team in
-                the youth generation.
-              </li>
-              <li>Successfully became the main player of the team.</li>
-              <li>
-                Successfully became a member of the national basketball team in
-                the youth generation.
-              </li>
-              <li>Successfully became the main player of the team.</li>
-            </ul>
+            className={styles.description}
+          >{data.description}
           </Spoiler>
         </div>
       </div>

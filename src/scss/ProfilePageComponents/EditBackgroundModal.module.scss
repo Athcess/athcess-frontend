@@ -11,32 +11,34 @@
     div {
       // border: 1px solid red;
     }
-    .backgroundcontent{
+    .backgroundcontent {
         display: flex;
-    flex-direction: column;
-    border-radius: 5px;
-    border: 2px solid #bbbbbb;
-    background-color: white;
-    min-width: 500px;
-    max-width: 100%;
-    height: auto;
-    padding: 20px;
-    .topic{
-        width: 100%;
-        display: flex;
-        font-weight: bold;
+        border-radius: 5px;
+        border: 2px solid #bbbbbb;
+        background-color: white;
+        min-width: 500px;
+        max-width: 100%;
+        height: auto;
+        padding: 20px;
         justify-content: space-between;
-
-    }
-    .sub{
-        color: grey;
-        font-size: 0.8rem;
-
-    }
-    .description{
-        font-size: 0.8rem;
-        max-width: 400px;
-    }
+        .content {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            .topic {
+                width: 100%;
+                display: flex;
+                font-weight: bold;
+            }
+            .sub {
+                color: grey;
+                font-size: 0.8rem;
+            }
+            .description {
+                font-size: 0.8rem;
+                max-width: 400px;
+            }
+        }
     }
     .backgroundadd{
         display: flex;

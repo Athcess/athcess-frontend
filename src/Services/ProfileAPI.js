@@ -130,6 +130,70 @@ export const del_achievement = async (e) => {
   }
 };
 
+export const put_background = async (e) => {
+  try {
+    const res = await axios.put(
+      "http://127.0.0.1:8000/services/experience/"+e.id+"/",
+      {
+        username: auth_username,
+        created_at: e.created_at,
+        start_date: e.start_date,
+        end_date: e.end_date,
+        topic: e.topic,
+        description: e.description
+
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    console.log(res);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const post_background = async (e) => {
+  try {
+    const res = await axios.post(
+      "http://127.0.0.1:8000/services/experience/",
+      {
+        username: auth_username,
+        start_date: e.start_date,
+        end_date: e.end_date,
+        topic: e.topic,
+        description: e.description
+
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    console.log(res);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const del_background = async (e) => {
+  try {
+    const res = await axios.delete(
+      "http://127.0.0.1:8000/services/experience/"+e.id+"/",
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    console.log(res);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const profileScout = async () => {
   try {
