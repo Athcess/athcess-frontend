@@ -4,6 +4,7 @@ import { useDisclosure } from "@mantine/hooks";
 import styles from "../../scss/ProfilePage.module.scss";
 import ProfileElement from "../../Components/ProfilePageComponents/ProfileElement";
 import EditProfileModalAthlete from "../../Components/ProfilePageComponents/AthleteProfilePageComponents/EditProfileModalAthlete";
+import ProfileElementOrg from "../../Components/ProfilePageComponents/ProfileElementOrg";
 
 export default function OrgProfilePage() {
 
@@ -12,7 +13,7 @@ export default function OrgProfilePage() {
     <>
    
       <div className={styles.container}>
-        <ProfileElement type="org"></ProfileElement>
+        <ProfileElementOrg type="org"></ProfileElementOrg>
         <Outlet></Outlet>
       </div>
     </>

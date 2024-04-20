@@ -18,40 +18,89 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import styles from "../../scss/ProfilePageComponents/NewPostModal.module.scss";
-import { postBlob, postEvent, postPost } from "../../Services/HomeAPI";
+import { postBlob, postEvent, postPost, putBlob, uploadedBlob } from "../../Services/HomeAPI";
+import { DateTimePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
+import { profileAthlete } from "../../Services/ProfileAPI";
 
-export default function NewEventModal({ opened, onClose, user }) {
+export default function NewEventModal({ opened, onClose, user , club}) {
+  console.log(club)
   const form = useForm({
+
     initialValues: {
-      club: user.organization,
+      club: club,
       description: "",
+      file: null,
+      hasfile: false,
       start_time: "",
       end_time: "",
     },
   });
-
-  const mutationBlob = useMutation({
-    mutationFn: postBlob,
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  });
-  const mutationevent = useMutation({
-    mutationFn: postEvent,
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  });
-
-  const post = (e) => {
-    e.preventDefault();
-    console.log(form.values);
-    mutationevent.mutate(form.values);
-    mutationBlob.mutate(form.values);
-  };
+ 
+    const queryClient = useQueryClient();
+  
+    const mutationevent = useMutation({
+      mutationFn: postEvent,
+      onSuccess: (data) => {
+        console.log(data.data);
+        if (data.data.has_attachment) {
+          mutationBlob.mutate({ form: form.values, eventid: data.data.event_id});
+        } else {
+          queryClient.invalidateQueries({ queryKey: ["getevent"] });
+          queryClient.invalidateQueries({ queryKey: ["postfeed"] });
+  
+          onClose();
+        }
+      },
+    });
+    const mutationBlob = useMutation({
+      mutationFn: postBlob,
+      onSuccess: (data) => {
+        const blob_id = data.postgras_id;
+        const url = data.signed_url;
+        console.log(url);
+        const reqdata = { url: url, file: form.values.file };
+        putmutationBlob.mutate(reqdata);
+        uploadedmutationBlob.mutate(blob_id);
+      },
+    });
+  
+    const putmutationBlob = useMutation({
+      mutationFn: putBlob,
+      onSuccess: (data) => {
+        console.log(data);
+      },
+    });
+  
+    const uploadedmutationBlob = useMutation({
+      mutationFn: uploadedBlob,
+      onSuccess: (data) => {
+        console.log(data);
+        setTimeout(() => {
+          queryClient.invalidateQueries({ queryKey: ["getevent"] });
+        }, 1000);
+        setTimeout(() => {
+          queryClient.invalidateQueries({ queryKey: ["postfeed"] });
+        }, 1000);
+  
+        onClose();
+      },
+    });
+    const post = (e) => {
+      e.preventDefault();
+      console.log(form.values);
+  
+      mutationevent.mutate(form.values);
+    };
+  
+    const setFile = (event) => {
+      form.setFieldValue("file", event);
+      form.setFieldValue("hasfile", true);
+    };
+  
 
   console.log(user);
   return (
@@ -81,28 +130,28 @@ export default function NewEventModal({ opened, onClose, user }) {
             <Textarea
               placeholder="Write content"
               onChange={(event) =>
-                form.setFieldValue("content", event.currentTarget.value)
+                form.setFieldValue("description", event.currentTarget.value)
               }></Textarea>
+              <DateTimePicker
+            slotProps={{ textField: { size: "small"} }}
+            label="start time"
+        
+            className={styles.dateinner}
+            onChange={(event) => form.setFieldValue("start_time", dayjs(event).format('YYYY-MM-DD'))}
+          />
+          <DateTimePicker
+            slotProps={{ textField: { size: "small"} }}
+            label="end time"
+            
+            className={styles.dateinner}
+            onChange={(event) => form.setFieldValue("end_time", dayjs(event).format('YYYY-MM-DD'))}
+          />
             <FileInput
-              onChange={(event) => form.setFieldValue("file", event)}
+              onChange={(event) => setFile(event)}
             />
 
-            {user.role == "athlete" && (
-              <Checkbox
-                label="Add this post to your highlight page"
-                onChange={(event) =>
-                  form.setFieldValue("highlight", event.currentTarget.checked)
-                }
-              />
-            )}
-            {user.role == "admin" && (
-              <Checkbox
-                label="Add to event"
-                onChange={(event) =>
-                  form.setFieldValue("event", event.currentTarget.checked)
-                }
-              />
-            )}
+            
+           
           </div>
           <br></br>
           <Button fullWidth color="#00A67E" type="submit">

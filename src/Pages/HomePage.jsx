@@ -25,17 +25,18 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { getFeed } from "../Services/HomeAPI";
 import dayjs from "dayjs";
+import Event from "../Components/Event";
 
 
 
 export default function HomePage() {
   const [isLogin, setIsLogin] = useState(true);
   const query = useQuery({ queryKey: ["postfeed"], queryFn: getFeed});
-  var posts = []
+  var feeds = []
   if (query.status === "success"){
-    posts = query.data.data
-    console.log(posts)
-    posts.sort((a, b) => dayjs(b.created_at) - dayjs(a.created_at));
+    feeds = query.data
+    console.log(feeds)
+    feeds.sort((a, b) => dayjs(b.created_at) - dayjs(a.created_at));
   }
   return (
     <div className={styles.container}>
@@ -53,8 +54,9 @@ export default function HomePage() {
       </div>
       {query.status === "success" && (
       <div className={styles.rightContent}>
-        {posts?.map((e)=> {
-        return <Post key={e.post_id} adata={e}></Post>
+        {feeds?.map((e)=> {
+        if(typeof e.post_id != "undefined"){return <Post key={feeds.indexOf(e)} adata={e}></Post>}
+        if(typeof e.event_id != "undefined"){return <Event key={feeds.indexOf(e)} adata={e}></Event>}
       })}
       </div>
       )}

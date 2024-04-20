@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 const access_token = Cookies.get("auth_token");
 const auth_username = Cookies.get("auth_username");
-
+const orgname = Cookies.get("orgname");
 export const profileAthlete = async () => {
   try {
     const response = await axios.get(
@@ -26,6 +26,24 @@ export const getPostProfile = async () => {
   try {
     const response = await axios.get(
       "http://127.0.0.1:8000/services/post/?username=" + auth_username ,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getEventProfile = async () => {
+  try {
+    const response = await axios.get(
+      "http://127.0.0.1:8000/services/calendar/byname/?org_name=" + orgname ,
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -87,7 +105,8 @@ export const editProfile_athleteInformation = async (e) => {
         birth_date: e.birthdate,
         hometown: e.location,
         position: e.position,
-        education: e.education
+        education: e.education,
+        tier :e.tier
       },
       {
         headers: {

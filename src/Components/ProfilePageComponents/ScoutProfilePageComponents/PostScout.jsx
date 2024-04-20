@@ -22,14 +22,11 @@ export default function PostScout({user}) {
       <div className={styles.container}>
         <NewPostModal opened={opened} onClose={close} user={user} />
         <div className={styles.header}>
-          <NavLink className={styles.link} to="/athleteprofile">
+          <NavLink className={styles.link} to="/scoutprofile">
             <UnstyledButton>About</UnstyledButton>
           </NavLink>
-          <NavLink className={styles.link} to="/athleteprofile/post">
+          <NavLink className={styles.link} to="/scoutprofile/post">
             <UnstyledButton>Post</UnstyledButton>
-          </NavLink>
-          <NavLink className={styles.link} to="/athleteprofile/highlight">
-            <UnstyledButton>Highlight</UnstyledButton>
           </NavLink>
         </div>
         <div className={styles.content}>

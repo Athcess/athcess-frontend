@@ -103,14 +103,27 @@ export const getNotification = async () => {
 
 export const getFeed = async () => {
   try {
-    const response = await axios.get("http://127.0.0.1:8000/services/post/", {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
+    const response = await axios.get(
+      "http://127.0.0.1:8000/services/post/",
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    const response2 = await axios.get(
+      "http://127.0.0.1:8000/services/calendar/get/",
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
 
-    console.log(response);
-    return response;
+    
+    const result = (response.data).concat(response2.data)
+    //console.log(result)
+    return result;
   } catch (error) {
     console.log(error);
   }
@@ -150,6 +163,7 @@ export const postBlob = async (e) => {
         file_size: e.form.file.size,
         skill_type: null,
         post: e.postid,
+        event: e.eventid,
         verify: null,
         club_name: null,
         physical_attribute: null,
@@ -174,6 +188,28 @@ export const getBlobPost = async (e) => {
     console.log(e);
     const res = await axios.get(
       "http://127.0.0.1:8000/services/upload/?post_id=" + e,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+
+    console.log(res);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
+
+export const getBlobEvent = async (e) => {
+  try {
+    console.log(e)
+    const res = await axios.get(
+      "http://127.0.0.1:8000/services/upload/?event=" +e,
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -233,9 +269,9 @@ export const postEvent = async (e) => {
       {
         club: e.club,
         description: e.description,
-        has_attachment: true,
         start_time: e.start_time,
-        end_time: e.end_time,
+        end_time: e.end_time,            
+        has_attachment: e.hasfile,
       },
       {
         headers: {
@@ -243,11 +279,32 @@ export const postEvent = async (e) => {
         },
       }
     );
+
     console.log(res);
+    return(res)
   } catch (error) {
     console.log(error);
   }
 };
+
+export const del_event = async (e) => {
+  try {
+    const response = await axios.delete(
+      "http://127.0.0.1:8000/services/calendar/"+e +"/",
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 export const postComment = async (e) => {
   try {

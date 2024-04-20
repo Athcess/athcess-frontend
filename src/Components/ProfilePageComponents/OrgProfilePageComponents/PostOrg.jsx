@@ -10,9 +10,9 @@ export default function PostOrg() {
         <NavLink className={styles.link} to="/orgprofile">
           <UnstyledButton>About</UnstyledButton>
         </NavLink>
-        <NavLink className={styles.link} to="/orgprofile/post">
+        {/* <NavLink className={styles.link} to="/orgprofile/post">
           <UnstyledButton>Post</UnstyledButton>
-        </NavLink>
+        </NavLink> */}
         <NavLink className={styles.link} to="/orgprofile/event">
           <UnstyledButton>Event</UnstyledButton>
         </NavLink>

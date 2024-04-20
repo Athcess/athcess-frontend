@@ -17,7 +17,7 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import styles from "../../../scss/ProfilePageComponents/AthleteProfilePageComponents/EditProfileModal.module.scss";
 import { DatePicker } from "@mui/x-date-pickers";
 import { editProfile_athleteInformation } from "../../../Services/ProfileAPI";
@@ -33,13 +33,16 @@ export default function EditProfileModalAthlete({ opened, onClose, data }) {
       birthdate: new Date(data.birth_date) || "",
       location: data.hometown || "",
       position: data.position || "",
+      tier:data.tier
     },
   });
+
+  const queryClient = useQueryClient()
 
   const mutation = useMutation({
     mutationFn: editProfile_athleteInformation, // Replace yourMutationFunction with your actual mutation function
     onSuccess: () => {
-      history.go(0);
+      queryClient.invalidateQueries({ queryKey: ['profileelement'] })
       onClose(); // Close the modal on success
     },
   });
@@ -81,14 +84,18 @@ export default function EditProfileModalAthlete({ opened, onClose, data }) {
             Last name
           </Text>
           <Text w={400}>{form.values.lastName}</Text>
-          <Text fw={700}>Bio</Text>
-          <Textarea
-            placeholder="Add Bio"
-            value={form.values.description}
-            onChange={(event) =>
-              form.setFieldValue("description", event.target.value)
-            }
-          />
+          {data.role === "athlete" && (
+            <>
+              <Text fw={700}>Bio</Text>
+              <Textarea
+                placeholder="Add Bio"
+                value={form.values.description}
+                onChange={(event) =>
+                  form.setFieldValue("description", event.target.value)
+                }
+              />
+            </>
+          )}
         </div>
         <Divider></Divider>
         <Text className={styles.text} fw={700}>
@@ -110,52 +117,140 @@ export default function EditProfileModalAthlete({ opened, onClose, data }) {
             onChange={(event) => form.setFieldValue("birth_date", event)}
           />
           <Text>Location</Text>
-          <TextInput
-            value={form.values.location}
-            onChange={(event) =>
-              form.setFieldValue("location", event.target.value)
-            }
-          />
-          <Text>Position</Text>
           <Select
             radius="md"
-            placeholder="Select position"
             searchable
             comboboxProps={{
               position: "bottom",
               middlewares: { flip: false, shift: false },
-              zIndex: 1000,
+              zIndex : 1000
             }}
-            value={form.values.position}
-            onChange={(event) => form.setFieldValue("position", event)}
+            value={form.values.location}
+            onChange={(event) => form.setFieldValue("location", event)}
             data={[
-              { value: "GK", label: "Goalkeeper" },
-              { value: "CB", label: "Center Back" },
-              { value: "LB", label: "Left Back" },
-              { value: "RB", label: "Right Back" },
-              { value: "CM", label: "Center Midfield" },
-              { value: "LM", label: "Left Midfield" },
-              { value: "RM", label: "Right Midfield" },
-              { value: "CAM", label: "Center Attacking Midfield" },
-              { value: "LW", label: "Left Wing" },
-              { value: "RW", label: "Right Wing" },
-              { value: "ST", label: "Striker" },
+              "Amnat Charoen",
+              "Ang Thong",
+              "Bangkok",
+              "Bueng Kan",
+              "Buri Ram",
+              "Chachoengsao",
+              "Chai Nat",
+              "Chaiyaphum",
+              "Chanthaburi",
+              "Chiang Mai",
+              "Chiang Rai",
+              "Chon Buri",
+              "Chumphon",
+              "Kalasin",
+              "Kamphaeng Phet",
+              "Kanchanaburi",
+              "Khon Kaen",
+              "Krabi",
+              "Lampang",
+              "Lamphun",
+              "Loei",
+              "Lop Buri",
+              "Mae Hong Son",
+              "Maha Sarakham",
+              "Mukdahan",
+              "Nakhon Nayok",
+              "Nakhon Pathom",
+              "Nakhon Phanom",
+              "Nakhon Ratchasima",
+              "Nakhon Sawan",
+              "Nakhon Si Thammarat",
+              "Nan",
+              "Narathiwat",
+              "Nong Bua Lamphu",
+              "Nong Khai",
+              "Nonthaburi",
+              "Pathum Thani",
+              "Pattani",
+              "Phang Nga",
+              "Phatthalung",
+              "Phayao",
+              "Phetchabun",
+              "Phetchaburi",
+              "Phichit",
+              "Phitsanulok",
+              "Phra Nakhon Si Ayutthaya",
+              "Phrae",
+              "Phuket",
+              "Prachin Buri",
+              "Prachuap Khiri Khan",
+              "Ranong",
+              "Ratchaburi",
+              "Rayong",
+              "Roi Et",
+              "Sa Kaeo",
+              "Sakon Nakhon",
+              "Samut Prakan",
+              "Samut Sakhon",
+              "Samut Songkhram",
+              "Saraburi",
+              "Satun",
+              "Sing Buri",
+              "Sisaket",
+              "Songkhla",
+              "Sukhothai",
+              "Suphan Buri",
+              "Surat Thani",
+              "Surin",
+              "Tak",
+              "Trang",
+              "Trat",
+              "Ubon Ratchathani",
+              "Udon Thani",
+              "Uthai Thani",
+              "Uttaradit",
+              "Yala",
+              "Yasothon",
             ]}
           />
-          <Text>Height</Text>
-          <NumberInput
-            value={form.values.height}
-            onChange={(event) =>
-              form.setFieldValue("height", event.target.value)
-            }
-          />
-          <Text>Weight</Text>
-          <NumberInput
-            value={form.values.weight}
-            onChange={(event) =>
-              form.setFieldValue("weight", event.target.value)
-            }
-          />
+          {data.role === "athlete" && (
+            <>
+              <Text>Position</Text>
+              <Select
+                radius="md"
+                placeholder="Select position"
+                searchable
+                comboboxProps={{
+                  position: "bottom",
+                  middlewares: { flip: false, shift: false },
+                  zIndex: 1000,
+                }}
+                value={form.values.position}
+                onChange={(event) => form.setFieldValue("position", event)}
+                data={[
+                  { value: "GK", label: "Goalkeeper" },
+                  { value: "CB", label: "Center Back" },
+                  { value: "LB", label: "Left Back" },
+                  { value: "RB", label: "Right Back" },
+                  { value: "CM", label: "Center Midfield" },
+                  { value: "LM", label: "Left Midfield" },
+                  { value: "RM", label: "Right Midfield" },
+                  { value: "CAM", label: "Center Attacking Midfield" },
+                  { value: "LW", label: "Left Wing" },
+                  { value: "RW", label: "Right Wing" },
+                  { value: "ST", label: "Striker" },
+                ]}
+              />
+              <Text>Height</Text>
+              <NumberInput
+                value={form.values.height}
+                onChange={(event) =>
+                  form.setFieldValue("height", event.target.value)
+                }
+              />
+              <Text>Weight</Text>
+              <NumberInput
+                value={form.values.weight}
+                onChange={(event) =>
+                  form.setFieldValue("weight", event.target.value)
+                }
+              />
+            </>
+          )}
         </div>
 
         <Button color="#00A67E" onClick={editProfile}>

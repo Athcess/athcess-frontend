@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     Cookies.remove('auth_token')
     Cookies.remove('auth_username')
+    Cookies.remove('orgname')
     //navigate("/", { replace: true });
   };
 

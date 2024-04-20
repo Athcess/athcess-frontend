@@ -78,27 +78,21 @@ export default function NewPostModal({ opened, onClose, user }) {
     mutationFn: uploadedBlob,
     onSuccess: (data) => {
       console.log(data);
-      setTimeout(() => {queryClient.invalidateQueries({ queryKey: ["postprofile"] }) }, 1000);
-      setTimeout(() => {queryClient.invalidateQueries({ queryKey: ["postfeed"] })}, 1000);
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ["postprofile"] });
+      }, 1000);
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ["postfeed"] });
+      }, 1000);
 
       onClose();
     },
   });
-  const mutationevent = useMutation({
-    mutationFn: postEvent,
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  });
-
   const post = (e) => {
     e.preventDefault();
     console.log(form.values);
-    if (form.values.event) {
-      mutationevent.mutate(form.values);
-    } else {
-      mutationpost.mutate(form.values);
-    }
+
+    mutationpost.mutate(form.values);
   };
 
   const setFile = (event) => {

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "../scss/NavigationBar.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "@mantine/form";
+import Cookies from "js-cookie"
 import {
   Group,
   Burger,
@@ -28,11 +29,14 @@ import NotiDropDown from "./NotiDropDown.jsx";
 import { useAuth } from "../hooks/useAuth";
 import NewPostModal from "../Components/ProfilePageComponents/NewPostModal.jsx";
 import NewEventModal from "./ProfilePageComponents/NewEventModal.jsx";
+import { useQuery } from "@tanstack/react-query";
+import { profileAthlete } from "../Services/ProfileAPI.js";
 export default function NavigationBar({ user, updateteir }) {
   const [isLogin, setIsLogin] = useState(true);
   const [menuOpened, setmenuOpened] = useState(false);
   const [opened, { toggle }] = useDisclosure();
   const navigate = useNavigate();
+
   const form = useForm({
     initialValues: {
       tosearch: "",
@@ -74,21 +78,33 @@ export default function NavigationBar({ user, updateteir }) {
   const body = () => {
     navigate("/bodyanalyzer");
   };
+  const query = useQuery({ queryKey: ["newevent"], queryFn: profileAthlete });
+  var club_name;
+  if (query.status === "success" ){
+    if(query.data.data.role==='admin'){
+    club_name = query.data.data.organization.club_name;
+    Cookies.set("orgname", query.data.data.organization.club_name);
+    }
+    
+  }
   const [NewPostModalOpened, NewPost] = useDisclosure(false);
   const [NewEventModalOpened, NewEvent] = useDisclosure(false);
   return (
     <header className={styles.container}>
-      {user.role === "athlete" || user.role == "scout" ? (
+      
         <NewPostModal
           opened={NewPostModalOpened}
           onClose={NewPost.close}
           user={user}
         />
-      ) : (
+
+      {(user.role === "admin" && query.status === "success") &&
+      (
         <NewEventModal
           opened={NewEventModalOpened}
           onClose={NewEvent.close}
           user={user}
+          club={club_name}
         />
       )}
 
