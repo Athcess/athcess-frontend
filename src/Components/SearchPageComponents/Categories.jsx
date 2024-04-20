@@ -1,16 +1,19 @@
 import {React, useState} from "react";
 import { Image, UnstyledButton, Button, SegmentedControl } from "@mantine/core";
 import styles from "../../scss/SearchPageComponents/Categories.module.scss";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postSearch } from "../../Services/HomeAPI";
 import dayjs from "dayjs";
 import { useParams } from "react-router";
 
-export function Categories({category,setCategory}) {
+export function Categories({category,setCategory, id , setId}) {
     let { tosearch } = useParams();
+    const queryClient = useQueryClient();
     const mutation = useMutation({
         mutationFn: postSearch,
         onSuccess: (data) => {
+            setId(data.data.search_id)
+            queryClient.invalidateQueries({ queryKey: ["search", id]})
         },
       });
     
