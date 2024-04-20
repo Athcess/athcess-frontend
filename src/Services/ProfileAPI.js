@@ -138,6 +138,25 @@ export const editProfile_athleteInformation = async (e) => {
   }
 };
 
+export const puttier = async (e) => {
+  try {
+    const response = await axios.put(
+      "http://127.0.0.1:8000/services/users/" + auth_username + "/",
+      {
+        tier : e
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const put_achievement = async (e) => {
   try {
     const res = await axios.put(

@@ -81,7 +81,7 @@ export default function NavigationBar({ user, updateteir }) {
   };
  
   
-  const query = useQuery({ queryKey: ["newevent",username], queryFn: profileAthlete(username) });
+  const query = useQuery({ queryKey: ["newevent",username], queryFn: ()=> profileAthlete(username) });
   var club_name;
   if (query.status === "success" ){
     if(query.data.data.role==='admin'){
@@ -101,15 +101,15 @@ export default function NavigationBar({ user, updateteir }) {
           user={user}
         />
 
-      {(user.role === "admin" && query.status === "success") &&
-      (
+     
+      
         <NewEventModal
           opened={NewEventModalOpened}
           onClose={NewEvent.close}
           user={user}
           club={club_name}
         />
-      )}
+      
 
       <div>
       <UnstyledButton onClick={home}>

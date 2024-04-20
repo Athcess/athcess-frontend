@@ -308,7 +308,7 @@ export const postComment = async (e) => {
   }
 };
 
-export const postSearch = async (e) => {
+export const postFilterSearch = async (e) => {
   try {
     const res = await axios.post("", {
       type: e.type,
@@ -325,6 +325,42 @@ export const postSearch = async (e) => {
       },
       search_info: e.keyword,
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const postSearch = async (e) => {
+  try {
+    const res = await axios.post("http://127.0.0.1:8000/services/search/", {
+      type: e.type,
+      data: e.data,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    }
+  );
+  console.log(res)
+    return (res)
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getSearch = async (e) => {
+  try {
+    const res = await axios.get("http://127.0.0.1:8000/services/search/"+e, {
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    }
+  );
+  console.log(res)
+    return (res)
   } catch (error) {
     console.log(error);
   }
