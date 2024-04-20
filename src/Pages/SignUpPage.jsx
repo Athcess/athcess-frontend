@@ -592,21 +592,7 @@ export default function SignUpPage(props) {
                       "Yasothon",
                     ]}
                   />
-                  {form.values.role === "admin" && (
-                    <TextInput
-                      required
-                      label="Organization Name"
-                      placeholder="Your organization"
-                      value={form.values.organization}
-                      onChange={(event) =>
-                        form.setFieldValue(
-                          "organization",
-                          event.currentTarget.value
-                        )
-                      }
-                      radius="md"
-                    />
-                  )}
+
                   {form.values.role === "scout" && (
                     <TextInput
                       label="If belong to an organization"

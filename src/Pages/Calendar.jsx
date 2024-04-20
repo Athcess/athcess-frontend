@@ -21,11 +21,11 @@ export default function MyCalendar() {
     if (data) {
       const eventsData = data.map((event) => ({
         event_id: event.event_id,
-        title: event.content,
+        title: event.description,
         created_at: event.created_at,
         like: event.like,
-        start: `${event.date_start}T${event.start_time}`,
-        end: `${event.date_end}T00:00`,
+        start: event.start_time,
+        end: event.end_time,
         backgroundColor: "#007458",
         textColor: "white",
         display: "block",

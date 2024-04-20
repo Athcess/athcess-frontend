@@ -26,23 +26,13 @@ import { postBlob, postEvent, postPost } from "../../Services/HomeAPI";
 export default function NewEventModal({ opened, onClose, user }) {
   const form = useForm({
     initialValues: {
+      club: user.organization,
       description: "",
-      file: null,
-      highlight: false,
-      event: false,
-      org_name: user.organization,
-      content: "",
       start_time: "",
       end_time: "",
     },
   });
 
-  const mutationpost = useMutation({
-    mutationFn: postPost,
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  });
   const mutationBlob = useMutation({
     mutationFn: postBlob,
     onSuccess: (data) => {
@@ -59,14 +49,11 @@ export default function NewEventModal({ opened, onClose, user }) {
   const post = (e) => {
     e.preventDefault();
     console.log(form.values);
-    if (form.values.event) {
-      mutationevent.mutate(form.values);
-    } else {
-      mutationpost.mutate(form.values);
-    }
+    mutationevent.mutate(form.values);
     mutationBlob.mutate(form.values);
   };
 
+  console.log(user);
   return (
     <Modal
       opened={opened}
