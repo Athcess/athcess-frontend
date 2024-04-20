@@ -103,14 +103,11 @@ export const getNotification = async () => {
 
 export const getFeed = async () => {
   try {
-    const response = await axios.get(
-      "http://127.0.0.1:8000/services/post/",
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    const response = await axios.get("http://127.0.0.1:8000/services/post/", {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
     const response2 = await axios.get(
       "http://127.0.0.1:8000/services/calendar/get/",
       {
@@ -120,8 +117,7 @@ export const getFeed = async () => {
       }
     );
 
-    
-    const result = (response.data).concat(response2.data)
+    const result = response.data.concat(response2.data);
     //console.log(result)
     return result;
   } catch (error) {
@@ -202,14 +198,11 @@ export const getBlobPost = async (e) => {
   }
 };
 
-
-
-
 export const getBlobEvent = async (e) => {
   try {
-    console.log(e)
+    console.log(e);
     const res = await axios.get(
-      "http://127.0.0.1:8000/services/upload/?event=" +e,
+      "http://127.0.0.1:8000/services/upload/?event=" + e,
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -270,7 +263,7 @@ export const postEvent = async (e) => {
         club: e.club,
         description: e.description,
         start_time: e.start_time,
-        end_time: e.end_time,            
+        end_time: e.end_time,
         has_attachment: e.hasfile,
       },
       {
@@ -281,7 +274,7 @@ export const postEvent = async (e) => {
     );
 
     console.log(res);
-    return(res)
+    return res;
   } catch (error) {
     console.log(error);
   }
@@ -290,7 +283,7 @@ export const postEvent = async (e) => {
 export const del_event = async (e) => {
   try {
     const response = await axios.delete(
-      "http://127.0.0.1:8000/services/calendar/"+e +"/",
+      "http://127.0.0.1:8000/services/calendar/" + e + "/",
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -304,7 +297,6 @@ export const del_event = async (e) => {
     console.log(error);
   }
 };
-
 
 export const postComment = async (e) => {
   try {
@@ -419,10 +411,10 @@ export const postPhyStats = async (e) => {
     const res = await axios.post(
       "http://127.0.0.1:8000/services/physical_attribute/",
       {
-        height: "",
-        weight: "",
-        fat_mass: "",
-        muscle_mass: "",
+        height: e.height,
+        weight: e.weight,
+        fat_mass: e.fat_mass,
+        muscle_mass: e.muscle_mass,
       },
       {
         headers: {

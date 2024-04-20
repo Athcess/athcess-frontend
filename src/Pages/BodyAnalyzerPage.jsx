@@ -13,6 +13,7 @@ import {
   Select,
   NumberInput,
   TextInput,
+  Loader,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
@@ -31,6 +32,7 @@ import {
 } from "../Components/BodyAnalyzerComponents/InfoModal";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { postPhyAttVid, postPhyStats, putPhyStats } from "../Services/HomeAPI";
+import { set } from "react-hook-form";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
@@ -50,7 +52,7 @@ export default function BodyAnalyzerPage({ user }) {
         username: user.username,
         file: null,
         physical_attribute_type: "push_up",
-        height: 180,
+        height: null,
       },
       situp: {
         file_name: null,
@@ -59,7 +61,7 @@ export default function BodyAnalyzerPage({ user }) {
         username: user.username,
         file: null,
         physical_attribute_type: "sit_up",
-        height: 180,
+        height: null,
       },
       running: {
         file_name: null,
@@ -68,18 +70,19 @@ export default function BodyAnalyzerPage({ user }) {
         username: user.username,
         file: null,
         physical_attribute_type: "run",
-        height: 180,
+        height: null,
       },
     },
   });
   const [PhyAttOpened, PhyAtt] = useDisclosure(false);
   const [PerfVidOpened, PerfVid] = useDisclosure(false);
   const [selectedFile, setSelectedFile] = useState(null);
-
-  const data = {
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState({
     labels: ["Running", "Pushup", "Situp"],
-    amounts: [3, 6, 9],
-  };
+    amounts: [0, 0, 0],
+  });
+
   const radarData = {
     labels: data.labels,
     datasets: [
@@ -109,6 +112,14 @@ export default function BodyAnalyzerPage({ user }) {
   };
   const options = { indexAxis: "y" };
 
+  const handleHeightChange = (newHeight) => {
+    // Update the height value in all required fields
+    form.setFieldValue("phyStat.height", newHeight);
+    form.setFieldValue("pushup.height", newHeight);
+    form.setFieldValue("situp.height", newHeight);
+    form.setFieldValue("running.height", newHeight);
+  };
+
   const handleFileChange = (fieldName) => (event) => {
     const file = event.target.files[0];
 
@@ -127,51 +138,25 @@ export default function BodyAnalyzerPage({ user }) {
         height: form.values[fieldName].height,
       });
     };
-
-    // Update the form values with the file information
   };
 
-  // const { data: pushupData, refetch: refetchPushup } = useQuery({
-  //   queryKey: ["getPushup", user.username],
-  //   queryFn: () =>
-  //     getPhyAttVid({ player_name: user.username, analytic_type: "push_up" }),
-  // });
-
-  // const { data: situpData, refetch: refetchSitup } = useQuery({
-  //   queryKey: ["getSitup", user.username],
-  //   queryFn: () =>
-  //     getPhyAttVid({ player_name: user.username, analytic_type: "sit_up" }),
-  // });
-
-  // const { data: runningData, refetch: refetchRunning } = useQuery({
-  //   queryKey: ["getRunning", user.username],
-  //   queryFn: () =>
-  //     getPhyAttVid({ player_name: user.username, analytic_type: "run" }),
-  // });
   const mutationPhyStat = useMutation({
     mutationFn: postPhyStats,
     onSuccess: () => {
       console.log("Physical Stats posted successfully");
     },
   });
-  // const mutationPhyStat = useMutation({
-  //   mutationFn: putPhyStats,
-  //   onSuccess: () => {
-  //     console.log("Physical Stats put successfully");
-  //   },
-  // });
+
   const mutationPushup = useMutation({
     mutationFn: postPhyAttVid,
     onSuccess: () => {
       console.log("Push-up video uploaded successfully");
-      refetchPushup();
     },
   });
   const mutationSitup = useMutation({
     mutationFn: postPhyAttVid,
     onSuccess: () => {
       console.log("Sit-up video uploaded successfully");
-      refetchSitup();
     },
   });
 
@@ -179,11 +164,11 @@ export default function BodyAnalyzerPage({ user }) {
     mutationFn: postPhyAttVid,
     onSuccess: () => {
       console.log("Running video uploaded successfully");
-      refetchRunning();
     },
   });
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     console.log(form.values);
     // Check if any videos are missing
     if (
@@ -195,17 +180,35 @@ export default function BodyAnalyzerPage({ user }) {
       return;
     }
 
-    // Execute the mutations for each type of video
-    mutationPhyStat.mutate(form.values.phyStat);
-    mutationPushup.mutate(form.values.pushup);
-    mutationSitup.mutate(form.values.situp);
-    mutationRunning.mutate(form.values.running);
-  };
-  // useEffect(() => {
-  //   initPhyStat.mutate();
-  // }, []);
+    const phyStatPromise = mutationPhyStat.mutateAsync(form.values.phyStat);
+    const pushupPromise = mutationPushup.mutateAsync(form.values.pushup);
+    const situpPromise = mutationSitup.mutateAsync(form.values.situp);
+    const runningPromise = mutationRunning.mutateAsync(form.values.running);
 
-  console.log(user);
+    // Use Promise.all to wait for all mutations to complete
+    const [phyStatResponse, pushupResponse, situpResponse, runningResponse] =
+      await Promise.all([
+        phyStatPromise,
+        pushupPromise,
+        situpPromise,
+        runningPromise,
+      ]);
+
+    // Here you can use the data from the responses to update the chart data
+    // For example:
+    const updatedAmounts = [
+      runningResponse.run, // Update running amount
+      pushupResponse.push_up, // Update pushup amount
+      situpResponse.sit_up, // Update situp amount
+    ];
+    setData({
+      labels: ["Running", "Pushup", "Situp"],
+      amounts: updatedAmounts,
+    });
+    console.log(updatedAmounts);
+    setIsLoading(false);
+  };
+
   return (
     <>
       <PhyAttModal opened={PhyAttOpened} onClose={PhyAtt.close} />
@@ -220,14 +223,20 @@ export default function BodyAnalyzerPage({ user }) {
                 style={{ width: rem(16), height: rem(16) }}></Image>
             </UnstyledButton>
           </div>
-          <div className={styles.phyAttContent}>
-            <div className={styles.radar}>
-              <CustomRadar data={radarData}></CustomRadar>
+          {isLoading ? (
+            <div className={styles.loader}>
+              <Loader color="green" size="xl" />
             </div>
-            <div className={styles.bar}>
-              <Bar data={barData} options={options}></Bar>
+          ) : (
+            <div className={styles.phyAttContent}>
+              <div className={styles.radar}>
+                <CustomRadar data={radarData}></CustomRadar>
+              </div>
+              <div className={styles.bar}>
+                <Bar data={barData} options={options}></Bar>
+              </div>
             </div>
-          </div>
+          )}
         </div>
         <div className={styles.perfVidContainer}>
           <div className={styles.header}>
@@ -249,12 +258,12 @@ export default function BodyAnalyzerPage({ user }) {
                     placeholder="Enter your height"
                     value={form.values.height}
                     onChange={(event) =>
-                      form.setFieldValue("phyStat.height", event)
+                      form.setFieldValue(handleHeightChange(event))
                     }
                     radius="md"
                   />
                   <NumberInput
-                    w="24.5%"
+                    w="24%"
                     required
                     label="Weight (kg)"
                     placeholder="Enter your weight"
@@ -265,7 +274,7 @@ export default function BodyAnalyzerPage({ user }) {
                     radius="md"
                   />
                   <NumberInput
-                    w="24.5%"
+                    w="24%"
                     required
                     label="Fat Mass (kg)"
                     placeholder="Enter your fat mass"
@@ -276,7 +285,7 @@ export default function BodyAnalyzerPage({ user }) {
                     radius="md"
                   />
                   <NumberInput
-                    w="24.5%"
+                    w="24%"
                     required
                     label="Body Mass (kg)"
                     placeholder="Enter your muscle mass"
