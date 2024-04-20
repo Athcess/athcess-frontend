@@ -313,17 +313,16 @@ export const postFilterSearch = async (e) => {
     const res = await axios.post("", {
       type: e.type,
       filter: {
-        age: e.age,
-        location: e.location,
-        sport: e.sports,
-        contenttype: e.contenttype,
-        date: e.date,
-        sort: e.sort,
-        organization: e.organization,
         height: e.height,
         weight: e.weight,
+        age: e.age,
+        location: e.location,
+        position: e.position,
+        sit_up: e.sit_up,
+        push_up: e.push_up,
+        run: e.run,
       },
-      search_info: e.keyword,
+      sdata: e.keyword,
     });
   } catch (error) {
     console.log(error);
@@ -332,18 +331,20 @@ export const postFilterSearch = async (e) => {
 
 export const postSearch = async (e) => {
   try {
-    const res = await axios.post("http://127.0.0.1:8000/services/search/", {
-      type: e.type,
-      data: e.data,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
+    const res = await axios.post(
+      "http://127.0.0.1:8000/services/search/",
+      {
+        type: e.type,
+        data: e.data,
       },
-    }
-  );
-  console.log(res)
-    return (res)
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    console.log(res);
+    return res;
   } catch (error) {
     console.log(error);
   }
@@ -351,16 +352,16 @@ export const postSearch = async (e) => {
 
 export const getSearch = async (e) => {
   try {
-    const res = await axios.get("http://127.0.0.1:8000/services/search/"+e, {
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    }
-  );
-  console.log(res)
-    return (res)
+    const res = await axios.get(
+      "http://127.0.0.1:8000/services/search/" + e + "/",
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    console.log(res);
+    return res;
   } catch (error) {
     console.log(error);
   }

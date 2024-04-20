@@ -235,7 +235,7 @@ export default function EditProfileModalAthlete({ opened, onClose, data }) {
                   { value: "ST", label: "Striker" },
                 ]}
               />
-              <Text>Height</Text>
+              {/* <Text>Height</Text>
               <NumberInput
                 value={form.values.height}
                 onChange={(event) =>
@@ -248,7 +248,7 @@ export default function EditProfileModalAthlete({ opened, onClose, data }) {
                 onChange={(event) =>
                   form.setFieldValue("weight", event.target.value)
                 }
-              />
+              /> */}
             </>
           )}
         </div>
