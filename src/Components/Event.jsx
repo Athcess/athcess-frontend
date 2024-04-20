@@ -21,9 +21,24 @@ import Cookies from "js-cookie";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { del_event, del_post, getBlobEvent, getBlobPost } from "../Services/HomeAPI";
 import dayjs from "dayjs";
+import { getOrg } from "../Services/ProfileAPI";
 
 
 export default function Event({adata}) {
+
+  const navigate = useNavigate();
+  const proquery = useQuery({ queryKey: ["goprofile", adata.club], queryFn: () => getOrg(adata.club) });
+
+  
+  const gotoProfile = () => {
+    queryClient.invalidateQueries({ queryKey: ["goprofile", adata.club] });
+    const roles = proquery.data.data.organization.username;
+    console.log(roles)
+    
+      navigate("/orgprofile/" + roles);
+    }
+
+  
   const [opened, { open, close }] = useDisclosure(false);
   const orgname = Cookies.get("orgname");
   const queryClient = useQueryClient();
@@ -74,7 +89,7 @@ export default function Event({adata}) {
       </Modal>
       <div className={styles.profile}>
         <div className={styles.profileLeft}>
-          <UnstyledButton>
+        <UnstyledButton onClick={() => gotoProfile()}>
             <Image
               src="/Images/profile_logo.jpeg"
               className={styles.profileImage}

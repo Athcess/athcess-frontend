@@ -4,11 +4,13 @@ import { rem } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Verified, UEvent } from "../Status";
 import styles from "../../scss/ProfilePageComponents/ProfileElement.module.scss";
-
+import Cookies from "js-cookie"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { profileAthlete } from "../../Services/ProfileAPI";
 import EditProfileModalAthlete from "./AthleteProfilePageComponents/EditProfileModalAthlete";
+import { useParams } from "react-router";
 export default function ProfileElementOrg({ type, openModal, user }) {
+  const auth_username = Cookies.get("auth_username");
   const [opened, { open, close }] = useDisclosure(false);
   const [profileImageSrc, setProfileImageSrc] = useState("");
   useEffect(() => {
@@ -20,9 +22,9 @@ export default function ProfileElementOrg({ type, openModal, user }) {
       setProfileImageSrc("/Images/ProfilePage/org_logo.png");
     }
   }, []);
-
+  let {username} = useParams()
   const queryClient = useQueryClient();
-  const query = useQuery({ queryKey: ["profileelement"], queryFn: profileAthlete });
+  const query = useQuery({ queryKey: ["profileelement", username], queryFn: ()=>profileAthlete(username) });
   
   if (query.status === "success") {
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { Image, UnstyledButton, rem } from "@mantine/core";
 import {useDisclosure} from "@mantine/hooks"
 import styles from "../../../scss/ProfilePageComponents/AthleteProfilePageComponents/PostAthlete.module.scss";
@@ -8,26 +8,30 @@ import NewPostModal from "../NewPostModal";
 import { getPostProfile } from "../../../Services/ProfileAPI";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
+
 export default function PostAthlete({user}) {
   const [opened, { open, close }] = useDisclosure(false);
-  const query = useQuery({ queryKey: ["postprofile"], queryFn: getPostProfile });
+  let {username} = useParams()
+  const query = useQuery({ queryKey: ["postprofile", username], queryFn: ()=>getPostProfile(username) });
+  
+    console.log(username)
   if (query.status === "success"){
     const posts = query.data.data
     console.log(posts)
     posts.sort((a, b) => dayjs(b.created_at) - dayjs(a.created_at));
-
+    
   return (
     
     <div className={styles.container}>
       <NewPostModal opened={opened} onClose={close} user={user} />
       <div className={styles.header}>
-        <NavLink className={styles.link} to="/athleteprofile">
+        <NavLink className={styles.link} to={`/athleteprofile/${username}`}>
           <UnstyledButton>About</UnstyledButton>
         </NavLink>
-        <NavLink className={styles.link} to="/athleteprofile/post">
+        <NavLink className={styles.link} to={`/athleteprofile/${username}/post`}>
           <UnstyledButton>Post</UnstyledButton>
         </NavLink>
-        <NavLink className={styles.link} to="/athleteprofile/highlight">
+        <NavLink className={styles.link} to={`/athleteprofile/${username}/highlight`}>
           <UnstyledButton>Highlight</UnstyledButton>
         </NavLink>
       </div>

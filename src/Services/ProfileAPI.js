@@ -4,10 +4,10 @@ import Cookies from "js-cookie";
 const access_token = Cookies.get("auth_token");
 const auth_username = Cookies.get("auth_username");
 const orgname = Cookies.get("orgname");
-export const profileAthlete = async () => {
+export const profileAthlete = async (username) => {
   try {
     const response = await axios.get(
-      "http://127.0.0.1:8000/services/users/" + auth_username + "/",
+      "http://127.0.0.1:8000/services/users/" + username + "/",
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -22,10 +22,10 @@ export const profileAthlete = async () => {
   }
 };
 
-export const getPostProfile = async () => {
+export const getOrg = async (username) => {
   try {
     const response = await axios.get(
-      "http://127.0.0.1:8000/services/post/?username=" + auth_username ,
+      "http://127.0.0.1:8000/services/organization/" + username + "/",
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -40,10 +40,10 @@ export const getPostProfile = async () => {
   }
 };
 
-export const getEventProfile = async () => {
+export const getPostProfile = async (e) => {
   try {
     const response = await axios.get(
-      "http://127.0.0.1:8000/services/calendar/byname/?org_name=" + orgname ,
+      "http://127.0.0.1:8000/services/post/?username=" + e ,
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -58,10 +58,28 @@ export const getEventProfile = async () => {
   }
 };
 
-export const getHighlight = async () => {
+export const getEventProfile = async (e) => {
   try {
     const response = await axios.get(
-      "http://127.0.0.1:8000/services/post/?username="+ auth_username +"&highlight=True",
+      "http://127.0.0.1:8000/services/calendar/byname/?org_name=" + e ,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getHighlight = async (e) => {
+  try {
+    const response = await axios.get(
+      "http://127.0.0.1:8000/services/post/?username="+ e +"&highlight=True",
       {
         headers: {
           Authorization: `Bearer ${access_token}`,

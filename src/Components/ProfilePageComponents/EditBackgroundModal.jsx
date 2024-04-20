@@ -22,6 +22,7 @@ import { post_background, profileAthlete } from "../../Services/ProfileAPI";
 import BackgroundModalElement from "./BackgroundModalElement";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
+import { useParams } from "react-router";
 
 export default function EditBackgroundModal({ opened, onClose }) {
   const form = useForm({
@@ -51,7 +52,9 @@ export default function EditBackgroundModal({ opened, onClose }) {
     console.log(form.values);
     mutation.mutate(form.values);
   };
-  const query = useQuery({ queryKey: ["background"], queryFn: profileAthlete });
+  let {username} = useParams()
+
+  const query = useQuery({ queryKey: ["background", username], queryFn: ()=> profileAthlete(username) });
   if (query.status === "success") {
     const Backgrounds = query.data.data.experiences;
     console.log(Backgrounds);

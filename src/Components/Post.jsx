@@ -23,8 +23,25 @@ import { del_post, getBlobPost } from "../Services/HomeAPI";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
+import { profileAthlete } from "../Services/ProfileAPI";
 
 export default function Post({ adata }) {
+  const navigate = useNavigate();
+
+  const proquery = useQuery({ queryKey: ["goprofile", adata.username], queryFn: () => profileAthlete(adata.username) });
+
+  
+  const gotoProfile = () => {
+    queryClient.invalidateQueries({ queryKey: ["goprofile", adata.username] });
+    const roles = proquery.data.data.role;
+    console.log(roles)
+    if (roles === "athlete") {
+      navigate("/athleteprofile/" + adata.username);
+    } else if (roles === "scout") {
+      navigate("/scoutprofile/" + adata.username);
+    }
+  };
+  
   const [opened, { open, close }] = useDisclosure(false);
   const auth_username = Cookies.get("auth_username");
   const queryClient = useQueryClient();
@@ -75,7 +92,7 @@ export default function Post({ adata }) {
       </Modal>
       <div className={styles.profile}>
         <div className={styles.profileLeft}>
-          <UnstyledButton>
+          <UnstyledButton onClick={(event) => gotoProfile()}>
             <Image
               src="/Images/profile_logo.jpeg"
               className={styles.profileImage}

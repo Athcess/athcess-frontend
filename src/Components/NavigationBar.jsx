@@ -42,6 +42,7 @@ export default function NavigationBar({ user, updateteir }) {
       tosearch: "",
     },
   });
+  const username = Cookies.get("auth_username");
   const { logout } = useAuth();
   const search = (e) => {
     navigate("/search/" + e.tosearch);
@@ -63,13 +64,13 @@ export default function NavigationBar({ user, updateteir }) {
   };
   const profile = () => {
     if (user.role === "athlete") {
-      navigate("/athleteprofile");
+      navigate("/athleteprofile/"+username);
     }
     if (user.role === "scout") {
-      navigate("/scoutprofile");
+      navigate("/scoutprofile/"+username);
     }
     if (user.role === "admin") {
-      navigate("/orgprofile");
+      navigate("/orgprofile/" +username);
     }
   };
   const friendlist = () => {
@@ -78,7 +79,9 @@ export default function NavigationBar({ user, updateteir }) {
   const body = () => {
     navigate("/bodyanalyzer");
   };
-  const query = useQuery({ queryKey: ["newevent"], queryFn: profileAthlete });
+ 
+  
+  const query = useQuery({ queryKey: ["newevent",username], queryFn: profileAthlete(username) });
   var club_name;
   if (query.status === "success" ){
     if(query.data.data.role==='admin'){

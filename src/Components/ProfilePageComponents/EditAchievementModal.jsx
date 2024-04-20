@@ -22,6 +22,7 @@ import styles from "../../scss/ProfilePageComponents/EditAchievementModal.module
 import { post_achievement, profileAthlete } from "../../Services/ProfileAPI";
 import { DatePicker } from "@mui/x-date-pickers";
 import AchievementModalElement from "./AchievementModalElement";
+import { useParams } from "react-router";
 
 export default function EditAchievementModal({ opened, onClose}) {
   const form = useForm({
@@ -52,7 +53,9 @@ export default function EditAchievementModal({ opened, onClose}) {
     console.log(form.values);
     mutation.mutate(form.values);
   };
-  const query = useQuery({ queryKey: ["achievement"], queryFn: profileAthlete });
+  let {username} = useParams()
+console.log(username)
+  const query = useQuery({ queryKey: ["achievement", username], queryFn:()=> profileAthlete(username) });
   if (query.status === "success"){
 
    const Achievements = query.data.data.achievements

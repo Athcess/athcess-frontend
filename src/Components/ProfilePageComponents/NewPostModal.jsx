@@ -19,6 +19,7 @@ import {
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Cookies from "js-cookie"
 
 import styles from "../../scss/ProfilePageComponents/NewPostModal.module.scss";
 import {
@@ -30,6 +31,7 @@ import {
 } from "../../Services/HomeAPI";
 
 export default function NewPostModal({ opened, onClose, user }) {
+  const auth_username = Cookies.get("auth_username")
   const form = useForm({
     initialValues: {
       description: "",
@@ -121,7 +123,7 @@ export default function NewPostModal({ opened, onClose, user }) {
             src="/Images/profile_logo.jpeg"
             className={styles.profileImage}
           />
-          <div className={styles.profileName}>วี่หว่อง หว่องวี่</div>
+          <div className={styles.profileName}>{auth_username}</div>
         </div>
         <form onSubmit={post}>
           <div className={styles.content}>

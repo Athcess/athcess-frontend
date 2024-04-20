@@ -118,7 +118,7 @@ export default function AppRouter() {
             <Route path="/Calendar" element={<MyCalendar />} />
 
             <Route
-              path="/athleteprofile"
+              path="/athleteprofile/:username"
               element={<AthleteProfilePage user={user} />}>
               <Route index element={<AboutAthlete></AboutAthlete>}></Route>
               <Route
@@ -129,12 +129,12 @@ export default function AppRouter() {
                 element={<HighlightAthlete></HighlightAthlete>}></Route>
             </Route>
             <Route
-              path="/scoutprofile"
+              path="/scoutprofile/:username"
               element={<ScoutProfilePage user={user} />}>
               <Route index element={<AboutScout></AboutScout>}></Route>
               <Route path="post" element={<PostScout user={user} ></PostScout>}></Route>
             </Route>
-            <Route path="/orgprofile" element={<OrgProfilePage />}>
+            <Route path="/orgprofile/:username" element={<OrgProfilePage />}>
               <Route index element={<AboutOrg></AboutOrg>}></Route>
               <Route path="post" element={<PostOrg></PostOrg>}></Route>
               <Route path="event" element={<EventOrg></EventOrg>}></Route>
