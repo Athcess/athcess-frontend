@@ -77,10 +77,9 @@ export default function AchievementModalElement({ adata}) {
     <>
       {(!edit&& !del)&& (
         <div className={styles.achievementcontent}>
-          <Image
-            style={{ width: rem(48), height: rem(48) }}
-            src="/Images/ProfilePage/instu_logo.png"
-          ></Image>
+           <Image
+        style={{ width: rem(48) ,height: rem(48)}}
+        src="/Images/ProfilePage/72-724246_achievement-icon-transparent-hd-png-download.png"></Image>
           <div className={styles.content}>
             <div className={styles.topic}>{form.values.topic}</div>
             <div className={styles.description}>{form.values.subTopic}</div>

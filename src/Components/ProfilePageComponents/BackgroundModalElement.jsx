@@ -77,10 +77,7 @@ export default function BackgroundModalElement({ adata}) {
       <>
         {(!edit&& !del)&& (
           <div className={styles.backgroundcontent}>
-            <Image
-              style={{ width: rem(48), height: rem(48) }}
-              src="/Images/ProfilePage/instu_logo.png"
-            ></Image>
+           
             <div className={styles.content}>
               <div className={styles.topic}>{form.values.topic}</div>
               <div className={styles.description}>

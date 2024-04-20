@@ -7,7 +7,7 @@ export default function AchievementElement({ data}) {
     <div className={styles.container}>
       <Image
         style={{ width: rem(48) }}
-        src="/Images/ProfilePage/instu_logo.png"></Image>
+        src="/Images/ProfilePage/72-724246_achievement-icon-transparent-hd-png-download.png"></Image>
       <div className={styles.content}>
         <div className={styles.topic}>{data.topic}</div>
         <div className={styles.subtopic}>{data.sub_topic}</div>
