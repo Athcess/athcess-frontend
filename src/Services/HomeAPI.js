@@ -1,11 +1,53 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
+const fileToBinary = (file) => {
+  return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+          const binaryData = reader.result;
+          resolve(binaryData);
+      };
+      reader.onerror = () => {
+          reject(new Error('Unable to read the file as binary data'));
+      };
+      reader.readAsArrayBuffer(file);
+  });
+};
+
 const access_token = Cookies.get("auth_token");
 const auth_username = Cookies.get("auth_username");
-export const getPost = async () => {
+export const getPost = async (e) => {
   try {
-    const res = await axios.get("");
+    const response = await axios.get(
+      "http://127.0.0.1:8000/services/post/"+e +"/",
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const del_post = async (e) => {
+  try {
+    const response = await axios.delete(
+      "http://127.0.0.1:8000/services/post/"+e +"/",
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+
+    console.log(response);
+    return response;
   } catch (error) {
     console.log(error);
   }
@@ -59,6 +101,24 @@ export const getNotification = async () => {
   }
 };
 
+export const getFeed = async () => {
+  try {
+    const response = await axios.get(
+      "http://127.0.0.1:8000/services/post/",
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const postPost = async (e) => {
   try {
     const res = await axios.post(
@@ -66,7 +126,7 @@ export const postPost = async (e) => {
       {
         username: auth_username,
         description: e.description,
-        has_attachment: true,
+        has_attachment: e.hasfile,
         highlight: e.highlight,
       },
       {
@@ -75,27 +135,30 @@ export const postPost = async (e) => {
         },
       }
     );
-    console.log(res);
+    return(res)
+
   } catch (error) {
     console.log(error);
   }
 };
+
 
 export const postBlob = async (e) => {
   try {
     const res = await axios.post(
       "http://127.0.0.1:8000/services/upload/",
       {
-        content_type: e.file.type,
+        content_type: e.form.file.type,
         description: "test",
-        file_name: e.file.name,
-        is_profile_picture: true,
-        file_size: e.file.size,
+        file_name: e.form.file.name,
+        is_profile_picture: false,
+        file_size: e.form.file.size,
         skill_type: null,
-        post: null,
+        post: e.postid,
         verify: null,
         club_name: null,
         physical_attribute: null,
+        status : e.status
       },
       {
         headers: {
@@ -110,6 +173,71 @@ export const postBlob = async (e) => {
     console.log(error);
   }
 };
+
+
+export const getBlobPost = async (e) => {
+  try {
+    console.log(e)
+    const res = await axios.get(
+      "http://127.0.0.1:8000/services/upload/?post_id=" +e,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+
+    console.log(res);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const uploadedBlob = async (e) => {
+  try {
+    const res = await axios.put(
+      "http://127.0.0.1:8000/services/upload/"+e+"/",
+      {
+        status : "uploaded"
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+
+    console.log(res);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const putBlob = async (e) => {
+  try {
+    console.log(e)
+    const binaryData = await fileToBinary(e.file);
+    console.log(binaryData)
+    const res = await axios.put(
+      e.url, binaryData,
+      {
+        headers: {
+          'x-ms-blob-type' : 'BlockBlob',
+        },
+      }
+    );
+    
+
+    console.log(res);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
 
 export const postEvent = async (e) => {
   try {
@@ -168,7 +296,7 @@ export const postSearch = async (e) => {
 
 export const getCalendar = async () => {
   try {
-    const res = await axios.get("http://127.0.0.1:8000/services/calendar/get", {
+    const res = await axios.get("http://127.0.0.1:8000/services/calendar/get/", {
       headers: {
         Authorization: `Bearer ${access_token}`,
       },

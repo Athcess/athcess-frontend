@@ -5,12 +5,20 @@ import {useDisclosure} from "@mantine/hooks"
 import styles from "../../../scss/ProfilePageComponents/AthleteProfilePageComponents/PostAthlete.module.scss";
 import Post from "../../Post";
 import NewPostModal from "../NewPostModal";
+import { getPostProfile } from "../../../Services/ProfileAPI";
+import { useQuery } from "@tanstack/react-query";
+import dayjs from "dayjs";
 export default function PostAthlete({user}) {
   const [opened, { open, close }] = useDisclosure(false);
+  const query = useQuery({ queryKey: ["postprofile"], queryFn: getPostProfile });
+  if (query.status === "success"){
+    const posts = query.data.data
+    console.log(posts)
+    posts.sort((a, b) => dayjs(b.created_at) - dayjs(a.created_at));
 
   return (
+    
     <div className={styles.container}>
-      {user.role}
       <NewPostModal opened={opened} onClose={close} user={user} />
       <div className={styles.header}>
         <NavLink className={styles.link} to="/athleteprofile">
@@ -24,9 +32,9 @@ export default function PostAthlete({user}) {
         </NavLink>
       </div>
       <div className={styles.content}>
-        <Post type="post"></Post>
-        <Post type="post"></Post>
-        <Post type="post"></Post>
+      {posts?.map((e)=> {
+        return <Post key={e.post_id} adata={e}></Post>
+      })}
       </div>
       <UnstyledButton className={styles.add} onClick={open}>
         <Image
@@ -35,4 +43,5 @@ export default function PostAthlete({user}) {
       </UnstyledButton>
     </div>
   );
+}
 }

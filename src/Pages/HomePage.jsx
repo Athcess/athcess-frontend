@@ -22,12 +22,21 @@ import {
   FriendSuggestionContainerTrue,
   FriendSuggestionContainerFalse,
 } from "../Components/HomePageComponents/FriendSuggestionContainer";
+import { useQuery } from "@tanstack/react-query";
+import { getFeed } from "../Services/HomeAPI";
+import dayjs from "dayjs";
 
 
 
 export default function HomePage() {
   const [isLogin, setIsLogin] = useState(true);
-
+  const query = useQuery({ queryKey: ["postfeed"], queryFn: getFeed});
+  var posts = []
+  if (query.status === "success"){
+    posts = query.data.data
+    console.log(posts)
+    posts.sort((a, b) => dayjs(b.created_at) - dayjs(a.created_at));
+  }
   return (
     <div className={styles.container}>
       <div className={styles.leftContent}>
@@ -42,11 +51,13 @@ export default function HomePage() {
           <FriendSuggestionContainerFalse></FriendSuggestionContainerFalse>
         )}
       </div>
+      {query.status === "success" && (
       <div className={styles.rightContent}>
-        <Post></Post>
-        <Post></Post>
-        <Post></Post>
+        {posts?.map((e)=> {
+        return <Post key={e.post_id} adata={e}></Post>
+      })}
       </div>
+      )}
     </div>
   );
 }

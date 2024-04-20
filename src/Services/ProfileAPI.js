@@ -22,6 +22,42 @@ export const profileAthlete = async () => {
   }
 };
 
+export const getPostProfile = async () => {
+  try {
+    const response = await axios.get(
+      "http://127.0.0.1:8000/services/post/?username=" + auth_username ,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getHighlight = async () => {
+  try {
+    const response = await axios.get(
+      "http://127.0.0.1:8000/services/post/?username="+ auth_username +"&highlight=True",
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const profilePic = async () => {
   try {
     const response = await axios.get("url");

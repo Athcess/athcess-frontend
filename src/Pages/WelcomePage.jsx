@@ -6,6 +6,12 @@ export default function WelcomePage() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
+      {/* <Image
+            
+            h={48}
+            w="auto"
+            src="../../public/Images/athcess.png"
+          /> */}
         <div className={styles.headerText}>ATHCESS</div>
       </header>
       <div className={styles.content}>
@@ -44,9 +50,9 @@ export default function WelcomePage() {
         <div>
           <Image
             radius="md"
-            h={500}
+            h={400}
             w="auto"
-            src="../../public/Images/logo_placeholder.png"
+            src="../../public/Images/athcess.png"
           />
         </div>
       </div>

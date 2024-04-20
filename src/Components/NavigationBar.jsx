@@ -48,6 +48,9 @@ export default function NavigationBar({ user, updateteir }) {
   const gopro = () => {
     navigate("/subscription");
   };
+  const home = () => {
+    navigate("/home");
+  };
   const chat = () => {
     navigate("/chat");
   };
@@ -90,13 +93,15 @@ export default function NavigationBar({ user, updateteir }) {
       )}
 
       <div>
-        <Anchor
-          className={styles.headerText}
-          underline="never"
-          href="/home"
-          size="xs">
-          ATHCESS
-        </Anchor>
+      <UnstyledButton onClick={home}>
+      <Image
+      className={styles.headerText}
+            h={48}
+            w="auto"
+            src="../../public/Images/athcess.png"
+          />
+      </UnstyledButton>
+      
       </div>
       <form
         className={styles.search}

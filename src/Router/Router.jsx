@@ -132,7 +132,7 @@ export default function AppRouter() {
               path="/scoutprofile"
               element={<ScoutProfilePage user={user} />}>
               <Route index element={<AboutScout></AboutScout>}></Route>
-              <Route path="post" element={<PostScout></PostScout>}></Route>
+              <Route path="post" element={<PostScout user={user} ></PostScout>}></Route>
             </Route>
             <Route path="/orgprofile" element={<OrgProfilePage />}>
               <Route index element={<AboutOrg></AboutOrg>}></Route>

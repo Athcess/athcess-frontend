@@ -16,6 +16,7 @@ import {
   Checkbox,
   Anchor,
   Stack,
+  Image,
 } from "@mantine/core";
 import styles from "../scss/SignInPage.module.scss";
 import { signin } from "../Services/WelcomeAPI";
@@ -67,7 +68,13 @@ export default function SignInPage(props) {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <div className={styles.headerText}>ATHCESS</div>
+      <Image
+            
+            h={48}
+            w="auto"
+            src="../../public/Images/athcess.png"
+          />
+        <div className={styles.headerText}></div>
       </header>
       <div className={styles.content}>
         <Paper

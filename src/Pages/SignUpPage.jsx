@@ -20,6 +20,7 @@ import {
   Select,
   MultiSelect,
   Checkbox,
+  Image,
 } from "@mantine/core";
 import styles from "../scss/SignUpPage.module.scss";
 import { signup } from "../Services/WelcomeAPI";
@@ -41,7 +42,9 @@ export default function SignUpPage(props) {
       birth_date: "",
       education: ["", ""],
       //organization
+      club_name:"",
       organization: "",
+      location: "",
     },
     validate: {
       email: (val) =>
@@ -90,7 +93,16 @@ export default function SignUpPage(props) {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <div className={styles.headerText}>ATHCESS</div>
+      <Image
+            
+            h={48}
+            w="auto"
+            src="../../public/Images/athcess.png"
+          />
+        <div className={styles.headerText}>
+
+          
+        </div>
       </header>
       <div className={styles.content}>
         <Paper
@@ -175,20 +187,23 @@ export default function SignUpPage(props) {
               {form.errors.role && (
                 <span style={{ color: "red" }}>Please select a role</span>
               )}
-              {/* {form.values.role === "organization" && (
+              
+              {(form.values.role === "athlete" ||
+                form.values.role === "scout" ||
+                form.values.role === "admin") && (
                 <>
                   <Text ta="center" size="lg" fw={500}>
-                    Oraganization Information
+                    Personal Information
                   </Text>
                   <Divider />
                   <TextInput
                     required
-                    label="Organization Name"
-                    placeholder="Enter organization name"
-                    value={form.values.organization}
+                    label="First Name"
+                    placeholder="Your first name"
+                    value={form.values.first_name}
                     onChange={(event) =>
                       form.setFieldValue(
-                        "organization",
+                        "first_name",
                         event.currentTarget.value
                       )
                     }
@@ -196,62 +211,41 @@ export default function SignUpPage(props) {
                   />
                   <TextInput
                     required
-                    label="Club name"
-                    placeholder="Enter club name"
-                    value={form.values.club_name}
+                    label="Last Name"
+                    placeholder="Your last name"
+                    value={form.values.last_name}
                     onChange={(event) =>
-                      form.setFieldValue(
-                        "club_name",
-                        event.currentTarget.value
-                      )
+                      form.setFieldValue("last_name", event.currentTarget.value)
                     }
                     radius="md"
                   />
-                  <TextInput
-                    required
-                    label="Phone"
-                    placeholder="Enter phone number"
-                    value={form.values.phone}
-                    onChange={(event) =>
-                      form.setFieldValue("phone", event.currentTarget.value)
-                    }
-                    error={
-                      form.errors.phone &&
-                      "Invalid phone number, do not enter -"
-                    }
+                  {form.values.role === "admin" && (
+                    <>
+                    <TextInput
+                      required
+                      label="Organization Name"
+                      placeholder="Your organization"
+                      value={form.values.club_name}
+                      onChange={(event) =>
+                        form.setFieldValue(
+                          "club_name",
+                          event.currentTarget.value
+                        )
+                      }
+                      radius="md"
+                    />
+                    <Select
                     radius="md"
-                  />
-                  <TextInput
                     required
-                    label="Address"
-                    placeholder="Enter address"
-                    value={form.values.address}
-                    onChange={(event) =>
-                      form.setFieldValue("address", event.currentTarget.value)
-                    }
-                    radius="md"
-                  />
-                  <TextInput
-                    required
-                    label="City"
-                    placeholder="Enter city"
-                    value={form.values.city}
-                    onChange={(event) =>
-                      form.setFieldValue("city", event.currentTarget.value)
-                    }
-                    radius="md"
-                  />
-                  <Select
-                    required
-                    label="Province"
-                    placeholder="Enter Province"
+                    label="Location"
+                    placeholder="Enter location"
                     searchable
                     comboboxProps={{
                       position: "bottom",
                       middlewares: { flip: false, shift: false },
                     }}
-                    value={form.values.province}
-                    onChange={(event) => form.setFieldValue("province", event)}
+                    value={form.values.location}
+                    onChange={(event) => form.setFieldValue("location", event)}
                     data={[
                       "Amnat Charoen",
                       "Ang Thong",
@@ -332,68 +326,11 @@ export default function SignUpPage(props) {
                       "Yasothon",
                     ]}
                   />
-                  <TextInput
-                    required
-                    label="Postal code"
-                    placeholder="Enter postal code"
-                    value={form.values.postalcode}
-                    onChange={(event) =>
-                      form.setFieldValue(
-                        "postalcode",
-                        event.currentTarget.value
-                      )
-                    }
-                    error={form.errors.postalcode && "Invalid postal code"}
-                    radius="md"
-                  />
-                </>
-              )} */}
-              {(form.values.role === "athlete" ||
-                form.values.role === "scout" ||
-                form.values.role === "admin") && (
-                <>
-                  <Text ta="center" size="lg" fw={500}>
-                    Personal Information
-                  </Text>
-                  <Divider />
-                  <TextInput
-                    required
-                    label="First Name"
-                    placeholder="Your first name"
-                    value={form.values.first_name}
-                    onChange={(event) =>
-                      form.setFieldValue(
-                        "first_name",
-                        event.currentTarget.value
-                      )
-                    }
-                    radius="md"
-                  />
-                  <TextInput
-                    required
-                    label="Last Name"
-                    placeholder="Your last name"
-                    value={form.values.last_name}
-                    onChange={(event) =>
-                      form.setFieldValue("last_name", event.currentTarget.value)
-                    }
-                    radius="md"
-                  />
-                  {form.values.role === "admin" && (
-                    <TextInput
-                      required
-                      label="Organization Name"
-                      placeholder="Your organization"
-                      value={form.values.organization}
-                      onChange={(event) =>
-                        form.setFieldValue(
-                          "organization",
-                          event.currentTarget.value
-                        )
-                      }
-                      radius="md"
-                    />
+</>
                   )}
+                  {(form.values.role === "athlete" ||
+                form.values.role === "scout") &&(
+                  <>
                   <NumberInput
                     required
                     label="Age"
@@ -418,7 +355,10 @@ export default function SignUpPage(props) {
                         form.setFieldValue("birth_date", event)
                       }
                     />
+                    
                   </Group>
+                  </>
+                )}
                   {form.values.role === "athlete" && (
                     <>
                       <Select
@@ -499,7 +439,8 @@ export default function SignUpPage(props) {
                       </Group>
                     </>
                   )}
-
+{(form.values.role === "athlete" ||
+                form.values.role === "scout") &&(
                   <Select
                     radius="md"
                     required
@@ -592,6 +533,7 @@ export default function SignUpPage(props) {
                       "Yasothon",
                     ]}
                   />
+                )}
 
                   {form.values.role === "scout" && (
                     <TextInput

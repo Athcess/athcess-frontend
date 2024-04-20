@@ -17,6 +17,8 @@ export const signup = async (e) => {
       education: e.education[1] + " " + e.education[0],
       description: "hi", //
       organization: e.organization,
+      club_name : e.club_name,
+      location : e.location,
       tier: false, //
     });
     console.log(response);

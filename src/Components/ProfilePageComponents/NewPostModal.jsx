@@ -18,10 +18,16 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import styles from "../../scss/ProfilePageComponents/NewPostModal.module.scss";
-import { postBlob, postEvent, postPost } from "../../Services/HomeAPI";
+import {
+  postBlob,
+  postEvent,
+  postPost,
+  putBlob,
+  uploadedBlob,
+} from "../../Services/HomeAPI";
 
 export default function NewPostModal({ opened, onClose, user }) {
   const form = useForm({
@@ -30,19 +36,52 @@ export default function NewPostModal({ opened, onClose, user }) {
       file: null,
       highlight: false,
       event: false,
+      hasfile: false,
     },
   });
+  const queryClient = useQueryClient();
 
   const mutationpost = useMutation({
     mutationFn: postPost,
     onSuccess: (data) => {
-      console.log(data);
+      console.log(data.data);
+      if (data.data.has_attachment) {
+        mutationBlob.mutate({ form: form.values, postid: data.data.post_id });
+      } else {
+        queryClient.invalidateQueries({ queryKey: ["postprofile"] });
+        queryClient.invalidateQueries({ queryKey: ["postfeed"] });
+
+        onClose();
+      }
     },
   });
   const mutationBlob = useMutation({
     mutationFn: postBlob,
     onSuccess: (data) => {
+      const blob_id = data.postgras_id;
+      const url = data.signed_url;
+      console.log(url);
+      const reqdata = { url: url, file: form.values.file };
+      putmutationBlob.mutate(reqdata);
+      uploadedmutationBlob.mutate(blob_id);
+    },
+  });
+
+  const putmutationBlob = useMutation({
+    mutationFn: putBlob,
+    onSuccess: (data) => {
       console.log(data);
+    },
+  });
+
+  const uploadedmutationBlob = useMutation({
+    mutationFn: uploadedBlob,
+    onSuccess: (data) => {
+      console.log(data);
+      setTimeout(() => {queryClient.invalidateQueries({ queryKey: ["postprofile"] }) }, 1000);
+      setTimeout(() => {queryClient.invalidateQueries({ queryKey: ["postfeed"] })}, 1000);
+
+      onClose();
     },
   });
   const mutationevent = useMutation({
@@ -60,7 +99,11 @@ export default function NewPostModal({ opened, onClose, user }) {
     } else {
       mutationpost.mutate(form.values);
     }
-    mutationBlob.mutate(form.values);
+  };
+
+  const setFile = (event) => {
+    form.setFieldValue("file", event);
+    form.setFieldValue("hasfile", true);
   };
 
   return (
@@ -79,7 +122,6 @@ export default function NewPostModal({ opened, onClose, user }) {
       }}
     >
       <div className={styles.container}>
-     
         <div className={styles.profile}>
           <Image
             src="/Images/profile_logo.jpeg"
@@ -95,10 +137,8 @@ export default function NewPostModal({ opened, onClose, user }) {
                 form.setFieldValue("description", event.currentTarget.value)
               }
             ></Textarea>
-            <FileInput
-              onChange={(event) => form.setFieldValue("file", event)}
-            />
-            
+            <FileInput onChange={(event) => setFile(event)} />
+
             {user.role == "athlete" && (
               <Checkbox
                 label="Add this post to your highlight page"
