@@ -71,7 +71,6 @@ export default function NavigationBar({ user, updateteir }) {
   const body = () => {
     navigate("/bodyanalyzer");
   };
-  console.log(user);
   const [NewPostModalOpened, NewPost] = useDisclosure(false);
   const [NewEventModalOpened, NewEvent] = useDisclosure(false);
   return (

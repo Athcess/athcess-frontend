@@ -27,7 +27,7 @@ export function UpcomingEventContainerTrue() {
           <div className={styles.error}>ERROR: {error.message}</div>
         ) : (
           data.map((event) => {
-            return <li key={event.event_id}>{event.content}</li>;
+            return <li key={event.event_id}>{event.description}</li>;
           })
         )}
       </div>

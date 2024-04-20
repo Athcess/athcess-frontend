@@ -116,8 +116,11 @@ export const postEvent = async (e) => {
     const res = await axios.post(
       "http://127.0.0.1:8000/services/calendar/",
       {
-        content: e.description,
-        org_name: "Mcgrath Group",
+        club: e.club,
+        description: e.description,
+        has_attachment: true,
+        start_time: e.start_time,
+        end_time: e.end_time,
       },
       {
         headers: {

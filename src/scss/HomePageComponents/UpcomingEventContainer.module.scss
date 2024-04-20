@@ -17,11 +17,12 @@
   .content {
     height: 80%;
     min-height: 200px;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+
     flex-grow: 1;
+    flex-wrap: wrap;
     border-radius: 0 0 30px 30px;
     background-color: white;
     .events {

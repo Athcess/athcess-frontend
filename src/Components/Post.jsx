@@ -132,7 +132,7 @@ export default function Post() {
         </Spoiler>
       </UnstyledButton>
 
-      <video className={styles.postVideo} controls>
+o      <video className={styles.postVideo} controls>
         <source src="/Videos/1996750-hd_1920_1080_25fps.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>

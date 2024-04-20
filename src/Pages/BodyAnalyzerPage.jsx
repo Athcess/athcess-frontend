@@ -111,7 +111,7 @@ export default function BodyAnalyzerPage() {
         </div>
         <div className={styles.perfVidContainer}>
           <div className={styles.header}>
-            Performance Videos
+            Physical Stats & Performance Videos
             <UnstyledButton onClick={PerfVid.open}>
               <Image
                 src="/Images/info_logo.png"
@@ -156,25 +156,6 @@ export default function BodyAnalyzerPage() {
                 />
               </UnstyledButton>
               Pull-up
-            </div>
-            <div className={styles.vidContainer}>
-              <UnstyledButton className={styles.selectVid}>
-                <label htmlFor="squat">
-                  <Image
-                    src="/Images/image_placeholder.png"
-                    style={{ width: rem(64) }}
-                  />
-                  Select a video to upload
-                </label>
-                <input
-                  id="squat"
-                  type="file"
-                  accept="video/*"
-                  style={{ display: "none" }}
-                  onChange={(event) => handleFileChange(event, "squat")}
-                />
-              </UnstyledButton>
-              Squat
             </div>
             <div className={styles.vidContainer}>
               <UnstyledButton className={styles.selectVid}>
