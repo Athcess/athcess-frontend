@@ -12,6 +12,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useForm } from "@mantine/form";
 import styles from "../scss/CheckoutPage.module.scss";
+import { useMutation } from "@tanstack/react-query";
+import { puttier } from "../Services/ProfileAPI";
 function CheckoutPage(props) {
   const navigate = useNavigate();
   const form = useForm({
@@ -31,6 +33,14 @@ function CheckoutPage(props) {
       console.log(values);
     },
   });
+
+  const mutation = useMutation({
+    mutationFn: puttier, 
+  });
+
+  const uptier = () => {
+    mutation.mutate(true);
+  };
 
   return (
     <div className={styles.container}>
@@ -83,7 +93,9 @@ function CheckoutPage(props) {
                 type="submit"
                 style={{ backgroundColor: "#007458" }}
                 onClick={() => {
+                  
                   props.updateteir(true); 
+                  uptier();
                   navigate("/home"); 
                 }}
               >

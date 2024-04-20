@@ -25,9 +25,10 @@ import { postBlob, postEvent, postPost, putBlob, uploadedBlob } from "../../Serv
 import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { profileAthlete } from "../../Services/ProfileAPI";
+import Cookies from "js-cookie"
 
-export default function NewEventModal({ opened, onClose, user , club}) {
-  console.log(club)
+export default function NewEventModal({ opened, onClose, user }) {
+  const club = Cookies.get("orgname");
   const form = useForm({
 
     initialValues: {
@@ -123,7 +124,7 @@ export default function NewEventModal({ opened, onClose, user , club}) {
             src="/Images/profile_logo.jpeg"
             className={styles.profileImage}
           />
-          <div className={styles.profileName}>วี่หว่อง หว่องวี่</div>
+          <div className={styles.profileName}>{club}</div>
         </div>
         <form onSubmit={post}>
           <div className={styles.content}>

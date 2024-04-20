@@ -2,8 +2,18 @@ import React from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import styles from "../scss/SubscriptionPage.module.scss";
 import { Image, rem, UnstyledButton } from "@mantine/core";
+import { useMutation } from "@tanstack/react-query";
+import { puttier } from "../Services/ProfileAPI";
 export default function SubscriptionPage({ user, updateteir }) {
   const navigate = useNavigate();
+  const mutation = useMutation({
+    mutationFn: puttier, 
+  });
+
+  const downtier = () => {
+    mutation.mutate(false);
+  };
+
 
   return (
     <div className={styles.container}>
@@ -47,6 +57,7 @@ export default function SubscriptionPage({ user, updateteir }) {
           {user.teir && (
             <UnstyledButton
               onClick={() => {
+                downtier()
                 updateteir(false);
                 navigate("/home");
               }}
