@@ -5,7 +5,6 @@ import styles from "./scss/index.module.scss";
 import "@mantine/core/styles.css";
 
 import { MainProvider } from "./Provider/MainProvider";
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <MainProvider>

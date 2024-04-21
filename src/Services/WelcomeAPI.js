@@ -1,9 +1,11 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
+const APIURL = import.meta.env.VITE_API_URL;
+
 export const signup = async (e) => {
   try {
-    const response = await axios.post("http://127.0.0.1:8000/users/signup/", {
+    const response = await axios.post(`${APIURL}/users/signup/`, {
       username: e.username,
       first_name: e.first_name,
       last_name: e.last_name,
@@ -15,11 +17,11 @@ export const signup = async (e) => {
       birth_date: e.birth_date,
       hometown: e.hometown,
       education: e.education[1] + " " + e.education[0],
-      description: "hi", //
+      description: "hi",
       organization: e.organization,
-      club_name : e.club_name,
-      location : e.location,
-      tier: false, //
+      club_name: e.club_name,
+      location: e.location,
+      tier: false,
     });
     console.log(response);
     //Cookies.set('token', response.data.access_token)
@@ -31,7 +33,7 @@ export const signup = async (e) => {
 
 export const signin = async (e) => {
   try {
-    const response = await axios.post("http://127.0.0.1:8000/users/signin/", {
+    const response = await axios.post(`${APIURL}/users/signin/`, {
       username: e.username,
       password: e.password,
     });

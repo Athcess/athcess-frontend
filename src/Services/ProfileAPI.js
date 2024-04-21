@@ -4,16 +4,15 @@ import Cookies from "js-cookie";
 const access_token = Cookies.get("auth_token");
 const auth_username = Cookies.get("auth_username");
 const orgname = Cookies.get("orgname");
+const APIURL = import.meta.env.VITE_API_URL;
+
 export const profileAthlete = async (username) => {
   try {
-    const response = await axios.get(
-      "http://127.0.0.1:8000/services/users/" + username + "/",
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${APIURL}/services/users/${username}/`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
 
     console.log(response);
     return response;
@@ -25,7 +24,7 @@ export const profileAthlete = async (username) => {
 export const getOrg = async (username) => {
   try {
     const response = await axios.get(
-      "http://127.0.0.1:8000/services/organization/" + username + "/",
+      `${APIURL}/services/organization/${username}/`,
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -42,14 +41,11 @@ export const getOrg = async (username) => {
 
 export const getPostProfile = async (e) => {
   try {
-    const response = await axios.get(
-      "http://127.0.0.1:8000/services/post/?username=" + e ,
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${APIURL}/services/post/?username=${e}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
 
     console.log(response);
     return response;
@@ -61,7 +57,7 @@ export const getPostProfile = async (e) => {
 export const getEventProfile = async (e) => {
   try {
     const response = await axios.get(
-      "http://127.0.0.1:8000/services/calendar/byname/?org_name=" + e ,
+      `${APIURL}/services/calendar/byname/?org_name=${e}`,
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -79,7 +75,7 @@ export const getEventProfile = async (e) => {
 export const getHighlight = async (e) => {
   try {
     const response = await axios.get(
-      "http://127.0.0.1:8000/services/post/?username="+ e +"&highlight=True",
+      `${APIURL}/services/post/?username=${e}&highlight=True`,
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -115,7 +111,7 @@ export const editProfile_Pic = async (e) => {
 export const editProfile_athleteInformation = async (e) => {
   try {
     const response = await axios.put(
-      "http://127.0.0.1:8000/services/users/" + auth_username + "/",
+      `${APIURL}/services/users/${auth_username}/`,
       {
         username: auth_username,
         description: e.description,
@@ -124,7 +120,7 @@ export const editProfile_athleteInformation = async (e) => {
         hometown: e.location,
         position: e.position,
         education: e.education,
-        tier :e.tier
+        tier: e.tier,
       },
       {
         headers: {
@@ -141,9 +137,9 @@ export const editProfile_athleteInformation = async (e) => {
 export const puttier = async (e) => {
   try {
     const response = await axios.put(
-      "http://127.0.0.1:8000/services/users/" + auth_username + "/",
+      `${APIURL}/services/users/${auth_username}/`,
       {
-        tier : e
+        tier: e,
       },
       {
         headers: {
@@ -160,15 +156,14 @@ export const puttier = async (e) => {
 export const put_achievement = async (e) => {
   try {
     const res = await axios.put(
-      "http://127.0.0.1:8000/services/achievement/"+e.id+"/",
+      `${APIURL}/services/achievement/${e.id}/`,
       {
         username: auth_username,
         created_at: e.created_at,
         date: e.date,
         topic: e.topic,
-        sub_topic : e.subTopic,
-        description: e.description
-
+        sub_topic: e.subTopic,
+        description: e.description,
       },
       {
         headers: {
@@ -185,14 +180,13 @@ export const put_achievement = async (e) => {
 export const post_achievement = async (e) => {
   try {
     const res = await axios.post(
-      "http://127.0.0.1:8000/services/achievement/",
+      `${APIURL}/services/achievement/`,
       {
         username: auth_username,
         date: e.date,
         topic: e.topic,
-        sub_topic : e.subTopic,
-        description: e.description
-
+        sub_topic: e.subTopic,
+        description: e.description,
       },
       {
         headers: {
@@ -208,14 +202,11 @@ export const post_achievement = async (e) => {
 
 export const del_achievement = async (e) => {
   try {
-    const res = await axios.delete(
-      "http://127.0.0.1:8000/services/achievement/"+e.id+"/",
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    const res = await axios.delete(`${APIURL}/services/achievement/${e.id}/`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
     console.log(res);
   } catch (error) {
     console.log(error);
@@ -225,15 +216,14 @@ export const del_achievement = async (e) => {
 export const put_background = async (e) => {
   try {
     const res = await axios.put(
-      "http://127.0.0.1:8000/services/experience/"+e.id+"/",
+      `${APIURL}/services/experience/${e.id}/`,
       {
         username: auth_username,
         created_at: e.created_at,
         start_date: e.start_date,
         end_date: e.end_date,
         topic: e.topic,
-        description: e.description
-
+        description: e.description,
       },
       {
         headers: {
@@ -250,14 +240,13 @@ export const put_background = async (e) => {
 export const post_background = async (e) => {
   try {
     const res = await axios.post(
-      "http://127.0.0.1:8000/services/experience/",
+      `${APIURL}/services/experience/`,
       {
         username: auth_username,
         start_date: e.start_date,
         end_date: e.end_date,
         topic: e.topic,
-        description: e.description
-
+        description: e.description,
       },
       {
         headers: {
@@ -273,14 +262,11 @@ export const post_background = async (e) => {
 
 export const del_background = async (e) => {
   try {
-    const res = await axios.delete(
-      "http://127.0.0.1:8000/services/experience/"+e.id+"/",
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    const res = await axios.delete(`${APIURL}/services/experience/${e.id}/`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
     console.log(res);
   } catch (error) {
     console.log(error);
