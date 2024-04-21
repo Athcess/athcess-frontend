@@ -89,7 +89,15 @@ export const getFriend = async () => {
 
 export const getFriendRequest = async () => {
   try {
-    const res = await axios.get("");
+    const res = await axios.get("http://127.0.0.1:8000/services/friend/?friend_username_id="+ auth_username +"&status=pending",{
+      
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      
+    });
+    console.log(res)
+    return(res)
   } catch (error) {
     console.log(error);
   }

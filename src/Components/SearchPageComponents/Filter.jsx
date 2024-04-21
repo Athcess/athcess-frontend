@@ -25,14 +25,14 @@ export function Filter({ category, user, id, setId }) {
   const queryClient = useQueryClient();
   const form = useForm({
     initialValues: {
-      height: "",
-      weight: "",
-      age: "",
-      location: "",
-      position: "",
-      sit_up: "",
-      push_up: "",
-      run: "",
+      height: null,
+      weight: null,
+      age: null,
+      location: null,
+      position: null,
+      sit_up: null,
+      push_up: null,
+      run: null,
     },
   });
 
