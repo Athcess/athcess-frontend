@@ -17,6 +17,7 @@ const fileToBinary = (file) => {
 
 const access_token = Cookies.get("auth_token");
 const auth_username = Cookies.get("auth_username");
+const orgname = Cookies.get("orgname");
 export const getPost = async (e) => {
   try {
     const response = await axios.get(
@@ -260,7 +261,7 @@ export const postEvent = async (e) => {
     const res = await axios.post(
       "http://127.0.0.1:8000/services/calendar/",
       {
-        club: e.club,
+        club: orgname,
         description: e.description,
         start_time: e.start_time,
         end_time: e.end_time,

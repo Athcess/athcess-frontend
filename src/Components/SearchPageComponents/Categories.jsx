@@ -39,8 +39,7 @@ export function Categories({category,setCategory, id , setId}) {
         { label: 'Posts', value: 'post' },
         { label: 'Athletes', value: 'athlete' },
         { label: 'Scouts', value: 'scout' },
-        { label: 'Organization', value: 'oragnization' },
-        { label: 'Events', value: 'event' },
+        { label: 'Organization', value: 'organization' }
       ]}
     />
       </div>

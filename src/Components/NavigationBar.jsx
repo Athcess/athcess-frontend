@@ -29,24 +29,37 @@ import NotiDropDown from "./NotiDropDown.jsx";
 import { useAuth } from "../hooks/useAuth";
 import NewPostModal from "../Components/ProfilePageComponents/NewPostModal.jsx";
 import NewEventModal from "./ProfilePageComponents/NewEventModal.jsx";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { profileAthlete } from "../Services/ProfileAPI.js";
-export default function NavigationBar({ user, updateteir }) {
+import { postSearch } from "../Services/HomeAPI.js";
+export default function NavigationBar({ user, updateteir , category, setCategory, id , setId }) {
   const [isLogin, setIsLogin] = useState(true);
   const [menuOpened, setmenuOpened] = useState(false);
   const [opened, { toggle }] = useDisclosure();
   const navigate = useNavigate();
-
+  const queryClient = useQueryClient();
   const form = useForm({
     initialValues: {
       tosearch: "",
     },
   });
+  const mutation = useMutation({
+    mutationFn: postSearch,
+    onSuccess: (data) => {
+      setId(data.data.search_id)
+            queryClient.invalidateQueries({ queryKey: ["search", id]})
+    },
+  });
   const username = Cookies.get("auth_username");
   const { logout } = useAuth();
   const search = (e) => {
+    console.log(category,e.tosearch)
+    mutation.mutate({ type: category, data: e.tosearch });
     navigate("/search/" + e.tosearch);
-  };
+   
+      
+    };
+
   const signout = () => {
     logout();
   };
@@ -130,7 +143,7 @@ export default function NavigationBar({ user, updateteir }) {
           placeholder="Search"
           radius="20px"
           limit={3}
-          data={["Football 1", "Basketball 1", "Basketball 2", "Football 2"]}
+          //data={["Football 1", "Basketball 1", "Basketball 2", "Football 2"]}
           comboboxProps={{ zIndex: 1000, offset: 2 }}
           onChange={(event) => form.setFieldValue("tosearch", event)}
           leftSection={
