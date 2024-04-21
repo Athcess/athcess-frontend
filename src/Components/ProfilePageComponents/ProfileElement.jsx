@@ -56,7 +56,8 @@ export default function ProfileElement({ type, openModal, user }) {
         <div className={styles.wallpaper}>
           <Image
             className={styles.wallpaperImage}
-            src="/Images/ProfilePage/wallpaper.jpg"></Image>
+            src="/Images/background_welcome.png"
+          ></Image>
         </div>
         <div className={styles.profileContent}>
           <div className={styles.profileImage}>
