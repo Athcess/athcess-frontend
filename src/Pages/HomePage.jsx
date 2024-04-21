@@ -27,15 +27,13 @@ import { getFeed } from "../Services/HomeAPI";
 import dayjs from "dayjs";
 import Event from "../Components/Event";
 
-
-
 export default function HomePage() {
   const [isLogin, setIsLogin] = useState(true);
-  const query = useQuery({ queryKey: ["postfeed"], queryFn: getFeed});
-  var feeds = []
-  if (query.status === "success"){
-    feeds = query.data
-    console.log(feeds)
+  const query = useQuery({ queryKey: ["postfeed"], queryFn: getFeed });
+  var feeds = [];
+  if (query.status === "success") {
+    feeds = query.data;
+    console.log(feeds);
     feeds.sort((a, b) => dayjs(b.created_at) - dayjs(a.created_at));
   }
   return (
@@ -53,12 +51,16 @@ export default function HomePage() {
         )}
       </div>
       {query.status === "success" && (
-      <div className={styles.rightContent}>
-        {feeds?.map((e)=> {
-        if(typeof e.post_id != "undefined"){return <Post key={feeds.indexOf(e)} adata={e}></Post>}
-        if(typeof e.event_id != "undefined"){return <Event key={feeds.indexOf(e)} adata={e}></Event>}
-      })}
-      </div>
+        <div className={styles.rightContent}>
+          {feeds?.map((e) => {
+            if (typeof e.post_id != "undefined") {
+              return <Post key={feeds.indexOf(e)} adata={e}></Post>;
+            }
+            if (typeof e.event_id != "undefined") {
+              return <Event key={feeds.indexOf(e)} adata={e}></Event>;
+            }
+          })}
+        </div>
       )}
     </div>
   );

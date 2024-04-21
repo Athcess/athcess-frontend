@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "../scss/FriendListPage.module.scss";
 import {
   Image,
@@ -14,14 +14,44 @@ import {
   Group,
 } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
-import { getFriendRequest } from "../Services/HomeAPI";
-import { useQuery } from "@tanstack/react-query";
+import { getFriendRequest, postAcceptFriend, postRejectFriend } from "../Services/HomeAPI";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function FriendRequest() {
+  const navigate = useNavigate();
+  const gotoAthleteProfile = (e) => {
+    navigate("/athleteprofile/" + e);
+  };
+  const queryClient = useQueryClient();
   const query = useQuery({
-    queryKey: ["firendrequest"],
+    queryKey: ["friendrequest"],
     queryFn: getFriendRequest,
   });
+
+  const acceptedmutation = useMutation({
+    mutationFn: postAcceptFriend,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["friendrequest"] });
+        queryClient.invalidateQueries({ queryKey: ["friendlist"] });
+      console.log(data);
+    },
+  });
+  const accept = (e) => {
+   acceptedmutation.mutate(e);
+  };
+
+  const rejectmutation = useMutation({
+    mutationFn: postRejectFriend,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["friendrequest"] });
+      queryClient.invalidateQueries({ queryKey: ["friendlist"] });
+      console.log(data);
+    },
+  });
+  const reject = (e) => {
+   rejectmutation.mutate(e);
+  };
+
 
   if (query.status === "success") {
     const posts = query.data.data;
@@ -38,7 +68,9 @@ export default function FriendRequest() {
               return (
                 <div key={e.id} className={styles.list}>
                   <div className={styles.profileLeft}>
-                    <UnstyledButton>
+                    <UnstyledButton
+                    onClick={(event) => gotoAthleteProfile(e.username)}
+                     >
                       <Image
                         src="/Images/profile_logo.jpeg"
                         className={styles.profileImage}
@@ -48,8 +80,8 @@ export default function FriendRequest() {
                       <div className={styles.profileName}>{e.username}</div>
                     </div>
                     <Group className={styles.editPost}>
-                      <Button color="#00A67E">Accept</Button>
-                      <Button color="#BBBBBB">Decline</Button>
+                      <Button color="#00A67E" onClick={()=> accept(e.id)}>Accept</Button>
+                      <Button color="#BBBBBB" onClick={()=> reject(e.id)}>Decline</Button>
                     </Group>
                   </div>
                 </div>

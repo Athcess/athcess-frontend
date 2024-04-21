@@ -79,13 +79,7 @@ export const getEvent = async () => {
   }
 };
 
-export const getFriend = async () => {
-  try {
-    const res = await axios.get("");
-  } catch (error) {
-    console.log(error);
-  }
-};
+
 
 export const getFriendRequest = async () => {
   try {
@@ -102,6 +96,62 @@ export const getFriendRequest = async () => {
     console.log(error);
   }
 };
+
+
+export const getFriend = async () => {
+  try {
+    const res = await axios.get("http://127.0.0.1:8000/services/friend/?friend_username_id="+ auth_username +"&status=accepted",{
+      
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      
+    });
+    console.log(res)
+    return(res)
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const postAcceptFriend = async (e) => {
+  try {
+    const res = await axios.put(
+      "http://127.0.0.1:8000/services/friend/"+e+"/",
+      {
+        status : "accepted"
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const postRejectFriend = async (e) => {
+  try {
+    const res = await axios.put(
+      "http://127.0.0.1:8000/services/friend/"+e+"/",
+      {
+        status : "rejected"
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 export const getNotification = async () => {
   try {
@@ -320,6 +370,7 @@ export const postComment = async (e) => {
 
 export const postFilterSearch = async (e) => {
   try {
+    
     const res = await axios.post("http://127.0.0.1:8000/services/search/", {
       filters: {
         height: e.height,
