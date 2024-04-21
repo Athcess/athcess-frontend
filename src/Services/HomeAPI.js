@@ -59,11 +59,17 @@ export const getProfilePic = async () => {
   }
 };
 
-export const getComment = async () => {
+export const getComment = async (e) => {
   try {
-    const res = await axios.get("");
+    const res = await axios.get(`${APIURL}/services/comment/?post_id=${e}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return res.data;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching data:", error);
+    throw error;
   }
 };
 
