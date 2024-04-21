@@ -2,6 +2,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useAuth } from "../hooks/useAuth";
 
+import { APIURL } from "../env";
+
 const fileToBinary = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -21,14 +23,11 @@ const auth_username = Cookies.get("auth_username");
 const orgname = Cookies.get("orgname");
 export const getPost = async (e) => {
   try {
-    const response = await axios.get(
-      "http://127.0.0.1:8000/services/post/" + e + "/",
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${APIURL}/services/post/${e}/`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
 
     console.log(response);
     return response;
@@ -39,14 +38,11 @@ export const getPost = async (e) => {
 
 export const del_post = async (e) => {
   try {
-    const response = await axios.delete(
-      "http://127.0.0.1:8000/services/post/" + e + "/",
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    const response = await axios.delete(`${APIURL}/services/post/${e}/`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
 
     console.log(response);
     return response;
@@ -63,11 +59,17 @@ export const getProfilePic = async () => {
   }
 };
 
-export const getComment = async () => {
+export const getComment = async (e) => {
   try {
-    const res = await axios.get("");
+    const res = await axios.get(`${APIURL}/services/comment/?post_id=${e}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return res.data;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching data:", error);
+    throw error;
   }
 };
 
@@ -79,36 +81,35 @@ export const getEvent = async () => {
   }
 };
 
-
-
 export const getFriendRequest = async () => {
   try {
-    const res = await axios.get("http://127.0.0.1:8000/services/friend/?friend_username_id="+ auth_username +"&status=pending",{
-      
+    const res = await axios.get(
+      `${APIURL}/services/friend/?friend_username_id=${auth_username}&status=pending`,
+      {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
-      
-    });
-    console.log(res)
-    return(res)
+      }
+    );
+    console.log(res);
+    return res;
   } catch (error) {
     console.log(error);
   }
 };
 
-
 export const getFriend = async () => {
   try {
-    const res = await axios.get("http://127.0.0.1:8000/services/friend/?friend_username_id="+ auth_username +"&status=accepted",{
-      
+    const res = await axios.get(
+      `${APIURL}/services/friend/?friend_username_id=${auth_username}&status=accepted`,
+      {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
-      
-    });
-    console.log(res)
-    return(res)
+      }
+    );
+    console.log(res);
+    return res;
   } catch (error) {
     console.log(error);
   }
@@ -117,9 +118,9 @@ export const getFriend = async () => {
 export const postAcceptFriend = async (e) => {
   try {
     const res = await axios.put(
-      "http://127.0.0.1:8000/services/friend/"+e+"/",
+      `${APIURL}/services/friend/${e}/`,
       {
-        status : "accepted"
+        status: "accepted",
       },
       {
         headers: {
@@ -138,7 +139,7 @@ export const postFollow = async (e) => {
     const res = await axios.put(
       "http://127.0.0.1:8000/services/follow/",
       {
-        club_name : e
+        club_name: e,
       },
       {
         headers: {
@@ -154,14 +155,11 @@ export const postFollow = async (e) => {
 
 export const getFollow = async (e) => {
   try {
-    const res = await axios.get(
-      "http://127.0.0.1:8000/services/follow/",
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    const res = await axios.get("http://127.0.0.1:8000/services/follow/", {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
     return res;
   } catch (error) {
     console.log(error);
@@ -171,9 +169,9 @@ export const getFollow = async (e) => {
 export const postRejectFriend = async (e) => {
   try {
     const res = await axios.put(
-      "http://127.0.0.1:8000/services/friend/"+e+"/",
+      `${APIURL}/services/friend/${e}/`,
       {
-        status : "rejected"
+        status: "rejected",
       },
       {
         headers: {
@@ -190,14 +188,14 @@ export const postRejectFriend = async (e) => {
 export const getisFriend = async (e) => {
   try {
     const res = await axios.get(
-      "http://127.0.0.1:8000/services/friend/?friend_username_id="+e+"&username=" + auth_username,
+      `${APIURL}/services/friend/?friend_username_id=${e}&username=${auth_username}`,
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       }
     );
-    console.log(res)
+    console.log(res);
     return res;
   } catch (error) {
     console.log(error);
@@ -206,11 +204,11 @@ export const getisFriend = async (e) => {
 
 export const postaddFriend = async (e) => {
   try {
-    console.log("hello")
+    console.log("hello");
     const res = await axios.post(
-      "http://127.0.0.1:8000/services/friend/",
+      `${APIURL}/services/friend/`,
       {
-        friend_username: e
+        friend_username: e,
       },
       {
         headers: {
@@ -218,14 +216,12 @@ export const postaddFriend = async (e) => {
         },
       }
     );
-    console.log(res)
+    console.log(res);
     return res;
   } catch (error) {
     console.log(error);
   }
 };
-
-
 
 export const getNotification = async () => {
   try {
@@ -237,7 +233,7 @@ export const getNotification = async () => {
 
 export const getFeed = async () => {
   try {
-    const response = await axios.get("http://127.0.0.1:8000/services/feed/", {
+    const response = await axios.get(`${APIURL}/services/feed/`, {
       headers: {
         Authorization: `Bearer ${access_token}`,
       },
@@ -253,7 +249,7 @@ export const getFeed = async () => {
 export const postPost = async (e) => {
   try {
     const res = await axios.post(
-      "http://127.0.0.1:8000/services/post/",
+      `${APIURL}/services/post/`,
       {
         username: auth_username,
         description: e.description,
@@ -275,7 +271,7 @@ export const postPost = async (e) => {
 export const postBlob = async (e) => {
   try {
     const res = await axios.post(
-      "http://127.0.0.1:8000/services/upload/",
+      `${APIURL}/services/upload/`,
       {
         content_type: e.form.file.type,
         description: "test",
@@ -307,14 +303,11 @@ export const postBlob = async (e) => {
 export const getBlobPost = async (e) => {
   try {
     console.log(e);
-    const res = await axios.get(
-      "http://127.0.0.1:8000/services/upload/?post_id=" + e,
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    const res = await axios.get(`${APIURL}/services/upload/?post_id=${e}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
 
     console.log(res);
     return res.data;
@@ -326,14 +319,11 @@ export const getBlobPost = async (e) => {
 export const getBlobEvent = async (e) => {
   try {
     console.log(e);
-    const res = await axios.get(
-      "http://127.0.0.1:8000/services/upload/?event=" + e,
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    const res = await axios.get(`${APIURL}/services/upload/?event=${e}`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
 
     console.log(res);
     return res.data;
@@ -344,7 +334,7 @@ export const getBlobEvent = async (e) => {
 export const uploadedBlob = async (e) => {
   try {
     const res = await axios.put(
-      "http://127.0.0.1:8000/services/upload/" + e + "/",
+      `${APIURL}/services/upload/${e}/`,
       {
         status: "uploaded",
       },
@@ -383,7 +373,7 @@ export const putBlob = async (e) => {
 export const postEvent = async (e) => {
   try {
     const res = await axios.post(
-      "http://127.0.0.1:8000/services/calendar/",
+      `${APIURL}/services/calendar/`,
       {
         club: orgname,
         description: e.description,
@@ -407,14 +397,11 @@ export const postEvent = async (e) => {
 
 export const del_event = async (e) => {
   try {
-    const response = await axios.delete(
-      "http://127.0.0.1:8000/services/calendar/" + e + "/",
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    const response = await axios.delete(`${APIURL}/services/calendar/${e}/`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
 
     console.log(response);
     return response;
@@ -435,24 +422,26 @@ export const postComment = async (e) => {
 
 export const postFilterSearch = async (e) => {
   try {
-    
-    const res = await axios.post("http://127.0.0.1:8000/services/search/", {
-      filters: {
-        height: e.height,
-        weight: e.weight,
-        age: e.age,
-        location: e.location,
-        position: e.position,
-        sit_up: e.sit_up,
-        push_up: e.push_up,
-        run: e.run,
+    const res = await axios.post(
+      `${APIURL}/services/search/`,
+      {
+        filters: {
+          height: e.height,
+          weight: e.weight,
+          age: e.age,
+          location: e.location,
+          position: e.position,
+          sit_up: e.sit_up,
+          push_up: e.push_up,
+          run: e.run,
+        },
       },
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
     console.log(res);
     return res;
   } catch (error) {
@@ -463,7 +452,7 @@ export const postFilterSearch = async (e) => {
 export const postSearch = async (e) => {
   try {
     const res = await axios.post(
-      "http://127.0.0.1:8000/services/search/",
+      `${APIURL}/services/search/`,
       {
         type: e.type,
         data: e.data,
@@ -483,14 +472,11 @@ export const postSearch = async (e) => {
 
 export const getSearch = async (e) => {
   try {
-    const res = await axios.get(
-      "http://127.0.0.1:8000/services/search/" + e + "/",
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    const res = await axios.get(`${APIURL}/services/search/${e}/`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
 
     console.log(res);
     return res;
@@ -501,14 +487,11 @@ export const getSearch = async (e) => {
 
 export const getCalendar = async () => {
   try {
-    const res = await axios.get(
-      "http://127.0.0.1:8000/services/calendar/get/",
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    const res = await axios.get(`${APIURL}/services/calendar/get/`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
 
     // if (res.status < 200 || res.status >= 300 || res.name == "AxiosError") {
     //   console.log("ERROR");
@@ -524,14 +507,11 @@ export const getCalendar = async () => {
 
 export const getPhyAtt = async () => {
   try {
-    const res = await axios.get(
-      "http://127.0.0.1:8000/services/physical_attribute/",
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
-    );
+    const res = await axios.get(`${APIURL}/services/physical_attribute/`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
     return res.data;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -541,7 +521,7 @@ export const getPhyAtt = async () => {
 export const postPhyAttVid = async (e) => {
   try {
     const postResponse = await axios.post(
-      "http://127.0.0.1:8000/services/upload/",
+      `${APIURL}/services/upload/`,
       {
         file_name: e.file_name,
         content_type: e.content_type,
@@ -573,7 +553,7 @@ export const postPhyAttVid = async (e) => {
     //-------------------------------------------------------
 
     const getResponse = await axios.get(
-      `http://127.0.0.1:8000/services/analytics/?player_name=${e.username}&analytic_type=${e.physical_attribute_type}&height=${e.height}`,
+      `${APIURL}/services/analytics/?player_name=${e.username}&analytic_type=${e.physical_attribute_type}&height=${e.height}`,
       { timeout: 10000000 }
     );
     console.log(getResponse.data);
@@ -587,7 +567,7 @@ export const postPhyAttVid = async (e) => {
 export const postPhyStats = async (e) => {
   try {
     const res = await axios.post(
-      "http://127.0.0.1:8000/services/physical_attribute/",
+      `${APIURL}/services/physical_attribute/`,
       {
         height: e.height,
         weight: e.weight,
@@ -607,20 +587,34 @@ export const postPhyStats = async (e) => {
   }
 };
 
-export const getPhyStats = async () => {
-  try {
-    const res = await axios.get("");
-  } catch {}
-};
 export const putPhyStats = async (e) => {
   try {
     const res = await axios.put(
-      "http://127.0.0.1:8000/services/physical_attribute/",
+      `${APIURL}/services/physical_attribute/`,
       {
         height: e.height,
         weight: e.weight,
         fat_mass: e.fat_mass,
         muscle_mass: e.muscle_mass,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    console.log(res.data);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+};
+export const postLike = async (e) => {
+  try {
+    const res = await axios.post(
+      `${APIURL}services/like/${e.postId}/`,
+      {
+        post_id: e,
       },
       {
         headers: {

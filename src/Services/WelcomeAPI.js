@@ -1,9 +1,10 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import { APIURL } from "../env";
 
 export const signup = async (e) => {
   try {
-    const response = await axios.post("http://127.0.0.1:8000/users/signup/", {
+    const response = await axios.post(`${APIURL}/users/signup/`, {
       username: e.username,
       first_name: e.first_name,
       last_name: e.last_name,
@@ -17,8 +18,8 @@ export const signup = async (e) => {
       education: e.education[1] + " " + e.education[0],
       description: "hi", //
       organization: e.organization,
-      club_name : e.club_name,
-      location : e.location,
+      club_name: e.club_name,
+      location: e.location,
       tier: false, //
     });
     console.log(response);
@@ -31,7 +32,7 @@ export const signup = async (e) => {
 
 export const signin = async (e) => {
   try {
-    const response = await axios.post("http://127.0.0.1:8000/users/signin/", {
+    const response = await axios.post(`${APIURL}/users/signin/`, {
       username: e.username,
       password: e.password,
     });

@@ -19,29 +19,40 @@ import styles from "../scss/Post.module.scss";
 import { useNavigate } from "react-router-dom";
 import { Component } from "react";
 import dayjs from "dayjs";
-import { del_post, getBlobPost } from "../Services/HomeAPI";
+import { del_post, getBlobPost, getComment } from "../Services/HomeAPI";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
+import { useForm } from "@mantine/form";
 import Cookies from "js-cookie";
 import { profileAthlete } from "../Services/ProfileAPI";
 
 export default function Post({ adata }) {
+  const form = useForm({
+    initialValues: {
+      commentValue: "",
+    },
+  });
+
   const navigate = useNavigate();
+  const proquery = useQuery({
+    queryKey: ["goprofile", adata.username],
+    queryFn: () => profileAthlete(adata.username),
+  });
 
-  const proquery = useQuery({ queryKey: ["goprofile", adata.username], queryFn: () => profileAthlete(adata.username) });
-
-  
+  const commentData = useQuery({
+    queryKey: ["getcomment"],
+    queryFn: () => getComment(adata.post_id),
+  });
   const gotoProfile = () => {
     queryClient.invalidateQueries({ queryKey: ["goprofile", adata.username] });
     const roles = proquery.data.data.role;
-    console.log(roles)
+    console.log(roles);
     if (roles === "athlete") {
       navigate("/athleteprofile/" + adata.username);
     } else if (roles === "scout") {
       navigate("/scoutprofile/" + adata.username);
     }
   };
-  
+
   const [opened, { open, close }] = useDisclosure(false);
   const auth_username = Cookies.get("auth_username");
   const queryClient = useQueryClient();
@@ -68,6 +79,13 @@ export default function Post({ adata }) {
     delmutation.mutate(adata.post_id);
     close();
   };
+
+  const handlePostComment = (e) => {
+    e.preventDefault();
+    form.setFieldValue("commentValue", "");
+    console.log(form.values);
+  };
+  console.log(commentData.data);
   return (
     <div className={styles.container}>
       <Modal
@@ -79,8 +97,7 @@ export default function Post({ adata }) {
         radius={30}
         padding={30}
         classNames={{ content: styles.modal }}
-        zIndex={1000}
-      >
+        zIndex={1000}>
         <Group justify="space-evenly">
           <Button w={150} size="lg" color="#00A67E" onClick={close}>
             BACK
@@ -117,8 +134,7 @@ export default function Post({ adata }) {
           hideLabel="Hide"
           maxHeight={125}
           padding={20}
-          className={styles.text}
-        >
+          className={styles.text}>
           {adata.description}
         </Spoiler>
       </UnstyledButton>
@@ -137,18 +153,32 @@ export default function Post({ adata }) {
           </video>
         )}
 
-      <PostInteraction></PostInteraction>
+      <PostInteraction adata={adata}></PostInteraction>
       <div className={styles.commentContainer}>
-        <Comment></Comment>
-        <Comment></Comment>
-        <Comment></Comment>
+        {commentData.data ? (
+          commentData.data.map((commentElement) => {
+            return (
+              <Comment
+                key={commentElement.created_at}
+                comment={commentElement}></Comment>
+            );
+          })
+        ) : (
+          <></>
+        )}
+      </div>
+      <form onSubmit={handlePostComment}>
         <TextInput
           className={styles.commentInput}
           placeholder="Add Comment"
           radius={"30px"}
           color="#eeeeee"
+          value={form.values.commentValue}
+          onChange={(event) =>
+            form.setFieldValue("commentValue", event.target.value)
+          }
         />
-      </div>
+      </form>
     </div>
   );
 }
