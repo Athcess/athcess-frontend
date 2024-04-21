@@ -603,3 +603,22 @@ export const putPhyStats = async (e) => {
     throw error;
   }
 };
+export const postLike = async (e) => {
+  try {
+    const res = await axios.post(
+      `${APIURL}services/like/${e.postId}/`,
+      {
+        post_id: e,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    console.log(res.data);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+};

@@ -28,20 +28,22 @@ import { profileAthlete } from "../Services/ProfileAPI";
 export default function Post({ adata }) {
   const navigate = useNavigate();
 
-  const proquery = useQuery({ queryKey: ["goprofile", adata.username], queryFn: () => profileAthlete(adata.username) });
+  const proquery = useQuery({
+    queryKey: ["goprofile", adata.username],
+    queryFn: () => profileAthlete(adata.username),
+  });
 
-  
   const gotoProfile = () => {
     queryClient.invalidateQueries({ queryKey: ["goprofile", adata.username] });
     const roles = proquery.data.data.role;
-    console.log(roles)
+    console.log(roles);
     if (roles === "athlete") {
       navigate("/athleteprofile/" + adata.username);
     } else if (roles === "scout") {
       navigate("/scoutprofile/" + adata.username);
     }
   };
-  
+
   const [opened, { open, close }] = useDisclosure(false);
   const auth_username = Cookies.get("auth_username");
   const queryClient = useQueryClient();
@@ -79,8 +81,7 @@ export default function Post({ adata }) {
         radius={30}
         padding={30}
         classNames={{ content: styles.modal }}
-        zIndex={1000}
-      >
+        zIndex={1000}>
         <Group justify="space-evenly">
           <Button w={150} size="lg" color="#00A67E" onClick={close}>
             BACK
@@ -117,8 +118,7 @@ export default function Post({ adata }) {
           hideLabel="Hide"
           maxHeight={125}
           padding={20}
-          className={styles.text}
-        >
+          className={styles.text}>
           {adata.description}
         </Spoiler>
       </UnstyledButton>
@@ -137,7 +137,7 @@ export default function Post({ adata }) {
           </video>
         )}
 
-      <PostInteraction></PostInteraction>
+      <PostInteraction adata={adata}></PostInteraction>
       <div className={styles.commentContainer}>
         <Comment></Comment>
         <Comment></Comment>
