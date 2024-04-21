@@ -408,9 +408,18 @@ export const getCalendar = async () => {
 
 export const getPhyAtt = async () => {
   try {
-    const res = await axios.get("");
+    const res = await axios.get(
+      "http://127.0.0.1:8000/services/physical_attribute/",
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    return res.data;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching data:", error);
+    throw error;
   }
 };
 export const postPhyAttVid = async (e) => {
@@ -482,6 +491,11 @@ export const postPhyStats = async (e) => {
   }
 };
 
+export const getPhyStats = async () => {
+  try {
+    const res = await axios.get("");
+  } catch {}
+};
 export const putPhyStats = async (e) => {
   try {
     const res = await axios.put(

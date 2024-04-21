@@ -31,7 +31,12 @@ import {
   PerfVidModal,
 } from "../Components/BodyAnalyzerComponents/InfoModal";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { postPhyAttVid, postPhyStats, putPhyStats } from "../Services/HomeAPI";
+import {
+  getPhyAtt,
+  postPhyAttVid,
+  postPhyStats,
+  putPhyStats,
+} from "../Services/HomeAPI";
 import { set } from "react-hook-form";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
@@ -139,6 +144,10 @@ export default function BodyAnalyzerPage({ user }) {
       });
     };
   };
+  const queryPhyAtt = useQuery({
+    queryKey: ["phyAtt"],
+    queryFn: getPhyAtt,
+  });
 
   const mutationPhyStat = useMutation({
     mutationFn: postPhyStats,
@@ -186,13 +195,12 @@ export default function BodyAnalyzerPage({ user }) {
     const runningPromise = mutationRunning.mutateAsync(form.values.running);
 
     // Use Promise.all to wait for all mutations to complete
-    const [phyStatResponse, pushupResponse, situpResponse, runningResponse] =
-      await Promise.all([
-        phyStatPromise,
-        pushupPromise,
-        situpPromise,
-        runningPromise,
-      ]);
+    const [pushupResponse, situpResponse, runningResponse] = await Promise.all([
+      phyStatPromise,
+      pushupPromise,
+      situpPromise,
+      runningPromise,
+    ]);
 
     // Here you can use the data from the responses to update the chart data
     // For example:
@@ -201,13 +209,41 @@ export default function BodyAnalyzerPage({ user }) {
       pushupResponse.push_up, // Update pushup amount
       situpResponse.sit_up, // Update situp amount
     ];
-    setData({
-      labels: ["Running", "Pushup", "Situp"],
-      amounts: updatedAmounts,
-    });
+
+    queryPhyAtt.refetch();
+
     console.log(updatedAmounts);
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    if (queryPhyAtt.data) {
+      // Extracting the latest data for pushup, situp, and running
+      const pushupDataList = queryPhyAtt.data.filter(
+        (item) => item.push_up !== null
+      );
+      const finalPushupData = pushupDataList[pushupDataList.length - 1].push_up;
+
+      const situpDataList = queryPhyAtt.data.filter(
+        (item) => item.sit_up !== null
+      );
+      const finalSitupData = situpDataList[situpDataList.length - 1].sit_up;
+
+      const runningDataList = queryPhyAtt.data.filter(
+        (item) => item.run !== null
+      );
+      const finalRunningData = runningDataList[runningDataList.length - 1].run;
+
+      // Update the state with the new data
+      setData({
+        labels: ["Running", "Pushup", "Situp"],
+        amounts: [finalRunningData, finalPushupData, finalSitupData],
+      });
+
+      // Logging the extracted data
+      console.log(finalPushupData, finalSitupData, finalRunningData);
+    }
+  }, [queryPhyAtt.data, setData]);
 
   return (
     <>
