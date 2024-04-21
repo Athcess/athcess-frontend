@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useAuth } from "../hooks/useAuth";
 
 const fileToBinary = (file) => {
   return new Promise((resolve, reject) => {
@@ -312,8 +313,7 @@ export const postComment = async (e) => {
 export const postFilterSearch = async (e) => {
   try {
     const res = await axios.post("", {
-      type: e.type,
-      filter: {
+      filters: {
         height: e.height,
         weight: e.weight,
         age: e.age,
@@ -323,7 +323,6 @@ export const postFilterSearch = async (e) => {
         push_up: e.push_up,
         run: e.run,
       },
-      sdata: e.keyword,
     });
   } catch (error) {
     console.log(error);

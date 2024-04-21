@@ -15,17 +15,16 @@ import {
 import { useForm } from "@mantine/form";
 import styles from "../../scss/SearchPageComponents/Filter.module.scss";
 import { useNavigate } from "react-router";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postFilterSearch, postSearch } from "../../Services/HomeAPI";
 import { useParams } from "react-router";
 
-export function Filter({ category, user }) {
+export function Filter({ category, user, id, setId }) {
   const navigate = useNavigate();
   let { tosearch } = useParams();
+  const queryClient = useQueryClient();
   const form = useForm({
     initialValues: {
-      type: category,
-      keyword: tosearch, 
       height: "",
       weight: "",
       age: "",
@@ -37,21 +36,18 @@ export function Filter({ category, user }) {
     },
   });
 
-  useEffect(() => {
-    form.setFieldValue("type", category);
-    form.setFieldValue("keyword", tosearch);
-  }, [category, tosearch]);
-
   const mutation = useMutation({
     mutationFn: postFilterSearch,
     onSuccess: (data) => {
-      console.log(data)
+        setId(data.data.search_id)
+        queryClient.invalidateQueries({ queryKey: ["search", id]})
     },
   });
 
+
   const go = (e) => {
     e.preventDefault();
-    //mutation.mutate(form.values);
+    mutation.mutate(form.values);
     console.log(form.values);
   };
   return (
@@ -199,8 +195,8 @@ export function Filter({ category, user }) {
               autosize
                 classNames={{ input: styles.input }}
                 placeholder="Run"
-                data={["<5m/s", "5-10m/s", "10-15m/s", ">15m/s"]}
-                onChange={(event) => form.setFieldValue("run", event)}
+                //data={["<5m/s", "5-10m/s", "10-15m/s", ">15m/s"]}
+                onChange={(event) => form.setFieldValue("run", event.currentTarget.value)}
                 w={190}
                 clearable
               />
