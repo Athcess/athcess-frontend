@@ -8,7 +8,7 @@ import {
   Modal,
   Textarea,
   Group,
-  Button
+  Button,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import PostInteraction from "./HomePageComponents/PostInteraction";
@@ -19,26 +19,30 @@ import { useNavigate } from "react-router-dom";
 import { Component } from "react";
 import Cookies from "js-cookie";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { del_event, del_post, getBlobEvent, getBlobPost } from "../Services/HomeAPI";
+import {
+  del_event,
+  del_post,
+  getBlobEvent,
+  getBlobPost,
+} from "../Services/HomeAPI";
 import dayjs from "dayjs";
 import { getOrg } from "../Services/ProfileAPI";
 
-
-export default function Event({adata}) {
-
+export default function Event({ adata }) {
   const navigate = useNavigate();
-  const proquery = useQuery({ queryKey: ["goprofile", adata.club], queryFn: () => getOrg(adata.club) });
+  const proquery = useQuery({
+    queryKey: ["goprofile", adata.club],
+    queryFn: () => getOrg(adata.club),
+  });
 
-  
   const gotoProfile = () => {
     queryClient.invalidateQueries({ queryKey: ["goprofile", adata.club] });
     const roles = proquery.data.data.organization.username;
-    console.log(roles)
-    
-      navigate("/orgprofile/" + roles);
-    }
+    console.log(roles);
 
-  
+    navigate("/orgprofile/" + roles);
+  };
+
   const [opened, { open, close }] = useDisclosure(false);
   const orgname = Cookies.get("orgname");
   const queryClient = useQueryClient();
@@ -76,8 +80,7 @@ export default function Event({adata}) {
         radius={30}
         padding={30}
         classNames={{ content: styles.modal }}
-        zIndex={1000}
-      >
+        zIndex={1000}>
         <Group justify="space-evenly">
           <Button w={150} size="lg" color="#00A67E" onClick={close}>
             BACK
@@ -89,7 +92,7 @@ export default function Event({adata}) {
       </Modal>
       <div className={styles.profile}>
         <div className={styles.profileLeft}>
-        <UnstyledButton onClick={() => gotoProfile()}>
+          <UnstyledButton onClick={() => gotoProfile()}>
             <Image
               src="/Images/profile_logo.jpeg"
               className={styles.profileImage}
@@ -97,10 +100,12 @@ export default function Event({adata}) {
           </UnstyledButton>
           <div className={styles.profileContent}>
             <div className={styles.profileName}>
-            {adata.club} <UEvent></UEvent>
+              {adata.club} <UEvent></UEvent>
             </div>
 
-            <div className={styles.profileDate}>{dayjs(adata.created_at).format("DD/MM/YYYY h:mm a")}</div>
+            <div className={styles.profileDate}>
+              {dayjs(adata.created_at).format("DD/MM/YYYY h:mm a")}
+            </div>
           </div>
         </div>
         {adata.club === orgname && (
@@ -109,19 +114,20 @@ export default function Event({adata}) {
           </UnstyledButton>
         )}
       </div>
-      
-        <Spoiler
-          showLabel="Show more"
-          hideLabel="Hide"
-          maxHeight={125}
-          padding={20}
-          className={styles.text}>
-          Start at: {dayjs(adata.start_time).format("DD/MM/YYYY h:mm a")} <br></br>
-          End at: {dayjs(adata.end_time).format("DD/MM/YYYY h:mm a")} <br></br>
-          {adata.description}
-        </Spoiler>
-   
-        {query.status === "success" &&
+
+      <Spoiler
+        showLabel="Show more"
+        hideLabel="Hide"
+        maxHeight={125}
+        padding={20}
+        className={styles.text}>
+        Start at: {dayjs(adata.start_time).format("DD/MM/YYYY h:mm a")}{" "}
+        <br></br>
+        End at: {dayjs(adata.end_time).format("DD/MM/YYYY h:mm a")} <br></br>
+        {adata.description}
+      </Spoiler>
+
+      {query.status === "success" &&
         content.length === 1 &&
         content[0].content_type.startsWith("image/") && (
           <Image className={styles.postImage} src={content[0].url}></Image>
@@ -135,17 +141,6 @@ export default function Event({adata}) {
           </video>
         )}
       <PostInteraction></PostInteraction>
-      <div className={styles.commentContainer}>
-        <Comment></Comment>
-        <Comment></Comment>
-        <Comment></Comment>
-        <TextInput
-          className={styles.commentInput}
-          placeholder="Add Comment"
-          radius={"30px"}
-          color="#eeeeee"
-        />
-      </div>
     </div>
   );
 }

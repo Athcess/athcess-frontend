@@ -412,9 +412,18 @@ export const del_event = async (e) => {
 
 export const postComment = async (e) => {
   try {
-    const res = await axios.post("", {
-      data: e,
-    });
+    const res = await axios.post(
+      `${APIURL}/services/comment/`,
+      {
+        post: e.post_id,
+        description: e.commentValue,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
   } catch (error) {
     console.log(error);
   }
@@ -612,10 +621,8 @@ export const putPhyStats = async (e) => {
 export const postLike = async (e) => {
   try {
     const res = await axios.post(
-      `${APIURL}services/like/${e.postId}/`,
-      {
-        post_id: e,
-      },
+      `${APIURL}/services/like/${e.postId}/`,
+      {},
       {
         headers: {
           Authorization: `Bearer ${access_token}`,

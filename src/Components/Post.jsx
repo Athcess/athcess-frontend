@@ -19,7 +19,12 @@ import styles from "../scss/Post.module.scss";
 import { useNavigate } from "react-router-dom";
 import { Component } from "react";
 import dayjs from "dayjs";
-import { del_post, getBlobPost, getComment } from "../Services/HomeAPI";
+import {
+  del_post,
+  getBlobPost,
+  getComment,
+  postComment,
+} from "../Services/HomeAPI";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "@mantine/form";
 import Cookies from "js-cookie";
@@ -28,6 +33,7 @@ import { profileAthlete } from "../Services/ProfileAPI";
 export default function Post({ adata }) {
   const form = useForm({
     initialValues: {
+      post_id: adata.post_id,
       commentValue: "",
     },
   });
@@ -73,7 +79,12 @@ export default function Post({ adata }) {
       queryClient.invalidateQueries({ queryKey: ["postfeed"] });
     },
   });
-
+  const mutationPost = useMutation({
+    mutationFn: postComment,
+    onSuccess: () => {
+      commentData.refetch();
+    },
+  });
   const delPost = (e) => {
     e.preventDefault();
     delmutation.mutate(adata.post_id);
@@ -83,6 +94,7 @@ export default function Post({ adata }) {
   const handlePostComment = (e) => {
     e.preventDefault();
     form.setFieldValue("commentValue", "");
+    mutationPost.mutate(form.values);
     console.log(form.values);
   };
   console.log(commentData.data);

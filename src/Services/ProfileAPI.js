@@ -90,10 +90,26 @@ export const getHighlight = async (e) => {
   }
 };
 
-export const profilePic = async () => {
+export const postProfilepic = async (e) => {
   try {
-    const response = await axios.get("url");
-    console.log(response);
+    const res = await axios.post(
+      "http://127.0.0.1:8000/services/upload/",
+      {
+        content_type: e.type,
+        file_name: e.name,
+        is_profile_picture: true,
+        file_size: e.size,
+        status: "uploaded",
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+
+    console.log(res);
+    return res.data;
   } catch (error) {
     console.log(error);
   }

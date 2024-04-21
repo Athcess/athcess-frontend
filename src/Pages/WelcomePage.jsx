@@ -42,11 +42,11 @@ export default function WelcomePage() {
               </Button>
             </div>
           </Group>
-          <Text ta="center">
+          {/* <Text ta="center">
             <Anchor underline="always" href="/homeguest" c="dimmed" size="md">
               Continue as a Guest
             </Anchor>
-          </Text>
+          </Text> */}
         </div>
         <div>
           <Image

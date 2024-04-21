@@ -27,7 +27,7 @@ import dayjs from "dayjs";
 import { profileAthlete } from "../../Services/ProfileAPI";
 import Cookies from "js-cookie"
 
-export default function NewEventModal({ opened, onClose, user }) {
+export default function NewEventModal({ opened, onClose, user, profilepic }) {
   const club = Cookies.get("orgname");
   const form = useForm({
 
@@ -121,7 +121,7 @@ export default function NewEventModal({ opened, onClose, user }) {
       <div className={styles.container}>
         <div className={styles.profile}>
           <Image
-            src="/Images/profile_logo.jpeg"
+            src={profilepic== null ? "/Images/defualt_profile.png": profilepic}
             className={styles.profileImage}
           />
           <div className={styles.profileName}>{club}</div>
