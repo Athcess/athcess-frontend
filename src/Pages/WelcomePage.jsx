@@ -5,18 +5,19 @@ import styles from "../scss/WelcomePage.module.scss";
 export default function WelcomePage() {
   return (
     <div className={styles.container}>
+      <Image
+        className={styles.background}
+        src="/Images/background_welcome.png"></Image>
       <header className={styles.header}>
-      {/* <Image
-            
-            h={48}
-            w="auto"
-            src="../../public/Images/athcess.png"
-          /> */}
         <div className={styles.headerText}>ATHCESS</div>
       </header>
       <div className={styles.content}>
         <div>
-          <h1>Athcess, a platform to success!</h1>
+          <div className={styles.title}>
+            <div className={styles.t1}>PLATFORM TO SUCCESS!</div>
+            <div className={styles.t2}>ATHCESS</div>
+          </div>
+
           <Group justify="center" gap={30}>
             <div className={styles.button}>
               <Button

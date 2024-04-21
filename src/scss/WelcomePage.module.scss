@@ -1,17 +1,40 @@
-.container{
+.container {
   height: 100%;
 }
+.background {
+  position: absolute; // Optional: to ensure the background is placed behind other elements
+  top: 0;
+  left: 0;
+  width: 100%; // Optional: ensures the background covers the entire width of the page
+  height: 100%; // Optional: ensures the background covers the entire height of the page
+  z-index: -1; // Ensures the background is behind other content
+  background-image: url("/Images/background_welcome.png"); // Path to your background image
+  background-size: cover; // Ensures the image covers the entire area
+  background-position: center; // Optional: centers the background image
+  background-repeat: no-repeat; // Optional: prevents the image from repeating
+  opacity: 0.5; // Optional: sets the opacity of the background image
+}
+.title {
+  .t1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #265073;
+  }
+  .t2 {
+    font-size: 5rem;
+    font-weight: bold;
+    color: #007458;
+  }
+  margin-bottom: 25px;
+}
 .content {
+  height: 90vh;
   display: grid;
   justify-content: center;
   grid-template-columns: auto auto;
   align-items: center;
   grid-column-gap: 100px;
-  margin-top: 150px;
-
-  
 }
-
 
 .header {
   display: flex;
@@ -22,7 +45,6 @@
   gap: 0.625rem;
   background-color: #007458;
   color: white;
-  margin-bottom: 3rem;
   padding: 0rem 1.875rem 0px 1.875rem;
   .headerText {
     font-size: 1.6rem;
@@ -30,7 +52,7 @@
     margin-left: 2rem;
   }
 }
-.button{
-width: 220px;
-margin-bottom: 1rem;
+.button {
+  width: 220px;
+  margin-bottom: 1rem;
 }
