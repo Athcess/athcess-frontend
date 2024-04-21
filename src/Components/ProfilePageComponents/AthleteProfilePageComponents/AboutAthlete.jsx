@@ -128,16 +128,7 @@ export default function AboutAthlete({ user }) {
         </div>
         <div className={styles.content}>
           <div className={styles.section}>
-            <div className={styles.sectionHeader}>
-              Physical Attributes
-              {username === auth_username && (
-                <UnstyledButton className={styles.edit}>
-                  <Image
-                    src="/Images/ProfilePage/editSection_logo.png"
-                    style={{ width: rem(48) }}></Image>
-                </UnstyledButton>
-              )}
-            </div>
+            <div className={styles.sectionHeader}>Physical Attributes</div>
             <div className={styles.radarContent}>
               <div className={styles.radar}>
                 <CustomRadar data={radarData}></CustomRadar>
