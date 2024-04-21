@@ -75,7 +75,12 @@ export default function SearchPage({ user, category, setCategory, id, setId }) {
       </div>
       <div className={styles.rightContent}>
         {category == "athlete" && (
-          <Filter category={category} user={user}></Filter>
+          <Filter
+            category={category}
+            user={user}
+            id={id}
+            setId={setId}
+          ></Filter>
         )}
         <br></br>
 
@@ -149,7 +154,8 @@ export default function SearchPage({ user, category, setCategory, id, setId }) {
                 <div className={styles.Athletecontainer}>
                   <div className={styles.profileLeft}>
                     <UnstyledButton
-                    onClick={(event) => gotoOrgProfile(e.username)}>
+                      onClick={(event) => gotoOrgProfile(e.username)}
+                    >
                       <Image
                         src="/Images/profile_logo.jpeg"
                         className={styles.profileImage}
