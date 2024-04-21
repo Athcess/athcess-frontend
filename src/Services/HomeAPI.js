@@ -127,6 +127,38 @@ export const postAcceptFriend = async (e) => {
   }
 };
 
+export const postFollow = async (e) => {
+  try {
+    const res = await axios.put(
+      "http://127.0.0.1:8000/services/follow/",
+      {
+        club_name: e,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getFollow = async (e) => {
+  try {
+    const res = await axios.get("http://127.0.0.1:8000/services/follow/", {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const postRejectFriend = async (e) => {
   try {
     const res = await axios.put(
@@ -194,19 +226,13 @@ export const getNotification = async () => {
 
 export const getFeed = async () => {
   try {
-    const response = await axios.get(`${APIURL}/services/post/`, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
-    const response2 = await axios.get(`${APIURL}/services/calendar/get/`, {
+    const response = await axios.get(`${APIURL}/services/feed/`, {
       headers: {
         Authorization: `Bearer ${access_token}`,
       },
     });
 
-    const result = response.data.concat(response2.data);
-    //console.log(result)
+    const result = response.data.posts.concat(response.data.events);
     return result;
   } catch (error) {
     console.log(error);

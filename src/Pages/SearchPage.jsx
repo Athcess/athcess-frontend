@@ -16,6 +16,7 @@ import {
 } from "@mantine/core";
 import dayjs from "dayjs";
 import IsFriend from "../Components/IsFriend";
+import IsFollow from "../Components/IsFollow";
 
 export default function SearchPage({ user, category, setCategory, id, setId }) {
   const Position = {
@@ -145,6 +146,9 @@ export default function SearchPage({ user, category, setCategory, id, setId }) {
                       <div className={styles.profiletext}>{e.hometown}</div>
                     </div>
                   </div>
+                  <div className={styles.profileright}>
+                  <IsFriend user = {e.username} id = {id}></IsFriend>
+                  </div>
                 </div>
               </>
             );
@@ -169,9 +173,12 @@ export default function SearchPage({ user, category, setCategory, id, setId }) {
                       <div className={styles.profileName}>{e.club_name}</div>
                       <div className={styles.profiletext}>{e.location}</div>
                       <div className={styles.profiletext}>
-                        Followers : {e.followers}
+                        Followers : {e.followers && e.followers !== "" ? e.followers.split(',').length : 0}
                       </div>
                     </div>
+                  </div>
+                  <div className={styles.profileright}>
+                  <IsFollow user = {e.club_name} id = {id}></IsFollow>
                   </div>
                 </div>
               </>
