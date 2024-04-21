@@ -14,8 +14,11 @@ import {
   Group,
 } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
+import FriendRequest from "../Components/FriendRequest";
 
 export default function FriendListPage() {
+
+  
   return (
     <div className={styles.container}>
       <div className={styles.leftcontainer}>
@@ -64,127 +67,8 @@ export default function FriendListPage() {
 
       <Divider size={3} orientation="vertical"></Divider>
 
-      <div className={styles.rightcontainer}>
-        <Text className={styles.text} fw={700}>
-          Friend Requests
-        </Text>
-        <div className={styles.content}>
-            <Stack className={styles.box}>
-          <div className={styles.list}>
-            <div className={styles.profileLeft}>
-              <UnstyledButton>
-                <Image
-                  src="/Images/profile_logo.jpeg"
-                  className={styles.profileImage}
-                />
-              </UnstyledButton>
-              <div className={styles.profileContent}>
-                <div className={styles.profileName}>วี่หว่อง หว่องวี่</div>
-              </div>
-              <Group className={styles.editPost}>
-                <Button color="#00A67E">Accept</Button>
-                <Button color="#BBBBBB">Decline</Button>
-              </Group>
-            </div>
-          </div>
-          </Stack>
-        </div>
-        <Text className={styles.text} fw={700}>
-          Friend Suggestions
-        </Text>
-        <div className={styles.content}>
-        <Spoiler maxHeight={300} showLabel="See all" hideLabel="Hide" transitionDuration={0} padding={20}>
-        <Stack className={styles.box}>
-            
-          <div className={styles.list}>
-            <div className={styles.profileLeft}>
-              <UnstyledButton>
-                <Image
-                  src="/Images/profile_logo.jpeg"
-                  className={styles.profileImage}
-                />
-              </UnstyledButton>
-              <div className={styles.profileContent}>
-                <div className={styles.profileName}>วี่หว่อง หว่องวี่</div>
-              </div>
-              <Group className={styles.editPost}>
-                <Button color="#00A67E">Accept</Button>
-                <Button color="#BBBBBB">Decline</Button>
-              </Group>
-            </div>
-          </div>
-          <div className={styles.list}>
-            <div className={styles.profileLeft}>
-              <UnstyledButton>
-                <Image
-                  src="/Images/profile_logo.jpeg"
-                  className={styles.profileImage}
-                />
-              </UnstyledButton>
-              <div className={styles.profileContent}>
-                <div className={styles.profileName}>วี่หว่อง หว่องวี่</div>
-              </div>
-              <Group className={styles.editPost}>
-                <Button color="#00A67E">Accept</Button>
-                <Button color="#BBBBBB">Decline</Button>
-              </Group>
-            </div>
-          </div>
-          <div className={styles.list}>
-            <div className={styles.profileLeft}>
-              <UnstyledButton>
-                <Image
-                  src="/Images/profile_logo.jpeg"
-                  className={styles.profileImage}
-                />
-              </UnstyledButton>
-              <div className={styles.profileContent}>
-                <div className={styles.profileName}>วี่หว่อง หว่องวี่</div>
-              </div>
-              <Group className={styles.editPost}>
-                <Button color="#00A67E">Accept</Button>
-                <Button color="#BBBBBB">Decline</Button>
-              </Group>
-            </div>
-          </div>
-          <div className={styles.list}>
-            <div className={styles.profileLeft}>
-              <UnstyledButton>
-                <Image
-                  src="/Images/profile_logo.jpeg"
-                  className={styles.profileImage}
-                />
-              </UnstyledButton>
-              <div className={styles.profileContent}>
-                <div className={styles.profileName}>วี่หว่อง หว่องวี่</div>
-              </div>
-              <Group className={styles.editPost}>
-                <Button color="#00A67E">Accept</Button>
-                <Button color="#BBBBBB">Decline</Button>
-              </Group>
-            </div>
-          </div>
-          <div className={styles.list}>
-            <div className={styles.profileLeft}>
-              <UnstyledButton>
-                <Image
-                  src="/Images/profile_logo.jpeg"
-                  className={styles.profileImage}
-                />
-              </UnstyledButton>
-              <div className={styles.profileContent}>
-                <div className={styles.profileName}>วี่หว่อง หว่องวี่</div>
-              </div>
-              <Group className={styles.editPost}>
-                <Button color="#00A67E">Accept</Button>
-                <Button color="#BBBBBB">Decline</Button>
-              </Group>
-            </div>
-          </div>
-          </Stack>
-          </Spoiler>
-        </div>
-      </div>
+      <FriendRequest></FriendRequest>
+       
     </div>
   );
 }
