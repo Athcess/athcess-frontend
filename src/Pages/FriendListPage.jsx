@@ -37,7 +37,7 @@ export default function FriendListPage() {
     <div className={styles.container}>
       <div className={styles.leftcontainer}>
         <Text className={styles.title} fw={700}>
-          Friends (2)
+          Friends ({posts.length})
         </Text>
         <TextInput
           className={styles.search}

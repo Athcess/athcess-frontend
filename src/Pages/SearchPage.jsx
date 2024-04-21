@@ -15,6 +15,7 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import dayjs from "dayjs";
+import IsFriend from "../Components/IsFriend";
 
 export default function SearchPage({ user, category, setCategory, id, setId }) {
   const Position = {
@@ -113,6 +114,9 @@ export default function SearchPage({ user, category, setCategory, id, setId }) {
                       </div>
                       <div className={styles.profiletext}>age : {e.age}</div>
                     </div>
+                  </div>
+                  <div className={styles.profileright}>
+                  <IsFriend user = {e.username} id = {id}></IsFriend>
                   </div>
                 </div>
               </>

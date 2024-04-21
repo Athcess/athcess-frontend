@@ -152,6 +152,45 @@ export const postRejectFriend = async (e) => {
   }
 };
 
+export const getisFriend = async (e) => {
+  try {
+    const res = await axios.get(
+      "http://127.0.0.1:8000/services/friend/?friend_username_id="+e+"&username=" + auth_username,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    console.log(res)
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const postaddFriend = async (e) => {
+  try {
+    console.log("hello")
+    const res = await axios.post(
+      "http://127.0.0.1:8000/services/friend/",
+      {
+        friend_username: e
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    console.log(res)
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 
 export const getNotification = async () => {
   try {

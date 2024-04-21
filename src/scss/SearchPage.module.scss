@@ -44,12 +44,13 @@
 }
 .Athletecontainer {
   display: flex;
-  flex-direction: column;
+  //flex-direction: column;
   gap: 10px;
   border-radius: 30px;
   border: 2px solid #bbbbbb;
   background-color: white;
-  
+  justify-content: space-between;
+  align-items: center;
   max-width: 100%;
   height: auto;
   padding: 20px;
@@ -57,6 +58,9 @@
     // border: 1px solid red;
   }
 
+  .profileright {
+    margin-right: 2rem;
+  }
     .profileLeft {
       margin-left: 2rem;
       height: 70px;
