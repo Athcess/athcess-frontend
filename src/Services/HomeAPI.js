@@ -2,7 +2,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useAuth } from "../hooks/useAuth";
 
-const APIURL = import.meta.env.VITE_API_URL;
+import { APIURL } from "../env";
+
 const fileToBinary = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();

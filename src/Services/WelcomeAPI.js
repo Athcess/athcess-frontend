@@ -1,7 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-
-const APIURL = import.meta.env.VITE_API_URL;
+import { APIURL } from "../env";
 
 export const signup = async (e) => {
   try {
@@ -17,11 +16,11 @@ export const signup = async (e) => {
       birth_date: e.birth_date,
       hometown: e.hometown,
       education: e.education[1] + " " + e.education[0],
-      description: "hi",
+      description: "hi", //
       organization: e.organization,
       club_name: e.club_name,
       location: e.location,
-      tier: false,
+      tier: false, //
     });
     console.log(response);
     //Cookies.set('token', response.data.access_token)

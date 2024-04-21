@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 const access_token = Cookies.get("auth_token");
 const auth_username = Cookies.get("auth_username");
 const orgname = Cookies.get("orgname");
-const APIURL = import.meta.env.VITE_API_URL;
+import { APIURL } from "../env";
 
 export const profileAthlete = async (username) => {
   try {
