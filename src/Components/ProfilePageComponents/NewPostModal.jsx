@@ -30,7 +30,7 @@ import {
   uploadedBlob,
 } from "../../Services/HomeAPI";
 
-export default function NewPostModal({ opened, onClose, user }) {
+export default function NewPostModal({ opened, onClose, user , profilepic}) {
   const auth_username = Cookies.get("auth_username")
   const form = useForm({
     initialValues: {
@@ -120,7 +120,7 @@ export default function NewPostModal({ opened, onClose, user }) {
       <div className={styles.container}>
         <div className={styles.profile}>
           <Image
-            src="/Images/profile_logo.jpeg"
+            src={profilepic== null ? "/Images/defualt_profile.png": profilepic}
             className={styles.profileImage}
           />
           <div className={styles.profileName}>{auth_username}</div>
@@ -140,14 +140,6 @@ export default function NewPostModal({ opened, onClose, user }) {
                 label="Add this post to your highlight page"
                 onChange={(event) =>
                   form.setFieldValue("highlight", event.currentTarget.checked)
-                }
-              />
-            )}
-            {user.role == "admin" && (
-              <Checkbox
-                label="Add to event"
-                onChange={(event) =>
-                  form.setFieldValue("event", event.currentTarget.checked)
                 }
               />
             )}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import dayjs from "dayjs";
 import {
   Modal,
@@ -14,15 +14,21 @@ import {
   Textarea,
   Select,
   NumberInput,
+  FileInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import styles from "../../../scss/ProfilePageComponents/AthleteProfilePageComponents/EditProfileModal.module.scss";
 import { DatePicker } from "@mui/x-date-pickers";
-import { editProfile_athleteInformation } from "../../../Services/ProfileAPI";
+import {
+  editProfile_athleteInformation,
+  postProfilepic,
+} from "../../../Services/ProfileAPI";
+import { putBlob, uploadedBlob } from "../../../Services/HomeAPI";
 
 export default function EditProfileModalAthlete({ opened, onClose, data }) {
+  const [file, setFile] = useState(null);
   const form = useForm({
     initialValues: {
       education: data.education,
@@ -33,24 +39,58 @@ export default function EditProfileModalAthlete({ opened, onClose, data }) {
       birthdate: new Date(data.birth_date) || "",
       location: data.hometown || "",
       position: data.position || "",
-      tier:data.tier
+      tier: data.tier,
     },
   });
 
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: editProfile_athleteInformation, // Replace yourMutationFunction with your actual mutation function
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['profileelement'] })
+      queryClient.invalidateQueries({ queryKey: ["profileelement"] });
       onClose(); // Close the modal on success
     },
   });
 
+  const profilemutation = useMutation({
+    mutationFn: postProfilepic, // Replace yourMutationFunction with your actual mutation function
+    onSuccess: (data) => {
+      const blob_id = data.postgras_id;
+      const url = data.signed_url;
+      console.log(url);
+      const reqdata = { url: url, file: file };
+      putmutationBlob.mutate(reqdata);
+      uploadedmutationBlob.mutate(blob_id);
+    },
+  });
+
+  const putmutationBlob = useMutation({
+    mutationFn: putBlob,
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
+
+  const uploadedmutationBlob = useMutation({
+    mutationFn: uploadedBlob,
+    onSuccess: (data) => {
+      console.log(data);
+      onClose();
+      setTimeout(() => {
+        history.go(0);
+      }, 1000);
+    },
+  });
   const editProfile = (e) => {
     e.preventDefault();
     console.log(form.values);
     mutation.mutate(form.values);
+    if (file !== null) {
+      console.log("yay");
+      profilemutation.mutate(file);
+      // setFile(null)
+    }
   };
 
   return (
@@ -70,10 +110,17 @@ export default function EditProfileModalAthlete({ opened, onClose, data }) {
     >
       <div className={styles.container}>
         <Image
-          src="/Images/profile_logo.jpeg"
+          src={data.profile_picture== null ? "/Images/defualt_profile.png": data.profile_picture}
           className={styles.profileImage}
         />
-        <Anchor>Change picture</Anchor>
+
+        <FileInput
+          // label = "Change Profile Picture"
+          variant="unstyled"
+          placeholder="Change Profile"
+          value={file}
+          onChange={setFile}
+        />
 
         <div className={styles.content}>
           <Text fw={700} h={30}>
@@ -123,7 +170,7 @@ export default function EditProfileModalAthlete({ opened, onClose, data }) {
             comboboxProps={{
               position: "bottom",
               middlewares: { flip: false, shift: false },
-              zIndex : 1000
+              zIndex: 1000,
             }}
             value={form.values.location}
             onChange={(event) => form.setFieldValue("location", event)}

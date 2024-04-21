@@ -56,7 +56,7 @@ console.log(username)
           <div className={styles.profileImage}>
             <Image
               className={styles.image}
-              src="/Images/profile_logo.jpeg"
+              src={query.data.data.profile_picture== null ? "/Images/defualt_profile.png": query.data.data.profile_picture}
               style={{ width: rem(150), border: "4px solid white" }}
             ></Image>
 
@@ -73,16 +73,16 @@ console.log(username)
               {query.data.data.first_name} {query.data.data.last_name} , {query.data.data.age}
             </div>
             <Image src={profileImageSrc} style={{ width: rem(32) }}></Image>
-            <UnstyledButton className={styles.friend}>
+            {/* <UnstyledButton className={styles.friend}>
               Friend (2)
-            </UnstyledButton>
+            </UnstyledButton> */}
           </div>
-          {user.role === "athlete" && (
+          {query.data.data.role === "athlete" && (
           <div className={styles.profileInfo}>
             {birthDate.getFullYear()}, {Position[query.data.data.position]}
           </div>
           )}
-          {user.role === "scout" && (
+          {query.data.data.role === "scout" && (
           <div className={styles.profileInfo}>
             {birthDate.getFullYear()}
           </div>
@@ -94,7 +94,7 @@ console.log(username)
             ></Image>
             {query.data.data.hometown}, Thailand
           </div>
-          {user.role === "athlete" && (
+          {query.data.data.role=== "athlete" && (
             <Spoiler
               showLabel="Show more"
               hideLabel="Hide"

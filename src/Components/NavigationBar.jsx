@@ -92,7 +92,8 @@ export default function NavigationBar({ user, updateteir , category, setCategory
   const body = () => {
     navigate("/bodyanalyzer");
   };
- 
+  const [NewPostModalOpened, NewPost] = useDisclosure(false);
+  const [NewEventModalOpened, NewEvent] = useDisclosure(false);
   
   const query = useQuery({ queryKey: ["newevent",username], queryFn: ()=> profileAthlete(username) });
   var club_name;
@@ -102,9 +103,7 @@ export default function NavigationBar({ user, updateteir , category, setCategory
     Cookies.set("orgname", query.data.data.organization.club_name);
     }
     
-  }
-  const [NewPostModalOpened, NewPost] = useDisclosure(false);
-  const [NewEventModalOpened, NewEvent] = useDisclosure(false);
+  
   return (
     <header className={styles.container}>
       
@@ -112,6 +111,7 @@ export default function NavigationBar({ user, updateteir , category, setCategory
           opened={NewPostModalOpened}
           onClose={NewPost.close}
           user={user}
+          profilepic = {query.data.data.profile_picture}
         />
 
      
@@ -121,6 +121,7 @@ export default function NavigationBar({ user, updateteir , category, setCategory
           onClose={NewEvent.close}
           user={user}
           club={club_name}
+          profilepic = {query.data.data.profile_picture}
         />
       
 
@@ -175,7 +176,7 @@ export default function NavigationBar({ user, updateteir , category, setCategory
       {isLogin ? (
         <UnstyledButton onClick={profile}>
           <Image
-            src="/Images/profile_logo.jpeg"
+            src={query.data.data.profile_picture== null ? "/Images/defualt_profile.png": query.data.data.profile_picture}
             className={styles.profileImage}
           />
         </UnstyledButton>
@@ -285,4 +286,5 @@ export default function NavigationBar({ user, updateteir , category, setCategory
       </Menu>
     </header>
   );
+}
 }

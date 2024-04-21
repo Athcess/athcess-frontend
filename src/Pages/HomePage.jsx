@@ -44,11 +44,11 @@ export default function HomePage() {
         ) : (
           <UpcomingEventContainerFalse></UpcomingEventContainerFalse>
         )}
-        {isLogin ? (
+        {/* {isLogin ? (
           <FriendSuggestionContainerTrue></FriendSuggestionContainerTrue>
         ) : (
           <FriendSuggestionContainerFalse></FriendSuggestionContainerFalse>
-        )}
+        )} */}
       </div>
       {query.status === "success" && (
         <div className={styles.rightContent}>

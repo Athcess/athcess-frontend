@@ -43,7 +43,7 @@ export default function ProfileElementOrg({ type, openModal, user }) {
           <div className={styles.profileImage}>
             <Image
               className={styles.image}
-              src="/Images/profile_logo.jpeg"
+              src={query.data.data.profile_picture== null ? "/Images/defualt_profile.png": query.data.data.profile_picture}
               style={{ width: rem(150), border: "4px solid white" }}
             ></Image>
             {/* <UnstyledButton className={styles.edit} onClick={open}>
@@ -58,9 +58,9 @@ export default function ProfileElementOrg({ type, openModal, user }) {
               {query.data.data.organization.club_name}
             </div>
             <Image src={profileImageSrc} style={{ width: rem(32) }}></Image>
-            <UnstyledButton className={styles.friend}>
-              Follower (2)
-            </UnstyledButton>
+            <div className={styles.friend}>
+              Follower ({query.data.data.organization.followers && query.data.data.organization.followers !== "" ? query.data.data.organization.followers.split(',').length : 0})
+            </div>
           </div>
           <div className={styles.profileLocation}>
             <Image
