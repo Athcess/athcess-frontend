@@ -45,6 +45,8 @@ import SubscriptionPage from "../Pages/SubscriptionPage";
 import CheckoutPage from "../Pages/CheckoutPage";
 
 export default function AppRouter() {
+  const [id, setId] = useState("");
+  const [category, setCategory] = useState("");
   const [user, setUser] = useState(
     getUserFromLocalStorage() || {
       username: "",
@@ -88,11 +90,17 @@ export default function AppRouter() {
                 <ProtectedRoute>
                   <NavigationBar
                     user={user}
-                    updateteir={updateteir}></NavigationBar>
+                    updateteir={updateteir}
+                    setCategory={setCategory}
+                    category={category}
+                    id={id}
+          setId={setId}
+                  ></NavigationBar>
                   <Outlet />
                 </ProtectedRoute>
               </>
-            }>
+            }
+          >
             <Route path="/home" element={<HomePage />} />
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/calendar" element={<MyCalendar />} />
@@ -102,12 +110,19 @@ export default function AppRouter() {
             />
             <Route
               path="/checkout"
-              element={
-                <CheckoutPage updateteir={updateteir}></CheckoutPage>
-              }></Route>
+              element={<CheckoutPage updateteir={updateteir}></CheckoutPage>}
+            ></Route>
             <Route
               path="/search/:tosearch"
-              element={<SearchPage user={user} />}
+              element={
+                <SearchPage
+                  user={user}
+                  setCategory={setCategory}
+                  category={category}
+                  id={id}
+          setId={setId}
+                />
+              }
             />
             <Route path="/post/:postid" element={<PostPage />} />
             <Route path="/friend" element={<FriendListPage />} />
@@ -119,20 +134,27 @@ export default function AppRouter() {
 
             <Route
               path="/athleteprofile/:username"
-              element={<AthleteProfilePage user={user} />}>
+              element={<AthleteProfilePage user={user} />}
+            >
               <Route index element={<AboutAthlete></AboutAthlete>}></Route>
               <Route
                 path="post"
-                element={<PostAthlete user={user}></PostAthlete>}></Route>
+                element={<PostAthlete user={user}></PostAthlete>}
+              ></Route>
               <Route
                 path="highlight"
-                element={<HighlightAthlete></HighlightAthlete>}></Route>
+                element={<HighlightAthlete></HighlightAthlete>}
+              ></Route>
             </Route>
             <Route
               path="/scoutprofile/:username"
-              element={<ScoutProfilePage user={user} />}>
+              element={<ScoutProfilePage user={user} />}
+            >
               <Route index element={<AboutScout></AboutScout>}></Route>
-              <Route path="post" element={<PostScout user={user} ></PostScout>}></Route>
+              <Route
+                path="post"
+                element={<PostScout user={user}></PostScout>}
+              ></Route>
             </Route>
             <Route path="/orgprofile/:username" element={<OrgProfilePage />}>
               <Route index element={<AboutOrg></AboutOrg>}></Route>
