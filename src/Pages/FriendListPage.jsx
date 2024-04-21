@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "../scss/FriendListPage.module.scss";
 import {
   Image,
@@ -19,6 +19,10 @@ import { getFriend } from "../Services/HomeAPI";
 import { useQuery } from "@tanstack/react-query";
 
 export default function FriendListPage() {
+  const navigate = useNavigate();
+  const gotoAthleteProfile = (e) => {
+    navigate("/athleteprofile/" + e);
+  };
 
   const query = useQuery({
     queryKey: ["friendlist"],
@@ -52,7 +56,8 @@ export default function FriendListPage() {
           return (<>
           <Divider size={3}></Divider>
           <div className={styles.profileLeft}>
-            <UnstyledButton>
+            <UnstyledButton
+            onClick={(event) => gotoAthleteProfile(e.username)}>
               <Image
                 src="/Images/profile_logo.jpeg"
                 className={styles.profileImage}
