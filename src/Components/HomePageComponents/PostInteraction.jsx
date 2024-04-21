@@ -60,10 +60,13 @@ export default function PostInteraction({ adata }) {
             />
           )}
         </UnstyledButton>
-        <UnstyledButton>
-          <Image src="/Images/comment_logo.png" className={styles.icon} />
-        </UnstyledButton>
-        <Modal
+        <div className={styles.totalLikes}>
+          {postData.data.data.likes && postData.data.data.likes !== ""
+            ? postData.data.data.likes.split(",").length
+            : 0}{" "}
+          likes
+        </div>
+        {/* <Modal
           opened={shareopened}
           onClose={shareto.close}
           title="Share to"
@@ -218,21 +221,23 @@ export default function PostInteraction({ adata }) {
               />
               Your browser does not support the video tag.
             </video>
-            {/* <Image className={styles.postImage} src="/Images/post1_image.png"></Image> */}
+            <Image
+              className={styles.postImage}
+              src="/Images/post1_image.png"></Image>
           </div>
           <div>
             <Button fullWidth color="#00A67E">
               REPOST
             </Button>
           </div>
-        </Modal>
-        <UnstyledButton>
-          <Image
-            src="/Images/repost_logo.png"
-            className={styles.icon}
-            onClick={repost.open}
-          />
-        </UnstyledButton>
+        </Modal> */}
+        {/* // <UnstyledButton>
+        //   <Image
+        //     src="/Images/repost_logo.png"
+        //     className={styles.icon}
+        //     onClick={repost.open}
+        //   />
+        // </UnstyledButton> */}
       </div>
     );
   }

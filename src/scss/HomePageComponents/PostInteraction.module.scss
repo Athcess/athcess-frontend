@@ -7,12 +7,13 @@
   .icon {
     width: 50px;
   }
-  
+  .totalLikes {
+  }
 }
-.modal{
+.modal {
   min-height: 500px;
   max-height: 500px;
-  display:flex;
+  display: flex;
 }
 .profile {
   display: grid;
@@ -20,30 +21,29 @@
   gap: 20px;
   padding: 1rem;
   max-height: 600px;
-    
-    .profileContent {
+
+  .profileContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    .profileName {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 10px;
-      .profileName {
-        display: flex;
-        gap: 2rem;
-        font-size: 0.8rem;
-        font-weight: bold;
-      }
-      .profileImage {
-        width: 5rem;
-        border-radius: 50%;
-      }
+      gap: 2rem;
+      font-size: 0.8rem;
+      font-weight: bold;
     }
-  
+    .profileImage {
+      width: 5rem;
+      border-radius: 50%;
+    }
+  }
 }
-.send{
-  position:absolute;
+.send {
+  position: absolute;
   width: 93%;
   margin-bottom: 10px;
-  bottom:0;
+  bottom: 0;
 }
 
 .repost {
@@ -64,7 +64,7 @@
       flex-direction: column;
       justify-content: center;
       width: 100%;
-      
+
       .repostName {
         display: flex;
         gap: 2rem;
@@ -80,8 +80,8 @@
 }
 
 .text {
- margin-top: 1rem;
- margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 .postImage {
   max-height: 500px;
@@ -110,22 +110,21 @@
   div {
     // border: 1px solid red;
   }
-  
 }
-.search{
+.search {
   margin-top: 1rem;
 }
-.text{
+.text {
   font-size: 0.8rem;
 }
-.header{
+.header {
   background-color: #007458 !important;
   color: white;
 }
-.title{
+.title {
   font-weight: 700 !important;
   font-size: large !important;
 }
-.close{
+.close {
   color: white !important;
 }

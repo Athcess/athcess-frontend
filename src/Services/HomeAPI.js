@@ -612,10 +612,8 @@ export const putPhyStats = async (e) => {
 export const postLike = async (e) => {
   try {
     const res = await axios.post(
-      `${APIURL}services/like/${e.postId}/`,
-      {
-        post_id: e,
-      },
+      `${APIURL}/services/like/${e.postId}/`,
+      {},
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
