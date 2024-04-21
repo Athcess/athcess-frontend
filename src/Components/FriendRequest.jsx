@@ -19,7 +19,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function FriendRequest() {
   const query = useQuery({
-    queryKey: ["firendrequest"],
+    queryKey: ["friendrequest"],
     queryFn: getFriendRequest,
   });
 
