@@ -312,7 +312,7 @@ export const postComment = async (e) => {
 
 export const postFilterSearch = async (e) => {
   try {
-    const res = await axios.post("", {
+    const res = await axios.post("http://127.0.0.1:8000/services/search/", {
       filters: {
         height: e.height,
         weight: e.weight,
@@ -323,7 +323,14 @@ export const postFilterSearch = async (e) => {
         push_up: e.push_up,
         run: e.run,
       },
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
     });
+    console.log(res);
+    return res;
   } catch (error) {
     console.log(error);
   }
@@ -360,6 +367,7 @@ export const getSearch = async (e) => {
         },
       }
     );
+
     console.log(res);
     return res;
   } catch (error) {
