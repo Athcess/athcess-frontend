@@ -46,22 +46,36 @@ export default function AboutAthlete() {
   });
   useEffect(() => {
     if (queryPhyAtt.data) {
+      let finalPushupData;
+      let finalSitupData;
+      let finalRunningData;
       // Extracting the latest data for pushup, situp, and running
       const pushupDataList = queryPhyAtt.data.filter(
-        (item) => item.push_up !== null
+        (item) => item.push_up !== null && item.username == user.username
       );
-      const finalPushupData = pushupDataList[pushupDataList.length - 1].push_up;
+      if (pushupDataList.length != 0) {
+        finalPushupData = pushupDataList[pushupDataList.length - 1].push_up;
+      } else {
+        finalPushupData = 0;
+      }
 
       const situpDataList = queryPhyAtt.data.filter(
-        (item) => item.sit_up !== null
+        (item) => item.sit_up !== null && item.username == user.username
       );
-      const finalSitupData = situpDataList[situpDataList.length - 1].sit_up;
+      if (situpDataList.length != 0) {
+        finalSitupData = situpDataList[situpDataList.length - 1].push_up;
+      } else {
+        finalSitupData = 0;
+      }
 
       const runningDataList = queryPhyAtt.data.filter(
-        (item) => item.run !== null
+        (item) => item.run !== null && item.username == user.username
       );
-      const finalRunningData = runningDataList[runningDataList.length - 1].run;
-
+      if (runningDataList.length != 0) {
+        finalRunningData = runningDataList[runningDataList.length - 1].push_up;
+      } else {
+        finalRunningData = 0;
+      }
       // Update the state with the new data
       setData({
         labels: ["Running", "Pushup", "Situp"],
@@ -70,6 +84,11 @@ export default function AboutAthlete() {
 
       // Logging the extracted data
       console.log(finalPushupData, finalSitupData, finalRunningData);
+    } else {
+      setData({
+        labels: ["Running", "Pushup", "Situp"],
+        amounts: [0, 0, 0],
+      });
     }
   }, [queryPhyAtt.data, setData]);
   let { username } = useParams();
