@@ -13,7 +13,7 @@ import EditAchievementModal from "../EditAchievementModal";
 import { profileAthlete } from "../../../Services/ProfileAPI";
 import { useQuery } from "@tanstack/react-query";
 import { getPhyAtt } from "../../../Services/HomeAPI";
-export default function AboutAthlete() {
+export default function AboutAthlete({ user }) {
   const auth_username = Cookies.get("auth_username");
   const [Backgroundopened, Background] = useDisclosure(false);
   const [Achievementopened, Achievement] = useDisclosure(false);
@@ -39,7 +39,6 @@ export default function AboutAthlete() {
       },
     ],
   };
-
   const queryPhyAtt = useQuery({
     queryKey: ["phyAtt"],
     queryFn: getPhyAtt,
@@ -51,7 +50,7 @@ export default function AboutAthlete() {
       let finalRunningData;
       // Extracting the latest data for pushup, situp, and running
       const pushupDataList = queryPhyAtt.data.filter(
-        (item) => item.push_up !== null && item.username == user.username
+        (item) => item.push_up !== null && item.username == username
       );
       if (pushupDataList.length != 0) {
         finalPushupData = pushupDataList[pushupDataList.length - 1].push_up;
@@ -60,19 +59,19 @@ export default function AboutAthlete() {
       }
 
       const situpDataList = queryPhyAtt.data.filter(
-        (item) => item.sit_up !== null && item.username == user.username
+        (item) => item.sit_up !== null && item.username == username
       );
       if (situpDataList.length != 0) {
-        finalSitupData = situpDataList[situpDataList.length - 1].push_up;
+        finalSitupData = situpDataList[situpDataList.length - 1].sit_up;
       } else {
         finalSitupData = 0;
       }
 
       const runningDataList = queryPhyAtt.data.filter(
-        (item) => item.run !== null && item.username == user.username
+        (item) => item.run !== null && item.username == username
       );
       if (runningDataList.length != 0) {
-        finalRunningData = runningDataList[runningDataList.length - 1].push_up;
+        finalRunningData = runningDataList[runningDataList.length - 1].run;
       } else {
         finalRunningData = 0;
       }
@@ -91,6 +90,7 @@ export default function AboutAthlete() {
       });
     }
   }, [queryPhyAtt.data, setData]);
+
   let { username } = useParams();
   const query = useQuery({
     queryKey: ["profile", username],

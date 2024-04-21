@@ -10,7 +10,7 @@ export default function AthleteProfilePage({ user }) {
     <>
       <div className={styles.container}>
         <ProfileElement type="athlete" user={user} />
-        <Outlet />
+        <Outlet user={user} />
       </div>
     </>
   );

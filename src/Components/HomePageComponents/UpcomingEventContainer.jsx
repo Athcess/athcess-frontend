@@ -22,9 +22,13 @@ export function UpcomingEventContainerTrue() {
           <li>ddsdssdsdwqdssadaas</li>
         </ul> */}
         {isPending ? (
-          <Loader color="teal" className={styles.loading} />
+          <div className={styles.loading}>
+            <Loader color="teal" />
+          </div>
         ) : error ? (
           <div className={styles.error}>ERROR: {error.message}</div>
+        ) : data.length == 0 ? (
+          <div className={styles.noEvent}>no event </div>
         ) : (
           data.map((event) => {
             return <li key={event.event_id}>{event.description}</li>;

@@ -235,7 +235,7 @@ export default function BodyAnalyzerPage({ user }) {
         (item) => item.sit_up !== null && item.username == user.username
       );
       if (situpDataList.length != 0) {
-        finalSitupData = situpDataList[situpDataList.length - 1].push_up;
+        finalSitupData = situpDataList[situpDataList.length - 1].sit_up;
       } else {
         finalSitupData = 0;
       }
@@ -244,7 +244,7 @@ export default function BodyAnalyzerPage({ user }) {
         (item) => item.run !== null && item.username == user.username
       );
       if (runningDataList.length != 0) {
-        finalRunningData = runningDataList[runningDataList.length - 1].push_up;
+        finalRunningData = runningDataList[runningDataList.length - 1].run;
       } else {
         finalRunningData = 0;
       }
