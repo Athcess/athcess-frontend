@@ -72,8 +72,7 @@ export default function SearchPage({ user, category, setCategory, id, setId }) {
           setCategory={setCategory}
           category={category}
           id={id}
-          setId={setId}
-        ></Categories>
+          setId={setId}></Categories>
       </div>
       <div className={styles.rightContent}>
         {category == "athlete" && (
@@ -81,8 +80,7 @@ export default function SearchPage({ user, category, setCategory, id, setId }) {
             category={category}
             user={user}
             id={id}
-            setId={setId}
-          ></Filter>
+            setId={setId}></Filter>
         )}
         <br></br>
 
@@ -99,10 +97,11 @@ export default function SearchPage({ user, category, setCategory, id, setId }) {
                 <div className={styles.Athletecontainer}>
                   <div className={styles.profileLeft}>
                     <UnstyledButton
-                      onClick={(event) => gotoAthleteProfile(e.username)}
-                    >
+                      onClick={(event) => gotoAthleteProfile(e.username)}>
                       <Image
-                        src="/Images/profile_logo.jpeg"
+                        src={
+                          e.url == null ? "/Images/defualt_profile.png" : e.url
+                        }
                         className={styles.profileImage}
                       />
                     </UnstyledButton>
@@ -117,7 +116,7 @@ export default function SearchPage({ user, category, setCategory, id, setId }) {
                     </div>
                   </div>
                   <div className={styles.profileright}>
-                  <IsFriend user = {e.username} id = {id}></IsFriend>
+                    <IsFriend user={e.username} id={id}></IsFriend>
                   </div>
                 </div>
               </>
@@ -132,10 +131,11 @@ export default function SearchPage({ user, category, setCategory, id, setId }) {
                 <div className={styles.Athletecontainer}>
                   <div className={styles.profileLeft}>
                     <UnstyledButton
-                      onClick={(event) => gotoScoutProfile(e.username)}
-                    >
+                      onClick={(event) => gotoScoutProfile(e.username)}>
                       <Image
-                        src="/Images/profile_logo.jpeg"
+                        src={
+                          e.url == null ? "/Images/defualt_profile.png" : e.url
+                        }
                         className={styles.profileImage}
                       />
                     </UnstyledButton>
@@ -147,7 +147,7 @@ export default function SearchPage({ user, category, setCategory, id, setId }) {
                     </div>
                   </div>
                   <div className={styles.profileright}>
-                  <IsFriend user = {e.username} id = {id}></IsFriend>
+                    <IsFriend user={e.username} id={id}></IsFriend>
                   </div>
                 </div>
               </>
@@ -162,10 +162,11 @@ export default function SearchPage({ user, category, setCategory, id, setId }) {
                 <div className={styles.Athletecontainer}>
                   <div className={styles.profileLeft}>
                     <UnstyledButton
-                      onClick={(event) => gotoOrgProfile(e.username)}
-                    >
+                      onClick={(event) => gotoOrgProfile(e.username)}>
                       <Image
-                        src="/Images/profile_logo.jpeg"
+                        src={
+                          e.url == null ? "/Images/defualt_profile.png" : e.url
+                        }
                         className={styles.profileImage}
                       />
                     </UnstyledButton>
@@ -173,12 +174,15 @@ export default function SearchPage({ user, category, setCategory, id, setId }) {
                       <div className={styles.profileName}>{e.club_name}</div>
                       <div className={styles.profiletext}>{e.location}</div>
                       <div className={styles.profiletext}>
-                        Followers : {e.followers && e.followers !== "" ? e.followers.split(',').length : 0}
+                        Followers :{" "}
+                        {e.followers && e.followers !== ""
+                          ? e.followers.split(",").length
+                          : 0}
                       </div>
                     </div>
                   </div>
                   <div className={styles.profileright}>
-                  <IsFollow user = {e.club_name} id = {id}></IsFollow>
+                    <IsFollow user={e.club_name} id={id}></IsFollow>
                   </div>
                 </div>
               </>

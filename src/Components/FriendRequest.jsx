@@ -72,7 +72,9 @@ export default function FriendRequest() {
                     onClick={(event) => gotoAthleteProfile(e.username)}
                      >
                       <Image
-                        src="/Images/profile_logo.jpeg"
+                        src={
+                          e.url == null ? "/Images/defualt_profile.png" : e.url
+                        }
                         className={styles.profileImage}
                       />
                     </UnstyledButton>
