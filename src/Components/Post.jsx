@@ -9,6 +9,7 @@ import {
   Textarea,
   Text,
   Group,
+  rem,
   Button,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -124,9 +125,7 @@ export default function Post({ adata }) {
           <UnstyledButton onClick={(event) => gotoProfile()}>
             <Image
               src={
-                adata.url == null
-                  ? "/Images/defualt_profile.png"
-                  : adata.url
+                adata.url == null ? "/Images/defualt_profile.png" : adata.url
               }
               className={styles.profileImage}
             />
