@@ -82,10 +82,10 @@ export default function NewPostModal({ opened, onClose, user , profilepic}) {
       console.log(data);
       setTimeout(() => {
         queryClient.invalidateQueries({ queryKey: ["postprofile"] });
-      }, 1000);
+      }, 2000);
       setTimeout(() => {
         queryClient.invalidateQueries({ queryKey: ["postfeed"] });
-      }, 1000);
+      }, 2000);
 
       onClose();
     },
@@ -101,6 +101,7 @@ export default function NewPostModal({ opened, onClose, user , profilepic}) {
     form.setFieldValue("file", event);
     form.setFieldValue("hasfile", true);
   };
+  
 
   return (
     <Modal
