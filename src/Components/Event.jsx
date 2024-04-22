@@ -53,6 +53,7 @@ export default function Event({ adata }) {
     queryFn: () => getBlobEvent(adata.event_id),
   });
   if (query.status === "success") {
+    console.log(adata);
     content = query.data;
   }
 
@@ -94,7 +95,11 @@ export default function Event({ adata }) {
         <div className={styles.profileLeft}>
           <UnstyledButton onClick={() => gotoProfile()}>
             <Image
-              src="/Images/profile_logo.jpeg"
+              src={
+                adata.url == null
+                  ? "/Images/defualt_profile.png"
+                  : adata.url
+              }
               className={styles.profileImage}
             />
           </UnstyledButton>

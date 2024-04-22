@@ -123,7 +123,11 @@ export default function Post({ adata }) {
         <div className={styles.profileLeft}>
           <UnstyledButton onClick={(event) => gotoProfile()}>
             <Image
-              src="/Images/profile_logo.jpeg"
+              src={
+                adata.url == null
+                  ? "/Images/defualt_profile.png"
+                  : adata.url
+              }
               className={styles.profileImage}
             />
           </UnstyledButton>
