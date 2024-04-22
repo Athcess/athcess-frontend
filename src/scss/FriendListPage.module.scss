@@ -1,7 +1,7 @@
 .container {
   display: flex;
   background-color: white;
-  min-height: 800px ;
+  min-height: 800px;
   max-width: 100%;
   margin-top: 70px;
   height: auto;
@@ -50,7 +50,7 @@
       max-width: 100%;
       height: auto;
     }
-    .box{
+    .box {
       gap: 15px;
     }
   }
@@ -68,9 +68,10 @@
     display: flex;
     gap: 0.5rem;
     margin-left: 1rem;
-    
+
     .profileImage {
       width: 3rem;
+      height: 3rem;
       border-radius: 50%;
     }
     .profileContent {
@@ -105,5 +106,4 @@
     margin-left: 1rem;
     margin-right: 1rem;
   }
-
 }

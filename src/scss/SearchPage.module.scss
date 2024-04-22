@@ -1,21 +1,18 @@
 .container {
-    min-width: 100%;
-    margin-top: 70px;
-    background-color: #fefefa;
-    padding: 2rem;
-    display: flex;
-    height: calc(100vh - 70px);
-  }
-  
+  min-width: 100%;
+  margin-top: 70px;
+  background-color: #fefefa;
+  padding: 2rem;
+  display: flex;
+  height: calc(100vh - 70px);
+}
 
 .rightContent {
   min-width: 80%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-
 
 .true {
   display: flex;
@@ -61,41 +58,40 @@
   .profileright {
     margin-right: 2rem;
   }
-    .profileLeft {
-      margin-left: 2rem;
-      height: 70px;
+  .profileLeft {
+    margin-left: 2rem;
+    height: 70px;
+    display: flex;
+    gap: 0.5rem;
+    .profileImage {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+    }
+    .profileContent {
       display: flex;
-      gap: 0.5rem;
-      .profileImage {
-        width: 4rem;
-        border-radius: 50%;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      .profileName {
+        font-size: 1.2rem;
+        font-weight: bold;
       }
-      .profileContent {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 100%;
-        .profileName {
-          font-size: 1.2rem;
-          font-weight: bold;
-        }
-        .profiletext {
-          font-size: 0.8rem;
-          color: grey;
-        }
+      .profiletext {
+        font-size: 0.8rem;
+        color: grey;
       }
     }
-    .editPost {
-      width: 2rem;
-      height: 1.5rem;
-      padding-top: 1rem;
-    }
   }
-
-  .text {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 2rem;
+  .editPost {
+    width: 2rem;
+    height: 1.5rem;
+    padding-top: 1rem;
   }
-  
+}
 
+.text {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
