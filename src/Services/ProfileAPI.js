@@ -41,6 +41,7 @@ export const getOrg = async (username) => {
 
 export const getPostProfile = async (e) => {
   try {
+    
     const response = await axios.get(`${APIURL}/services/post/?username=${e}`, {
       headers: {
         Authorization: `Bearer ${access_token}`,
@@ -54,10 +55,17 @@ export const getPostProfile = async (e) => {
   }
 };
 
-export const getEventProfile = async (e) => {
+export const getEventProfile = async (username) => {
   try {
-    const response = await axios.get(
-      `${APIURL}/services/calendar/byname/?org_name=${e}`,
+    const response = await axios.get(`${APIURL}/services/users/${username}/`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+
+    console.log(response);
+    const result = await axios.get(
+      `${APIURL}/services/calendar/byname/?org_name=${response.data.organization.club_name}`,
       {
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -65,8 +73,8 @@ export const getEventProfile = async (e) => {
       }
     );
 
-    console.log(response);
-    return response;
+    console.log(result);
+    return result;
   } catch (error) {
     console.log(error);
   }
